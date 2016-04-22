@@ -1,3 +1,9 @@
+.idea
+*.iml
+out
+*.sf2
+*.SF2
+
 *.class
 
 # Mobile Tools for Java (J2ME)
