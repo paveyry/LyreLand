@@ -1,9 +1,18 @@
+# IntelliJ IDEA Trash files
 .idea
 *.iml
 out
+
+# Maven Target dir
+target
+
+# Soundfonts and sounds
 *.sf2
 *.SF2
+*.wav
+*.mp3
 
+# Java Bytecode Files
 *.class
 
 # Mobile Tools for Java (J2ME)
