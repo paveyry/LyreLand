@@ -33,6 +33,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classesDirectory>${basedir}/target/classes</classesDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
                     <archive>
                         <manifest>
