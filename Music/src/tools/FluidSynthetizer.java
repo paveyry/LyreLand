@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class FluidSynthetizer {
-    private static final String soundfonts = Misc.getJarPath() + "../assets/soundfonts/sgm2.sf2";
+    private static String soundfonts = Misc.getJarPath() + "../assets/soundfonts/sgm2.sf2";
 
     public static void midToWav(String midInputFile, String wavOutputFile) {
         try {
@@ -37,5 +37,9 @@ public class FluidSynthetizer {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setSoundfonts(String pathToSoundfonts) {
+        FluidSynthetizer.soundfonts = pathToSoundfonts;
     }
 }
