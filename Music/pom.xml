@@ -27,9 +27,6 @@
                     <exclude>**/*.java</exclude>
                 </excludes>
             </resource>
-            <resource>
-                <directory>${basedir}/assets</directory>
-            </resource>
         </resources>
 
         <plugins>

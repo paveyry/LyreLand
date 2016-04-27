@@ -1,21 +1,33 @@
 package tools;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class FluidSynthetizer {
-    private static final String soundfonts = "../assets/soundfonts/sgm2.sf2";
+    private static final String soundfonts = Misc.getJarPath() + "../assets/soundfonts/sgm2.sf2";
 
     public static void midToWav(String midInputFile, String wavOutputFile) {
         try {
             Process fluidSynth = Runtime.getRuntime().exec("fluidsynth -F " + wavOutputFile
                     + " " + soundfonts + " " + midInputFile);
-            fluidSynth.waitFor();
-            int exitValue = fluidSynth.exitValue();
 
-            if (exitValue == 0)
-                System.out.println(wavOutputFile + "was successfully synthesized.");
-            else
-                System.err.println("An error occured while synthesizing " + wavOutputFile);
+            BufferedReader bre = new BufferedReader(new InputStreamReader(fluidSynth.getErrorStream()));
+
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = bre.readLine()) != null) {
+                sb.append(line);
+            }
+            if (sb.length() > 0) {
+                System.err.println("An error occurred while synthesizing " + wavOutputFile + ":");
+                System.err.println(sb.toString());
+            }
+            else {
+                System.out.println("The file " + wavOutputFile + " was successfully synthesized.");
+            }
+
+            fluidSynth.waitFor();
 
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
