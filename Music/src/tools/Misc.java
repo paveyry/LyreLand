@@ -8,9 +8,11 @@ public class Misc {
         String path = Misc.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String decoded = null;
         String dir = null;
+
         try {
             decoded = URLDecoder.decode(path, "UTF-8");
             int lastSlash = decoded.lastIndexOf("/");
+
             if (decoded.substring(lastSlash - 7, lastSlash).compareTo("classes") == 0)
                 dir = decoded.substring(0, lastSlash - 7);
             else
