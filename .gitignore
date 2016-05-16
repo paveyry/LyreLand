@@ -1,7 +1,11 @@
-# IntelliJ IDEA Trash files
+# IntelliJ IDEA trash files
 .idea
 *.iml
 out
+
+# Personnal Intellij IDEA trash files
+LyreLand.ipr
+LyreLand.iws
 
 # Maven Target dir
 target
