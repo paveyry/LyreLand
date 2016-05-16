@@ -18,14 +18,7 @@ public class Scale {
         setScale(octaveNumber);
     }
 
-    // ---------- Getters ----------
-    public int getDegree(int degree) {
-        if (_notes != null)
-            return _notes.get(degree);
-        return 0;
-    }
-
-    private ArrayList<Integer> getScale(int tonic, String s, int octaveNumber){
+    private List<Integer> createScale(int tonic, String s, int octaveNumber) {
         // We have to check what we ask don't exceed G9 = 127 (highest pitch)
         if (tonic + (octaveNumber * 12) <= 127) {
             ArrayList<Integer> notes = new ArrayList<Integer>();
@@ -52,9 +45,20 @@ public class Scale {
         return null;
     }
 
+    // ---------- Getters ----------
+    public int getDegree(int degree) {
+        if (_notes != null)
+            return _notes.get(degree);
+        return 0;
+    }
+
+    private List<Integer> getScale(){
+        return _notes;
+    }
+
     // ---------- Setters ----------
     public void setScale (int octaveNumber) {
-        _notes = getScale(_tonic, _type, octaveNumber);
+        _notes = createScale(_tonic, _type, octaveNumber);
     }
-    
+
 }
