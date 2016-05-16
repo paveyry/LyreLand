@@ -7,6 +7,9 @@ out
 LyreLand.ipr
 LyreLand.iws
 
+# Ignore .mid files
+*.mid
+
 # Maven Target dir
 target
 

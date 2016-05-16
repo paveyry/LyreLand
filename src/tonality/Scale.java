@@ -1,7 +1,6 @@
 package tonality;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by olivier on 16/05/16.
@@ -9,7 +8,7 @@ import java.util.List;
 public class Scale {
     private int _tonic;
     private String _type; // Minor or Major ?
-    private List<Integer> _notes;
+    private ArrayList<Integer> _notes;
 
     // ---------- Constructors ----------
     public Scale(int tonic, String s, int octaveNumber) {
@@ -18,7 +17,7 @@ public class Scale {
         setScale(octaveNumber);
     }
 
-    private List<Integer> createScale(int tonic, String s, int octaveNumber) {
+    private ArrayList<Integer> createScale(int tonic, String s, int octaveNumber) {
         // We have to check what we ask don't exceed G9 = 127 (highest pitch)
         if (tonic + (octaveNumber * 12) <= 127) {
             ArrayList<Integer> notes = new ArrayList<Integer>();
@@ -27,12 +26,16 @@ public class Scale {
                 switch (s) {
                     case "major":
                         temp = new int[] {tonic, tonic + 2, tonic + 4, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
+                        break;
                     case "minorn": // natural Minor Scale without alterations
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 10};
+                        break;
                     case "minorh": // Harmonic Minor Scale
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 11};
+                        break;
                     case "minorm": // Melodic Minor Scale
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
+                        break;
                     default: break;
                 }
                 for (int j = 0; j < temp.length; j++)
@@ -52,7 +55,7 @@ public class Scale {
         return 0;
     }
 
-    private List<Integer> getScale(){
+    public ArrayList<Integer> getScale(){
         return _notes;
     }
 
