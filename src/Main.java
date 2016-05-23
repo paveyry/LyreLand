@@ -1,8 +1,10 @@
+import Analysis.Utils;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
 import jm.util.Play;
+import jm.util.Read;
 import jm.util.View;
 import jm.util.Write;
 import tonality.Scale;
@@ -31,6 +33,10 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello LyreLand!");
-        demoScale(60, "major", 1, 0.5);
+        //demoScale(60, "major", 1, 0.5);
+
+        Score s = new Score();
+        Read.midi(s, "Blue Bird.mid");
+        System.out.println(Utils.getTonality(s.getKeySignature(), s.getKeyQuality()));
     }
 }
