@@ -7,6 +7,9 @@ out
 LyreLand.ipr
 LyreLand.iws
 
+# Personal Score
+Analysis_Music/*/*.pdf
+
 # Ignore .mid files
 *.mid
 
