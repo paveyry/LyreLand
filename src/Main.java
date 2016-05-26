@@ -1,4 +1,5 @@
 import Analysis.ScoreAnalyser;
+import Analysis.Utils;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -38,5 +39,10 @@ public class Main {
         sa.printScoreBasicInformations();
         sa.getScale().showScale();
         //System.out.println(Analysis.Utils.normalizeRythmValue(4.75124));
+        /*Note n = new Note(60, 2.235);
+        ArrayList<Note> temp = Utils.normalizeNoteLength(n, 4);
+        for (int i = 0; i < temp.size(); i++) {
+            System.out.println(temp.get(i));
+        }*/
     }
 }
