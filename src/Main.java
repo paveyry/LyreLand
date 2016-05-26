@@ -34,7 +34,8 @@ public class Main {
         System.out.println("Hello LyreLand!");
         //demoScale(60, "major", 1, 0.5);
 
-        /*ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
-        sa.printScoreBasicInformations();*/
+        ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
+        sa.printScoreBasicInformations();
+        sa.getScale().showScale();
     }
 }
