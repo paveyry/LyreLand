@@ -37,5 +37,6 @@ public class Main {
         ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
         sa.printScoreBasicInformations();
         sa.getScale().showScale();
+        //System.out.println(Analysis.Utils.normalizeRythmValue(4.75124));
     }
 }
