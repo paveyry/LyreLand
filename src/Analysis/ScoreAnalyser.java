@@ -1,5 +1,8 @@
 package Analysis;
 
+import jm.music.data.Note;
+import jm.music.data.Part;
+import jm.music.data.Phrase;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
@@ -112,6 +115,21 @@ public class ScoreAnalyser {
             return (new Scale(tonic, splited[2], 1));
         }
     }
+
+    public void normaliseRythm() {
+        Arrays.asList(_score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph ->
+            Arrays.asList(ph.getNoteArray()).forEach(n -> Utils.normalizeRythmValue(n))));
+
+    }
+
+    // Same function but with print
+    public void normaliseRythmPrint() {
+        Arrays.asList(_score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph -> {
+                Arrays.asList(ph.getNoteArray()).forEach(n -> {Utils.normalizeRythmValue(n);
+                    System.out.print("(" + n.getRhythmValue() + " " + n.getPitch() + ") ");});
+            System.out.println(System.lineSeparator());}));
+    }
+
 
     // ---------- GETTERS ----------
     public String getFileName() { return _fileName; }

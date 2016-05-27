@@ -1,5 +1,4 @@
 import Analysis.ScoreAnalyser;
-import Analysis.Utils;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -35,14 +34,13 @@ public class Main {
         System.out.println("Hello LyreLand!");
         //demoScale(60, "major", 1, 0.5);
 
-        ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
+        ScoreAnalyser sa = new ScoreAnalyser("/home/light/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
+        //sa.getScale().showScale();
         sa.printScoreBasicInformations();
-        sa.getScale().showScale();
-        //System.out.println(Analysis.Utils.normalizeRythmValue(4.75124));
-        /*Note n = new Note(60, 2.235);
-        ArrayList<Note> temp = Utils.normalizeNoteLength(n, 4);
-        for (int i = 0; i < temp.size(); i++) {
-            System.out.println(temp.get(i));
-        }*/
+        // Print the normalised notes
+        // use noramliseRythm() if you don't want to print
+        sa.normaliseRythmPrint();
+        Write.midi(sa.getScore(), "foobar.mid");
+        Play.mid("foobar.mid");
     }
 }
