@@ -35,6 +35,7 @@ public class Main {
         //demoScale(60, "major", 1, 0.5);
 
         ScoreAnalyser sa = new ScoreAnalyser("/home/light/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
+        //ScoreAnalyser sa = new ScoreAnalyser("/home/light/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
         //sa.getScale().showScale();
         sa.printScoreBasicInformations();
         // Print the normalised notes

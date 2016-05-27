@@ -2,15 +2,13 @@ package Analysis;
 
 import jm.music.data.Note;
 
-import java.util.ArrayList;
-
 /**
  * Created by olivier on 26/05/16.
  */
 public class Utils {
 
     private static double r = 0;
-    private static double time = 0.0625;
+    private static double quantum = 0.250;
 
     // Normalize a double rythm value according to
     // midi rythm reading.
@@ -20,7 +18,7 @@ public class Utils {
         r += n.getRhythmValue();
         int result = ((int)(r * 10000));
         // Rounded to the superior 250 multiple.
-        int mod = ((int)(time * 10000));
+        int mod = ((int)(quantum * 10000));
         int rest = result % mod;
         if (rest != 0) {
             rest = rest > mod / 2 ? mod - rest : - rest;
@@ -28,5 +26,9 @@ public class Utils {
         }
         n.setRhythmValue((double) result / 10000);
         r =  (double) - rest / 10000;
+    }
+
+    public static double getQuantum() {
+        return quantum;
     }
 }

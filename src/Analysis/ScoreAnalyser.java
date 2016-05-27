@@ -8,6 +8,7 @@ import jm.util.Read;
 import tonality.Scale;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -135,49 +136,83 @@ public class ScoreAnalyser {
     public void normalisePhraseLength() {
         // Get the start of the music
         double startTime = _score.getPartArray()[0].getPhraseArray()[0].getStartTime();
+        Phrase firstphrase = _score.getPart(0).getPhrase(0);
         for (Part p : _score.getPartArray()) {
-            for (Phrase ph : p.getPhraseArray())
-                startTime = startTime < ph.getStartTime() ? startTime : ph.getStartTime();
+            for (Phrase ph : p.getPhraseArray()) {
+                if (startTime > ph.getStartTime()) {
+                    startTime = ph.getStartTime();
+                    firstphrase = ph;
+                }
+            }
         }
+
+        // Deal with the firstphrase
+        int maxsize = 0;
+        for (Part p : _score.getPartArray()) {
+            for (Phrase ph : p.getPhraseArray()) {
+                if (ph != firstphrase)
+                    continue;
+                Vector<Note> vector = new Vector<>();
+                for (Note n : _score.getPart(0).getPhrase(0).getNoteArray()) {
+                    double d = n.getRhythmValue();
+                    double quantum = Utils.getQuantum();
+                    while (d > quantum) {
+                        Note tmp = n.copy();
+                        tmp.setRhythmValue(quantum);
+                        vector.add(tmp);
+                        d -= quantum;
+                    }
+                    Note tmp = n.copy();
+                    tmp.setRhythmValue(d);
+                    vector.add(tmp);
+                }
+                ph.setNoteList(vector);
+                maxsize = ph.getNoteArray().length;
+            }
+        }
+
 
         for (Part p : _score.getPartArray()) {
             for (Phrase ph : p.getPhraseArray()) {
-                Vector<Note> vector = new Vector<>();
 
-                /*
-                // Make all phrase begin at the same time and add silence
-                double number_beats = (ph.getStartTime() - startTime) * (_score.getTempo() / 60);
-                ph.setStartTime(startTime);
-                while (number_beats > _beatsPerBar) {
-                    Note tmp = ph.getNote(0).copy();
-                    tmp.setRhythmValue(_beatsPerBar);
-                    tmp.setPitch(REST);
-                    vector.add(tmp);
-                    number_beats -= _beatsPerBar;
-                }
-                Note tmp = ph.getNote(0).copy();
-                tmp.setRhythmValue(number_beats);
-                tmp.setPitch(REST);
-                vector.add(tmp);
-                */
+                if (ph == firstphrase)
+                    continue;
+
+                Vector<Note> vector = new Vector<>();
 
 
                 // Counteract the midi rythm staking effect of two following
                 // similar notes : (C4, 4.0) and (C4, 2.0) will be transformed
                 // into one note (C4, 6.0).
                 // We want to redivide the notes according to bar beat value.
-                for (Note n : ph.getNoteArray()) {
+                for (int i = ph.getNoteArray().length - 1; i >= 0; i--) {
+                    Note n = ph.getNote(i);
                     double d = n.getRhythmValue();
-                    while (d > _beatsPerBar) {
+                    double quantum = Utils.getQuantum();
+                    while (d > quantum) {
                         Note tmp = n.copy();
-                        tmp.setRhythmValue(_beatsPerBar);
+                        tmp.setRhythmValue(quantum);
                         vector.add(tmp);
-                        d -= _beatsPerBar;
+                        d -= quantum;
                     }
                     Note tmp = n.copy();
                     tmp.setRhythmValue(d);
                     vector.add(tmp);
                 }
+
+
+                /*
+                // Make all phrase begin at the same time and add silence
+                ph.setStartTime(startTime);
+                for (int i = vector.size(); i < maxsize; i++) {
+                    Note tmp = ph.getNote(0).copy();
+                    tmp.setRhythmValue(Utils.getQuantum());
+                    tmp.setPitch(REST);
+                    vector.add(tmp);
+                }
+                */
+
+                Collections.reverse(vector);
                 ph.setNoteList(vector);
             }
         }
