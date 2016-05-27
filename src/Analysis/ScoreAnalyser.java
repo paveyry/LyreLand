@@ -1,8 +1,5 @@
 package Analysis;
 
-import jm.music.data.Note;
-import jm.music.data.Part;
-import jm.music.data.Phrase;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
@@ -53,6 +50,19 @@ public class ScoreAnalyser {
     }
 
     // Private functions.
+
+    // This function extract the bar unit according to _score.get(Denominator)
+    // EG: 4 -> 1.0 | 2 -> 2.0 | 8 -> 0.5 | 1 -> 4.0
+    private double computeBarUnit() {
+        int val = _score.getDenominator();
+        switch (val) {
+            case 1: return 4.0;
+            case 2: return 2.0;
+            case 4: return 1.0;
+            case 8: return 0.5;
+        }
+        return 1.0;
+    }
 
     // Return the tonality of the score following format :
     // Tonic Alteration(sharp, flat or none) Mode --> E.g A sharp Major
