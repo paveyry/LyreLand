@@ -2,6 +2,7 @@ package Analysis;
 
 import jm.music.data.Note;
 
+import java.util.ArrayList;
 
 /**
  * Created by olivier on 26/05/16.
@@ -9,6 +10,7 @@ import jm.music.data.Note;
 public class Utils {
 
     private static double r = 0;
+    private static double time = 0.0625;
 
     // Normalize a double rythm value according to
     // midi rythm reading.
@@ -16,21 +18,15 @@ public class Utils {
     public static void normalizeRythmValue(Note n) {
         // truncate three decimals and convert to int.
         r += n.getRhythmValue();
-        int result = ((int)(r * 1000));
+        int result = ((int)(r * 10000));
         // Rounded to the superior 250 multiple.
-        int mod = 250;
+        int mod = ((int)(time * 10000));
         int rest = result % mod;
         if (rest != 0) {
             rest = rest > mod / 2 ? mod - rest : - rest;
             result = result + rest;
         }
-        n.setRhythmValue((double) result / 1000);
-        r =  (double) - rest / 1000;
+        n.setRhythmValue((double) result / 10000);
+        r =  (double) - rest / 10000;
     }
-
-    // TODO
-    // Counteract the midi rythm staking effect of two following
-    // similar notes : (C4, 4.0) and (C4, 2.0) will be transformed
-    // into one note (C4, 6.0).
-    // We want to redivide the notes according to bar beat value.
 }

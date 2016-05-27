@@ -40,6 +40,8 @@ public class Main {
         // Print the normalised notes
         // use noramliseRythm() if you don't want to print
         sa.normaliseRythmPrint();
+        sa.normalisePhraseLength();
+        sa.checknpl();
         Write.midi(sa.getScore(), "foobar.mid");
         Play.mid("foobar.mid");
     }
