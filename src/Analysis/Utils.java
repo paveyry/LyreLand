@@ -8,7 +8,7 @@ import jm.music.data.Note;
 public class Utils {
 
     private static double r = 0;
-    private static double quantum = 0.250;
+    private static double quantum = 0.0625;
 
     // Normalize a double rythm value according to
     // midi rythm reading.

@@ -7,10 +7,7 @@ import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import static jm.constants.Pitches.*;
 
@@ -29,7 +26,6 @@ public class ScoreAnalyser {
 
     // Extracted informations
     private Scale _scale;
-
 
     public ScoreAnalyser(String midiFile) {
         _score = new Score();
@@ -131,11 +127,9 @@ public class ScoreAnalyser {
         }
     }
 
-
     public void normaliseRythm() {
         Arrays.asList(_score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph ->
             Arrays.asList(ph.getNoteArray()).forEach(n -> Utils.normalizeRythmValue(n))));
-
     }
 
     // Same function but with print
@@ -158,7 +152,6 @@ public class ScoreAnalyser {
                 }
             }
         }
-
         // Deal with the firstphrase
         int maxsize = 0;
         for (Part p : _score.getPartArray()) {
@@ -183,17 +176,11 @@ public class ScoreAnalyser {
                 maxsize = ph.getNoteArray().length;
             }
         }
-
-
         for (Part p : _score.getPartArray()) {
             for (Phrase ph : p.getPhraseArray()) {
-
                 if (ph == firstphrase)
                     continue;
-
                 Vector<Note> vector = new Vector<>();
-
-
                 // Counteract the midi rythm staking effect of two following
                 // similar notes : (C4, 4.0) and (C4, 2.0) will be transformed
                 // into one note (C4, 6.0).
@@ -212,8 +199,6 @@ public class ScoreAnalyser {
                     tmp.setRhythmValue(d);
                     vector.add(tmp);
                 }
-
-
                 /*
                 // Make all phrase begin at the same time and add silence
                 ph.setStartTime(startTime);
@@ -224,7 +209,6 @@ public class ScoreAnalyser {
                     vector.add(tmp);
                 }
                 */
-
                 Collections.reverse(vector);
                 ph.setNoteList(vector);
             }
@@ -242,6 +226,34 @@ public class ScoreAnalyser {
                     System.out.print("(" + n.getRhythmValue() + " " + n.getPitch() + ") ");
                 }
                 System.out.println(System.lineSeparator());
+            }
+        }
+    }
+
+    // FIXME: Store the result and remove the print.
+    public void sequenceChords() {
+        for (Part p : _score.getPartArray()) {
+            // Get the number of notes in the longuest Phrases.
+            int max = 0;
+            for(Phrase phr : p.getPhraseArray()) {
+                max = (phr.length() > max) ? phr.length() : max;
+            }
+            for (int i = 0; i < max; i++) {
+                ArrayList<Integer> temp = new ArrayList<>();
+                for(Phrase phr : p.getPhraseArray()) {
+                    int index = phr.length() - 1 - i;
+                    if (index >= 0) {
+                        if (phr.getNote(phr.length() - 1 - i).getPitch() != Note.REST)
+                            temp.add(phr.getNote(phr.length() - 1 - i).getPitch());
+                    }
+                }
+                if (temp.size() != 0) {
+                    Collections.sort(temp);
+                    for (int j = 0; j < temp.size(); j++) {
+                        System.out.print(temp.get(j) + " ");
+                    }
+                    System.out.println();
+                }
             }
         }
     }
