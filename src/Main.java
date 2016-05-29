@@ -31,12 +31,12 @@ public class Main {
         System.out.println("Hello LyreLand!");
         //demoScale(60, "major", 1, 0.5);
 
-        //ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
-        ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
+        ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
+        //ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
         //sa.getScale().showScale();
-        sa.printScoreBasicInformations();
+        sa.writeScoreInformations("toto.txt");
         // Print the normalised notes
-        // use noramliseRythm() if you don't want to print
+        // use normaliseRythm() if you don't want to print
         sa.normaliseRythm();
         sa.normalisePhraseLength();
         //sa.sequenceChords();

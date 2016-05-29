@@ -7,6 +7,10 @@ import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static jm.constants.Pitches.*;
@@ -23,6 +27,7 @@ public class ScoreAnalyser {
     private String _tonality;
     private int _mesureUnit;
     private int _beatsPerBar;
+    private int _partNb;
 
     // Extracted informations
     private Scale _scale;
@@ -36,16 +41,30 @@ public class ScoreAnalyser {
             _scale = this.computeScale();
             _mesureUnit = _score.getDenominator();
             _beatsPerBar = _score.getNumerator();
+            _partNb = _score.getPartArray().length;
         }
         catch (Exception e) {
             System.out.println("Error: ScoreAnalyser midi file can't be found");
         }
     }
 
-    public void printScoreBasicInformations() {
-        System.out.println("Music title: " + _title);
-        System.out.println("Music tonality: " + _tonality);
-        System.out.println("beat per bar: " + _beatsPerBar + "/"+ _mesureUnit);
+    public void writeScoreInformations(String s) {
+        Path path = Paths.get(s);
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            writer.write("Title: " + _title + "\n");
+            writer.write("Music tonality: " + _tonality + "\n");
+            writer.write("Scale: " + _scale.pitchToString() + "\n");
+            writer.write("Bar unit: " + _barUnit + "\n");
+            writer.write("Number of beat per bar: " + _beatsPerBar + "\n");
+            writer.write("Part Number: " + _partNb + "\n");
+            writer.write("Used instruments:" + "\n");
+            for (int i = 0; i < _score.getPartArray().length; i++) {
+                writer.write("     (Part " + i + ") " + _score.getPart(i).getInstrument() + "\n");
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error: writeScoreInformation");
+        }
     }
 
     // Private functions.
@@ -247,13 +266,11 @@ public class ScoreAnalyser {
                             temp.add(phr.getNote(phr.length() - 1 - i).getPitch());
                     }
                 }
-                if (temp.size() != 0) {
-                    Collections.sort(temp);
-                    for (int j = 0; j < temp.size(); j++) {
-                        System.out.print(temp.get(j) + " ");
-                    }
-                    System.out.println();
+                Collections.sort(temp);
+                for (int j = 0; j < temp.size(); j++) {
+                    System.out.print(temp.get(j) + ", ");
                 }
+                System.out.println();
             }
         }
     }

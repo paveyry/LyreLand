@@ -64,6 +64,19 @@ public class Scale {
         return result;
     }
 
+    // Convert the array pitch composing the scale into
+    // a string witch can latter be written in a file
+    public String pitchToString() {
+        String result = "[";
+        for (int i = 0; i < _notes.size(); i++) {
+            if (i < _notes.size() - 1)
+                result += _notes.get(i) + ", ";
+            else
+                result += _notes.get(i) + "]";
+        }
+        return result;
+    }
+
     // Show the scale on GUI FIXME: need to repair Notate
     public void showScale() {
         Score score = new Score();
