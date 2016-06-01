@@ -40,20 +40,20 @@ public class NormalizeRythm {
     }
 
 
-    public void normaliseRythm(Score score) {
+    public static void normaliseRythm(Score score) {
         Arrays.asList(score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph ->
                 Arrays.asList(ph.getNoteArray()).forEach(n -> normalizeRythmValue(n))));
     }
 
     // Same function but with print
-    public void normaliseRythmPrint(Score score) {
+    public static void normaliseRythmPrint(Score score) {
         Arrays.asList(score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph -> {
             Arrays.asList(ph.getNoteArray()).forEach(n -> {normalizeRythmValue(n);
                 System.out.print("(" + n.getRhythmValue() + " " + n.getPitch() + ") ");});
             System.out.println(System.lineSeparator());}));
     }
 
-    public void normalisePhraseLength(Score score) {
+    public static void normalisePhraseLength(Score score) {
         // Get the start of the music
         double startTime = score.getPartArray()[0].getPhraseArray()[0].getStartTime();
         Phrase firstphrase = score.getPart(0).getPhrase(0);
@@ -128,7 +128,7 @@ public class NormalizeRythm {
         }
     }
 
-    public void checknpl(Score score) {
+    public static void checknpl(Score score) {
         System.out.println(" CHECK ");
         int size = score.getPartArray()[0].getPhraseArray()[0].size();
         for (Part p : score.getPartArray()) {

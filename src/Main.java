@@ -1,4 +1,5 @@
 import Analysis.DataWriter;
+import Analysis.NormalizeRythm;
 import Analysis.ScoreAnalyser;
 import jm.music.data.*;
 import jm.util.Play;
@@ -37,9 +38,9 @@ public class Main {
         //sa.getScale().showScale();
         // Print the normalised notes
         // use normaliseRythm() if you don't want to print
-        sa.normaliseRythm();
-        sa.normalisePhraseLength();
-        //sa.sequenceChords();
+        NormalizeRythm.normaliseRythm(sa.getScore());
+        NormalizeRythm.normalisePhraseLength(sa.getScore());
+        sa.sequenceChords();
         //sa.checknpl();
         //Write.midi(sa.getScore(), "foobar.mid");
         //Play.mid("foobar.mid");
