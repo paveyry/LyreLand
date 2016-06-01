@@ -1,3 +1,4 @@
+import Analysis.DataWriter;
 import Analysis.ScoreAnalyser;
 import jm.music.data.*;
 import jm.util.Play;
@@ -34,7 +35,6 @@ public class Main {
         ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
         //ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
         //sa.getScale().showScale();
-        sa.writeScoreInformations("toto.txt");
         // Print the normalised notes
         // use normaliseRythm() if you don't want to print
         sa.normaliseRythm();

@@ -7,10 +7,6 @@ import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static jm.constants.Pitches.*;
@@ -45,25 +41,6 @@ public class ScoreAnalyser {
         }
         catch (Exception e) {
             System.out.println("Error: ScoreAnalyser midi file can't be found");
-        }
-    }
-
-    public void writeScoreInformations(String s) {
-        Path path = Paths.get(s);
-        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            writer.write("Title: " + _title + "\n");
-            writer.write("Music tonality: " + _tonality + "\n");
-            writer.write("Scale: " + _scale.pitchToString() + "\n");
-            writer.write("Bar unit: " + _barUnit + "\n");
-            writer.write("Number of beat per bar: " + _beatsPerBar + "\n");
-            writer.write("Part Number: " + _partNb + "\n");
-            writer.write("Used instruments:" + "\n");
-            for (int i = 0; i < _score.getPartArray().length; i++) {
-                writer.write("     (Part " + i + ") " + _score.getPart(i).getInstrument() + "\n");
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Error: writeScoreInformation");
         }
     }
 
@@ -278,11 +255,19 @@ public class ScoreAnalyser {
     // ---------- GETTERS ----------
     public String getFileName() { return _fileName; }
 
+    public String getTitle() { return _title; }
+
     public Score getScore() { return _score; }
 
     public String getTonality() { return _tonality; }
 
     public Scale getScale() { return _scale; }
+
+    public double getBarUnit() { return _barUnit; }
+
+    public int getBeatsPerBar() { return _beatsPerBar; }
+
+    public int getPartNb() { return _partNb; }
 
     // ---------- SETTERS ----------
     // None for now
