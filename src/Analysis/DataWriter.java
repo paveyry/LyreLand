@@ -1,4 +1,4 @@
-package Analysis;
+package analysis;
 
 import java.io.BufferedWriter;
 import java.nio.file.Files;

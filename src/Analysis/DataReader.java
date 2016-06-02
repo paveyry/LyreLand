@@ -1,4 +1,4 @@
-package Analysis;
+package analysis;
 
 /**
  * Created by olivier on 01/06/16.

@@ -1,6 +1,6 @@
-import Analysis.DataWriter;
-import Analysis.NormalizeRythm;
-import Analysis.ScoreAnalyser;
+import analysis.DataWriter;
+import analysis.NormalizeRythm;
+import analysis.ScoreAnalyser;
 import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;

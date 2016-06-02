@@ -1,4 +1,4 @@
-package Analysis;
+package analysis;
 
 import jm.music.data.Score;
 import jm.util.Read;
