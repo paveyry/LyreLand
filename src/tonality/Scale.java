@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * Created by olivier on 16/05/16.
  */
 public class Scale {
-    private int _tonic;
-    private String _type; // Minor or Major ?
-    private ArrayList<Integer> _notes;
+    private int tonic_;
+    private String type_; // Minor or Major ?
+    private ArrayList<Integer> notes_;
 
     // ---------- Constructors ----------
     public Scale(int tonic, String s, int octaveNumber) {
-        _tonic = tonic;
-        _type = s;
+        tonic_ = tonic;
+        type_ = s;
         setScale(octaveNumber);
     }
 
@@ -58,8 +58,8 @@ public class Scale {
     // Public functions
     public boolean isInScale(int pitch) {
         boolean result = false;
-        for (int i = 0; i < _notes.size() && !result; i++) {
-            result = (_notes.get(i) % 12 == pitch % 12);
+        for (int i = 0; i < notes_.size() && !result; i++) {
+            result = (notes_.get(i) % 12 == pitch % 12);
         }
         return result;
     }
@@ -68,11 +68,11 @@ public class Scale {
     // a string witch can latter be written in a file
     public String pitchToString() {
         String result = "[";
-        for (int i = 0; i < _notes.size(); i++) {
-            if (i < _notes.size() - 1)
-                result += _notes.get(i) + ", ";
+        for (int i = 0; i < notes_.size(); i++) {
+            if (i < notes_.size() - 1)
+                result += notes_.get(i) + ", ";
             else
-                result += _notes.get(i) + "]";
+                result += notes_.get(i) + "]";
         }
         return result;
     }
@@ -83,9 +83,9 @@ public class Scale {
         Part p = new Part();
         Phrase phr = new Phrase();
         System.out.print("Scale pitch values : ");
-        for (int i = 0; i < _notes.size(); i++) {
-            Note n = new Note(_notes.get(i), 1.0);
-            System.out.print(_notes.get(i) + " ");
+        for (int i = 0; i < notes_.size(); i++) {
+            Note n = new Note(notes_.get(i), 1.0);
+            System.out.print(notes_.get(i) + " ");
             phr.add(n);
         }
         System.out.println();
@@ -96,18 +96,18 @@ public class Scale {
 
     // ---------- Getters ----------
     public int getDegree(int degree) {
-        if (_notes != null && degree <= 6)
-            return _notes.get(degree);
+        if (notes_ != null && degree <= 6)
+            return notes_.get(degree);
         return 0;
     }
 
     public ArrayList<Integer> getScale(){
-        return _notes;
+        return notes_;
     }
 
     // ---------- Setters ----------
     public void setScale (int octaveNumber) {
-        _notes = createScale(_tonic, _type, octaveNumber);
+        notes_ = createScale(tonic_, type_, octaveNumber);
     }
 
 }

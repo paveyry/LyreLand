@@ -40,8 +40,10 @@ public class Main {
         // use normaliseRythm() if you don't want to print
         NormalizeRythm.normaliseRythm(sa.getScore());
         NormalizeRythm.normalisePhraseLength(sa.getScore());
-        sa.sequenceChords();
+        //ChordExtractor.sequenceChords(sa.getScore());
         //sa.checknpl();
+        DataWriter dt = new DataWriter(sa);
+        dt.writeData("toto.txt");
         //Write.midi(sa.getScore(), "foobar.mid");
         //Play.mid("foobar.mid");
     }

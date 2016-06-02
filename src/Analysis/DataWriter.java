@@ -13,33 +13,33 @@ public class DataWriter {
     // This class writes the data of the ScoreAnalyser
     // to a file to fill the database.
     // FIXME: Need to find a good format (easy to read human/program)
-    private ScoreAnalyser _scoreAnalyser;
-    private ArrayList<String> _data;
+    private ScoreAnalyser scoreAnalyser_;
+    private ArrayList<String> data_;
 
     public DataWriter(ScoreAnalyser sa) {
-        _scoreAnalyser = sa;
-        _data = new ArrayList<>();
+        scoreAnalyser_ = sa;
+        data_ = new ArrayList<>();
         fillData();
     }
 
     private void fillData() {
-        _data.add("---------- Metadata ----------");
-        _data.add("Title: " + _scoreAnalyser.getTitle());
-        _data.add("Music tonality: " + _scoreAnalyser.getTonality());
-        _data.add("Scale: "+ _scoreAnalyser.getScale().pitchToString());
-        _data.add("Bar unit: " + _scoreAnalyser.getBarUnit());
-        _data.add("Number of beat per bar: " + _scoreAnalyser.getBeatsPerBar());
-        _data.add("Part Number: " + _scoreAnalyser.getPartNb());
-        _data.add("Used instruments: ");
-        for (int i = 0; i < _scoreAnalyser.getScore().getPartArray().length; i++) {
-            _data.add("     (Part " + i + ") " + _scoreAnalyser.getScore().getPart(i).getInstrument());
+        data_.add("---------- Metadata ----------");
+        data_.add("Title: " + scoreAnalyser_.getTitle());
+        data_.add("Music tonality: " + scoreAnalyser_.getTonality());
+        data_.add("Scale: "+ scoreAnalyser_.getScale().pitchToString());
+        data_.add("Bar unit: " + scoreAnalyser_.getBarUnit());
+        data_.add("Number of beat per bar: " + scoreAnalyser_.getBeatsPerBar());
+        data_.add("Part Number: " + scoreAnalyser_.getPartNb());
+        data_.add("Used instruments: ");
+        for (int i = 0; i < scoreAnalyser_.getScore().getPartArray().length; i++) {
+            data_.add("     (Part " + i + ") " + scoreAnalyser_.getScore().getPart(i).getInstrument());
         }
     }
 
     public void writeData(String s) {
         Path path = Paths.get(s);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            for (String data : _data) {
+            for (String data : data_) {
                 writer.write(data + "\n");
             }
         }
