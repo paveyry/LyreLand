@@ -10,15 +10,10 @@ LyreLand.iws
 # Personal Score
 Analysis_Music/*/*.pdf
 
-# Ignore .mid files
-*.mid
-
 # Maven Target dir
 target
 
-# Soundfonts and sounds
-*.sf2
-*.SF2
+# sounds
 *.wav
 *.mp3
 
