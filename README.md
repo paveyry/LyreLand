@@ -12,3 +12,9 @@ Dependencies
 
 LyreLand is developed using JAVA 8. It uses the jMusic library to generate
 MIDI scores and Fluidsynth to produce WAV files using a SF2 GM soundfont.
+
+File storage
+------------
+
+This repository uses git lfs to store binary files. You need to install git-lfs
+to work on this repository.
