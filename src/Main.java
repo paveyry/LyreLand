@@ -43,6 +43,5 @@ public class Main {
         //Write.midi(sa.getScore(), "foobar.mid");
         //Play.mid("foobar.mid");
         ChordExtractor.seeResult(ChordExtractor.sequenceChords(sa.getScore()));
-        //playShit(ChordExtractor.sequenceChords(sa.getScore()));
     }
 }

@@ -35,7 +35,8 @@ public class ChordExtractor {
                     int index = phr.length() - 1 - i;
                     // Phrases don't have the same lenght
                     if (index >= 0) {
-                        if (phr.getNote(phr.length() - 1 - i).getPitch() != Note.REST) {
+                        if (phr.getNote(phr.length() - 1 - i).getPitch() != Note.REST &&
+                                !pitches.contains(phr.getNote(phr.length() - 1 - i).getPitch())) {
                             pitches.add(phr.getNote(phr.length() - 1 - i).getPitch());
                             dynamic.add(phr.getNote(phr.length() - 1 - i).getDynamic());
                             duration.add(phr.getNote(phr.length() - 1 - i).getDuration());
