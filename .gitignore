@@ -7,6 +7,9 @@ out
 LyreLand.ipr
 LyreLand.iws
 
+# Personnal dev scores
+assets/midi/dev_midi/scores/*
+
 # Personal Score
 Analysis_Music/*/*.pdf
 
