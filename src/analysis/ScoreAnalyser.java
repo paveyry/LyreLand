@@ -4,9 +4,6 @@ import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 
-/**
- * Created by olivier on 24/05/16.
- */
 public class ScoreAnalyser {
     private String fileName_;
     private Score score_;

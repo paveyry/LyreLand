@@ -1,6 +1,4 @@
-import analysis.DataWriter;
-import analysis.NormalizeRythm;
-import analysis.ScoreAnalyser;
+import analysis.*;
 import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;
@@ -42,9 +40,9 @@ public class Main {
         NormalizeRythm.normalisePhraseLength(sa.getScore());
         //ChordExtractor.sequenceChords(sa.getScore());
         //sa.checknpl();
-        DataWriter dt = new DataWriter(sa);
-        dt.writeData("toto.txt");
         //Write.midi(sa.getScore(), "foobar.mid");
         //Play.mid("foobar.mid");
+        ChordExtractor.seeResult(ChordExtractor.sequenceChords(sa.getScore()));
+        //playShit(ChordExtractor.sequenceChords(sa.getScore()));
     }
 }
