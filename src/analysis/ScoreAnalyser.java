@@ -11,20 +11,21 @@ public class ScoreAnalyser {
     private Score score_;
 
     // Basic Meta data of the score.
-
     private String title_;
     private Tonality tonality_;
     private double barUnit_;
     private int beatsPerBar_;
     private int partNb_;
 
-    // Extracted informations
+    // Extracted data
     private Scale scale_;
 
     public ScoreAnalyser(String midiFile) {
         score_ = new Score();
         try {
             Read.midi(score_, midiFile);
+            fileName_ = midiFile.substring(midiFile.lastIndexOf('/') + 1, midiFile.length());
+            System.out.println("CACA: " + fileName_);
             title_ = score_.getTitle();
             tonality_ = MetadataExtractor.getTonality(score_.getKeySignature(), score_.getKeyQuality());
             scale_ = MetadataExtractor.computeScale(tonality_);
@@ -36,23 +37,35 @@ public class ScoreAnalyser {
         }
     }
 
-    // ---------- GETTERS ----------
-    public String getFileName() { return fileName_; }
+    public String getFileName() {
+        return fileName_;
+    }
 
-    public String getTitle() { return title_; }
+    public String getTitle() {
+        return title_;
+    }
 
-    public Score getScore() { return score_; }
+    public Score getScore() {
+        return score_;
+    }
 
-    public Tonality getTonality() { return tonality_; }
+    public Tonality getTonality() {
+        return tonality_;
+    }
 
-    public Scale getScale() { return scale_; }
+    public Scale getScale() {
+        return scale_;
+    }
 
-    public double getBarUnit() { return barUnit_; }
+    public double getBarUnit() {
+        return barUnit_;
+    }
 
-    public int getBeatsPerBar() { return beatsPerBar_; }
+    public int getBeatsPerBar() {
+        return beatsPerBar_;
+    }
 
-    public int getPartNb() { return partNb_; }
-
-    // ---------- SETTERS ----------
-    // None for now
+    public int getPartNb() {
+        return partNb_;
+    }
 }
