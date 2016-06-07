@@ -68,6 +68,6 @@ public class MetadataExtractor {
     public static Scale computeScale(Tonality tonality) {
         Integer tonic = tonality.getTonic();
         Tonality.Mode mode = tonality.getMode();
-        return (new Scale(tonic, mode, 1));
+        return new Scale(tonic, mode, 1);
     }
 }
