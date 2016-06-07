@@ -1,4 +1,4 @@
-package analysis;
+package analysis.harmonic;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package analysis;
 
+import analysis.harmonic.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;

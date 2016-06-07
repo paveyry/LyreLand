@@ -1,4 +1,4 @@
-package analysis;
+package analysis.io;
 
 import analysis.ScoreAnalyser;
 

@@ -1,4 +1,7 @@
-import analysis.*;
+import analysis.harmonic.ChordExtractor;
+import analysis.harmonic.NormalizeRythm;
+import analysis.ScoreAnalyser;
+import analysis.harmonic.VerticalBand;
 import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;

@@ -1,5 +1,6 @@
-package analysis;
+package analysis.harmonic;
 
+import analysis.containers.CircularArrayList;
 import tonality.Scale;
 
 import java.util.Arrays;
