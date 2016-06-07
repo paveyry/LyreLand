@@ -1,6 +1,7 @@
 package analysis;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by olivier on 16/05/16.
@@ -20,8 +21,8 @@ public class VerticalBand {
                         ArrayList<Double> duration, ArrayList<Integer> dynamic) {
         pitches_ = pitches;
         rythm_ = rythm;
-        dynamic_ = dynamic;
         duration_ = duration;
+        dynamic_ = dynamic;
     }
 
     // This function return true if the pitches, dynamics
@@ -35,12 +36,16 @@ public class VerticalBand {
     }
 
     public void printVerticalBand(){
-        System.out.print("[ ");
-        for (Integer i: pitches_) {
+        System.out.print("Pitches: [ ");
+        for (Integer i: pitches_)
             System.out.print(i + " ");
-        }
-        System.out.print("] || ");
-        System.out.print("Rythm = " + rythm_ + "\n");
+        System.out.print("] || Rhythm = " + rythm_ + " || Duration: [ ");
+        for (Double i : duration_)
+            System.out.print(i + " ");
+        System.out.print("] || Dynamic: [ ");
+        for (Integer i : dynamic_)
+            System.out.print(i + " ");
+        System.out.println("]");
     }
 
     // ---------- Getters ----------
@@ -56,7 +61,7 @@ public class VerticalBand {
 
 
     // Covert ArrayList<Integer> to int[] (in case we need it ...)
-    /*public static int[] cI(List<Integer> integers)
+    public int[] cI(List<Integer> integers)
     {
         int[] ret = new int[integers.size()];
         for (int i=0; i < ret.length; i++)
@@ -64,5 +69,5 @@ public class VerticalBand {
             ret[i] = integers.get(i).intValue();
         }
         return ret;
-    }*/
+    }
 }

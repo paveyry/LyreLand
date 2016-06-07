@@ -17,6 +17,8 @@ public class NormalizeRythm {
     private static double r_ = 0;
     private static double quantum_ = 0.0625;
 
+    // FIXME: Select quantum in function of the lowest rhythmic value.
+
     // Normalize a double rythm value according to
     // midi rythm reading.
     // E.G 1.251 -> 1.5.
@@ -109,7 +111,7 @@ public class NormalizeRythm {
                         d -= quantum;
                     }
                     Note tmp = n.copy();
-                    tmp.setRhythmValue(d);
+                    tmp.setRhythmValue(quantum);
                     vector.add(tmp);
                 }
                 /*

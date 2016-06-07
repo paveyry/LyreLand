@@ -27,12 +27,28 @@ public class Main {
         Play.mid("basic_scale.mid"); // Play the sound
     }
 
+    public static void playTest(ArrayList<ArrayList<VerticalBand>> vb) {
+        Score s = new Score();
+        for (ArrayList<VerticalBand> av : vb) {
+            Part p = new Part();
+            CPhrase cph = new CPhrase();
+            for (int j = av.size(); j > 0; j--) {
+                cph.addChord(av.get(j-1).cI(av.get(j-1).getPitches()), av.get(j-1).getRythm());
+            }
+            p.addCPhrase(cph);
+            s.add(p);
+            Play.midi(p);
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello LyreLand!");
         //demoScale(60, "major", 1, 0.5);
 
-        ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Guren_no_Yumiya/Guren no Yumiya.mid");
-        //ScoreAnalyser sa = new ScoreAnalyser("/home/olivier/Documents/LyreLand/Analysis_Music/Blue_Bird/Blue_Bird.mid");
+        ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Guren_no_Yumiya.mid");
+        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Blue_Bird.mid");
+        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Hikaru_Nara.mid");
+        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/This_Game.mid");
         //sa.getScale().showScale();
         // Print the normalised notes
         // use normaliseRythm() if you don't want to print
@@ -42,6 +58,8 @@ public class Main {
         //sa.checknpl();
         //Write.midi(sa.getScore(), "foobar.mid");
         //Play.mid("foobar.mid");
-        ChordExtractor.seeResult(ChordExtractor.sequenceChords(sa.getScore()));
+        ArrayList<ArrayList<VerticalBand>> temp = ChordExtractor.sequenceChords(sa.getScore());
+        ChordExtractor.printResultFromBeginning(temp, 100);
+        playTest(temp);
     }
 }
