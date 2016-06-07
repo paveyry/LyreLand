@@ -4,6 +4,7 @@ import analysis.harmonic.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
+import tonality.Tonality;
 
 public class ScoreAnalyser {
     private String fileName_;
@@ -12,7 +13,7 @@ public class ScoreAnalyser {
     // Basic Meta data of the score.
 
     private String title_;
-    private String tonality_;
+    private Tonality tonality_;
     private double barUnit_;
     private int beatsPerBar_;
     private int partNb_;
@@ -42,7 +43,7 @@ public class ScoreAnalyser {
 
     public Score getScore() { return score_; }
 
-    public String getTonality() { return tonality_; }
+    public Tonality getTonality() { return tonality_; }
 
     public Scale getScale() { return scale_; }
 

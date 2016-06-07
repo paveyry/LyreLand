@@ -10,35 +10,35 @@ import java.util.ArrayList;
 
 public class Scale {
     private int tonic_;
-    private String type_; // Minor or Major ?
+    private Tonality.Mode mode_; // Minor or Major ?
     private ArrayList<Integer> notes_;
 
     // ---------- Constructors ----------
-    public Scale(int tonic, String s, int octaveNumber) {
+    public Scale(int tonic, Tonality.Mode mode, int octaveNumber) {
         tonic_ = tonic;
-        type_ = s;
+        mode_ = mode;
         setScale(octaveNumber);
     }
 
     // Private functions.
 
-    private ArrayList<Integer> createScale(int tonic, String s, int octaveNumber) {
+    private ArrayList<Integer> createScale(int tonic, Tonality.Mode mode, int octaveNumber) {
         // We have to check what we ask don't exceed G9 = 127 (highest pitch)
         if (tonic + (octaveNumber * 12) <= 127) {
             ArrayList<Integer> notes = new ArrayList<Integer>();
             for (int i = 0; i < octaveNumber; i++) {
                 int[] temp = null;
-                switch (s) {
-                    case "Major":
+                switch (mode) {
+                    case MAJOR:
                         temp = new int[] {tonic, tonic + 2, tonic + 4, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
                         break;
-                    case "Minor": // natural Minor Scale without alterations
+                    case MINOR:
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 10};
                         break;
-                    case "Minorh": // Harmonic Minor Scale
+                    case HARMONICMINOR:
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 11};
                         break;
-                    case "Minorm": // Melodic Minor Scale
+                    case MELODICMINOR:
                         temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
                         break;
                     default: break;
@@ -104,7 +104,7 @@ public class Scale {
 
     // ---------- Setters ----------
     public void setScale (int octaveNumber) {
-        notes_ = createScale(tonic_, type_, octaveNumber);
+        notes_ = createScale(tonic_, mode_, octaveNumber);
     }
 
 }
