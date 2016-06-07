@@ -20,39 +20,6 @@ public class Scale {
         setScale(octaveNumber);
     }
 
-    // Private functions.
-
-    private ArrayList<Integer> createScale(int tonic, Tonality.Mode mode, int octaveNumber) {
-        // We have to check what we ask don't exceed G9 = 127 (highest pitch)
-        if (tonic + (octaveNumber * 12) <= 127) {
-            ArrayList<Integer> notes = new ArrayList<Integer>();
-            for (int i = 0; i < octaveNumber; i++) {
-                int[] temp = null;
-                switch (mode) {
-                    case MAJOR:
-                        temp = new int[] {tonic, tonic + 2, tonic + 4, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
-                        break;
-                    case MINOR:
-                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 10};
-                        break;
-                    case HARMONICMINOR:
-                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 11};
-                        break;
-                    case MELODICMINOR:
-                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
-                        break;
-                    default: break;
-                }
-                for (int j = 0; j < temp.length; j++)
-                    notes.add(temp[j]);
-                tonic += 12;
-            }
-            return notes;
-        }
-        return null;
-    }
-
-    // Public functions
     public boolean isInScale(int pitch) {
         boolean result = false;
         for (int i = 0; i < notes_.size() && !result; i++) {
@@ -91,7 +58,6 @@ public class Scale {
         View.show(score);
     }
 
-    // ---------- Getters ----------
     public int getDegree(int degree) {
         if (notes_ != null && degree <= 6)
             return notes_.get(degree);
@@ -102,9 +68,37 @@ public class Scale {
         return notes_;
     }
 
-    // ---------- Setters ----------
     public void setScale (int octaveNumber) {
         notes_ = createScale(tonic_, mode_, octaveNumber);
     }
 
+    private ArrayList<Integer> createScale(int tonic, Tonality.Mode mode, int octaveNumber) {
+        // We have to check what we ask don't exceed G9 = 127 (highest pitch)
+        if (tonic + (octaveNumber * 12) <= 127) {
+            ArrayList<Integer> notes = new ArrayList<Integer>();
+            for (int i = 0; i < octaveNumber; i++) {
+                int[] temp = null;
+                switch (mode) {
+                    case MAJOR:
+                        temp = new int[] {tonic, tonic + 2, tonic + 4, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
+                        break;
+                    case MINOR:
+                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 10};
+                        break;
+                    case HARMONICMINOR:
+                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 8, tonic + 11};
+                        break;
+                    case MELODICMINOR:
+                        temp = new int[] {tonic, tonic + 2, tonic + 3, tonic + 5, tonic + 7, tonic + 9, tonic + 11};
+                        break;
+                    default: break;
+                }
+                for (int j = 0; j < temp.length; j++)
+                    notes.add(temp[j]);
+                tonic += 12;
+            }
+            return notes;
+        }
+        return null;
+    }
 }
