@@ -1,7 +1,6 @@
 package tonality;
 
 import jm.constants.Pitches;
-import jm.music.data.Note;
 
 public class Tonality {
     public enum Mode {
@@ -13,10 +12,12 @@ public class Tonality {
 
     private Integer tonic_;
     private Mode mode_;
+    private Boolean isSharp_; // Already applied on the tonic pitch. Just useful to distinguish C sharp from D flat
 
-    public Tonality(int tonic, Mode mode) {
+    public Tonality(int tonic, Mode mode, boolean isSharp) {
         this.tonic_ = tonic;
         this.mode_ = mode;
+        this.isSharp_ = isSharp;
     }
 
     public Mode getMode() {
@@ -34,7 +35,7 @@ public class Tonality {
         else if (mode_ == Mode.MELODICMINOR)
             sb.append("Melodic ");
 
-        sb.append(pitchToString(tonic_)).append(" ");
+        sb.append(pitchToString(tonic_, isSharp_)).append(" ");
         if (mode_ == Mode.MAJOR)
             sb.append("Major");
         else
@@ -42,31 +43,31 @@ public class Tonality {
         return sb.toString();
     }
 
-    public static String pitchToString(int pitch) {
+    public static String pitchToString(int pitch, boolean isSharp) {
         pitch = pitch % 12;
         switch (pitch) {
             case Pitches.C0 % 12:
                 return "C";
             case Pitches.CS0 % 12:
-                return "C#";
+                return isSharp ? "C#" : "Db";
             case Pitches.D0 % 12:
                 return "D";
             case Pitches.DS0 % 12:
-                return "D#";
+                return isSharp ? "D#" : "Eb";
             case Pitches.E0 % 12:
                 return "E";
             case Pitches.F0 % 12:
                 return "F";
             case Pitches.FS0 % 12:
-                return "F#";
+                return isSharp ? "F#" : "Gb";
             case Pitches.G0 % 12:
                 return "G";
             case Pitches.GS0 % 12:
-                return "G#";
+                return isSharp ? "G#" : "Ab";
             case Pitches.A0 % 12:
                 return "A";
             case Pitches.AS0 % 12:
-                return "A#";
+                return isSharp ? "A#" : "Bb";
             case Pitches.B0 % 12:
                 return "B";
         }
