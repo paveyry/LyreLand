@@ -8,9 +8,6 @@ import jm.util.View;
 
 import java.util.ArrayList;
 
-/**
- * Created by olivier on 16/05/16.
- */
 public class Scale {
     private int tonic_;
     private String type_; // Minor or Major ?

@@ -7,9 +7,6 @@ import java.util.List;
 
 import static jm.constants.Pitches.*;
 
-/**
- * Created by olivier on 01/06/16.
- */
 public class MetadataExtractor {
 
     // This function extract the bar unit according to _score.get(Denominator)

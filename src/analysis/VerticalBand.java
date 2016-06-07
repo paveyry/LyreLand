@@ -3,9 +3,6 @@ package analysis;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by olivier on 16/05/16.
- */
 public class VerticalBand {
     // This class is used to store Chords informations
     // extracted by the Chord Extractor class.

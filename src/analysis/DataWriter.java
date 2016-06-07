@@ -1,14 +1,13 @@
 package analysis;
 
+import analysis.ScoreAnalyser;
+
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-/**
- * Created by olivier on 01/06/16.
- */
 public class DataWriter {
     // This class writes the data of the ScoreAnalyser
     // to a file to fill the database.

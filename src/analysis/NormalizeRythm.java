@@ -9,9 +9,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Vector;
 
-/**
- * Created by olivier on 01/06/16.
- */
 public class NormalizeRythm {
 
     private static double r_ = 0;
