@@ -36,7 +36,7 @@ public class Main {
             Part p = new Part();
             CPhrase cph = new CPhrase();
             for (int j = av.size(); j > 0; j--) {
-                cph.addChord(av.get(j-1).cI(av.get(j-1).getPitches()), av.get(j-1).getRythm());
+                cph.addChord(TypeConversion.convertIntegers(av.get(j-1).getPitches()), av.get(j-1).getRythm());
             }
             p.addCPhrase(cph);
             s.add(p);
