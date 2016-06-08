@@ -8,7 +8,7 @@ import static jm.constants.Pitches.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ChordDegreeProcessorTests {
+public class ChordDegreeProcessorTest {
     @Test
     public void t_ChordToDegree() {
         // Testing with C Major

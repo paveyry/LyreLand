@@ -1,6 +1,6 @@
 import org.junit.*;
 
-public class TemplateTests {
+public class TemplateTest {
 
     @BeforeClass
     public static void initClass() throws Exception {
