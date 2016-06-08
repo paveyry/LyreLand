@@ -33,7 +33,7 @@ public class ChordDegreeProcessor {
         for (int i = 0; i < chords_.size(); ++i) {
             for (int j = 0; j < chord.size(); ++j) {
                 for (int k = 0; k < chords_.get(i).length - 1; ++k) {
-                    if (chords_.get(i)[k].equals(chord.get(j))) {
+                    if (chords_.get(i)[k] % 12 == chord.get(j) % 12) {
                         percentage[i] += 1.0;
                         break;
                     }
@@ -54,16 +54,15 @@ public class ChordDegreeProcessor {
         }
 
         for (int i = 0; i < chord.size(); ++i) {
-            if (degree > 0 && chord.get(i).equals(chords_.get(i - 1)[3]))
+            if (degree > 0 && chord.get(i) % 12 == chords_.get(degree - 1)[3] % 12)
                 seventhChord = true;
         }
 
-        if (!(max > 0.51 && seventhChord || max > 0.75))
+
+        if (!((max > 0.51 && seventhChord) || max >= 0.75))
             return null;
 
-        // FIXME: Determine inversion index
-
-        return new ChordDegree(degree, seventhChord, 1);
+        return new ChordDegree(degree, seventhChord);
     }
 
     private ArrayList<Integer[]> generateChordDegrees() {
