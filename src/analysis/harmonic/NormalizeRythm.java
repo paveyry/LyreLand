@@ -16,9 +16,11 @@ public class NormalizeRythm {
 
     // FIXME: Select quantum in function of the lowest rhythmic value.
 
-    // Normalize a double rythm value according to
-    // midi rythm reading.
-    // E.G 1.251 -> 1.5.
+    /**
+     * Normalize a double rhythm value according to MIDI rhythm reading
+     * E.G 1.251 -> 1.5.
+     * @param n Note
+     */
     public static void normalizeRythmValue(Note n) {
         // truncate three decimals and convert to int.
         r_ += n.getRhythmValue();

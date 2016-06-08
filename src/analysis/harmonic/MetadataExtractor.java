@@ -9,8 +9,12 @@ import java.util.Arrays;
 
 public class MetadataExtractor {
 
-    // This function extract the bar unit according to _score.get(Denominator)
-    // EG: 4 -> 1.0 | 2 -> 2.0 | 8 -> 0.5 | 1 -> 4.0
+    /**
+     * Extract the bar unit using score_.get(Denominator)
+     * EG: 4 -> 1.0 | 2 -> 2.0 | 8 -> 0.5 | 1 -> 4.0
+     * @param denominator
+     * @return
+     */
     public static double computeBarUnit(int denominator) {
         switch (denominator) {
             case 1: return 4.0;
@@ -21,8 +25,13 @@ public class MetadataExtractor {
         return 1.0;
     }
 
-    // Return the tonality of the score following format :
-    // Tonic Alteration(sharp, flat or none) Mode --> E.g A sharp Major
+    /**
+     * Return the tonality of the score following format :
+     * Tonic Alteration(sharp, flat or none) Mode --> E.g A sharp Major
+     * @param keySignature Number of sharps or flats at key
+     * @param keyQuality Major or Minor
+     * @return Tonality of the song
+     */
     public static Tonality getTonality(int keySignature, int keyQuality) {
         if (keySignature == 0)
             return (keyQuality == 0)
@@ -64,7 +73,11 @@ public class MetadataExtractor {
         return new Tonality(tonic, mode, isSharp);
     }
 
-    // This function use _tonality to create the corresponding Scale object
+    /**
+     * Determine Scale for a specified tonality
+     * @param tonality Specified tonality
+     * @return Scale
+     */
     public static Scale computeScale(Tonality tonality) {
         Integer tonic = tonality.getTonic();
         Tonality.Mode mode = tonality.getMode();

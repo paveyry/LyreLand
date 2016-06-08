@@ -24,9 +24,9 @@ public class ChordDegreeProcessor {
 
     /**
      * Finds the degree of a chord
-     * @param chord the analyzed chord
-     * @return The degree (between 1 and 7) with a boolean specifying whether it is a seventh chord
-     *          null if the chord does not match a degree.
+     * @param chord Analyzed chord
+     * @return Degree (between 1 and 7) with a boolean specifying whether it is a seventh chord
+     *         `null` if the chord does not match a degree.
      */
     public ChordDegree chordToDegree(ArrayList<Integer> chord) {
         double[] percentage = new double[chords_.size()];

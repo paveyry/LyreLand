@@ -28,6 +28,7 @@ public class Tonality {
         return this.tonic_;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (mode_ == Mode.HARMONICMINOR)

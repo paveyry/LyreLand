@@ -40,7 +40,7 @@ public class ChordExtractor {
                     }
                 }
                 VerticalBand temp = new VerticalBand(pitches, rythm, duration, dynamic);
-                if (vBand.size() != 0 && (vBand.get(vBand.size()-1).isEqual(temp)))
+                if (vBand.size() != 0 && (vBand.get(vBand.size()-1).equals(temp)))
                     vBand.get(vBand.size()-1).setRythm(vBand.get(vBand.size()-1).getRythm() + rythm);
                 else
                     // To not add empty VerticalBand
@@ -52,7 +52,7 @@ public class ChordExtractor {
         return result;
     }
 
-    public static void PrintAllResult(ArrayList<ArrayList<VerticalBand>> a) {
+    public static void printAllResults(ArrayList<ArrayList<VerticalBand>> a) {
         for (ArrayList<VerticalBand> b: a)
             for (VerticalBand an :  b)
                 an.printVerticalBand();
