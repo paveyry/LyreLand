@@ -24,7 +24,7 @@ public class ChordExtractor {
             }
             for (int i = 0; i < max; i++) {
                 ArrayList<Integer> pitches = new ArrayList<>();
-                double rythm = NormalizeRythm.getQuantum();
+                double rythm = NormalizeRhythm.getQuantum();
                 ArrayList<Integer> dynamic = new ArrayList<>();
                 ArrayList<Double> duration = new ArrayList<>();
                 for (Phrase phr: p.getPhraseArray()) {

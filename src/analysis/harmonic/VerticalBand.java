@@ -1,7 +1,6 @@
 package analysis.harmonic;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is used to store Chords information extracted by the ChordExtractor class.

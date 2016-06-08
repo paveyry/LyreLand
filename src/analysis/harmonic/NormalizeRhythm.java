@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Vector;
 
-public class NormalizeRythm {
+public class NormalizeRhythm {
 
     private static double r_ = 0;
     private static double quantum_ = 0.0625;
@@ -21,7 +21,7 @@ public class NormalizeRythm {
      * E.G 1.251 -> 1.5.
      * @param n Note
      */
-    public static void normalizeRythmValue(Note n) {
+    public static void normalizeRhythmValue(Note n) {
         // truncate three decimals and convert to int.
         r_ += n.getRhythmValue();
         int result = ((int)(r_ * 10000));
@@ -41,15 +41,16 @@ public class NormalizeRythm {
     }
 
 
-    public static void normaliseRythm(Score score) {
+    public static void normaliseRhythm(Score score) {
         Arrays.asList(score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph ->
-                Arrays.asList(ph.getNoteArray()).forEach(n -> normalizeRythmValue(n))));
+                Arrays.asList(ph.getNoteArray()).forEach(n -> normalizeRhythmValue(n))));
     }
 
     // Same function but with print
-    public static void normaliseRythmPrint(Score score) {
+    public static void normaliseRhythmPrint(Score score) {
         Arrays.asList(score.getPartArray()).stream().forEach(p -> Arrays.asList(p.getPhraseArray()).stream().forEach(ph -> {
-            Arrays.asList(ph.getNoteArray()).forEach(n -> {normalizeRythmValue(n);
+            Arrays.asList(ph.getNoteArray()).forEach(n -> {
+                normalizeRhythmValue(n);
                 System.out.print("(" + n.getRhythmValue() + " " + n.getPitch() + ") ");});
             System.out.println(System.lineSeparator());}));
     }
