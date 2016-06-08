@@ -1,0 +1,16 @@
+<project>
+    <skin>
+        <groupId>lt.velykis.maven.skins</groupId>
+        <artifactId>reflow-maven-skin</artifactId>
+        <version>1.1.1</version>
+    </skin>
+    <custom>
+        <reflowSkin>
+            <smoothScroll>true</smoothScroll>
+            <theme>default</theme>
+            <toc>false</toc>
+            <tocTopMax>6</tocTopMax>
+            <topNav>Documentation|Tools|Contribute</topNav>
+        </reflowSkin>
+    </custom>
+</project>
