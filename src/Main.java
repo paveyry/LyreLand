@@ -1,18 +1,17 @@
-import analysis.harmonic.ChordExtractor;
-import analysis.harmonic.NormalizeRythm;
-import analysis.ScoreAnalyser;
 import analysis.harmonic.VerticalBand;
 import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;
 import jm.util.Write;
 import tonality.Scale;
+import tonality.Tonality;
+import tools.TypeConversion;
 
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void demoScale(int tonic, String s, int octaveNumber, double rythm){
+    public static void demoScale(int tonic, Tonality.Mode s, int octaveNumber, double rythm){
         Score score = new Score();
         Part p = new Part();
         Phrase phr = new Phrase();
@@ -45,24 +44,21 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello LyreLand!");
-        //demoScale(60, "major", 1, 0.5);
+        OptionManager optionManager = new OptionManager(args);
+        optionManager.parse();
 
-        ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Guren_no_Yumiya.mid");
-        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Blue_Bird.mid");
-        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/Hikaru_Nara.mid");
-        //ScoreAnalyser sa = new ScoreAnalyser(tools.Misc.getJarPath() + "../assets/midi/dev_midi/This_Game.mid");
-        //sa.getScale().showScale();
-        // Print the normalised notes
-        // use normaliseRythm() if you don't want to print
-        NormalizeRythm.normaliseRythm(sa.getScore());
-        NormalizeRythm.normalisePhraseLength(sa.getScore());
-        //ChordExtractor.sequenceChords(sa.getScore());
-        //sa.checknpl();
-        //Write.midi(sa.getScore(), "foobar.mid");
-        //Play.mid("foobar.mid");
-        ArrayList<ArrayList<VerticalBand>> temp = ChordExtractor.sequenceChords(sa.getScore());
-        ChordExtractor.printResultFromBeginning(temp, 100);
-        playTest(temp);
+        if (ExecutionParameters.analyze) {
+            // Launch analysis for each file in ExecutionParameters.midDirPath and create training set
+            // in ExecutionParameters.trainingSetPath directory.
+        }
+        if (ExecutionParameters.train) {
+            // Launch training from the training set in ExecutionParameters.trainingSetPath and create
+            // trained data in ExecutionParameters.trainedDataPath directory.
+        }
+        if (ExecutionParameters.generate) {
+            // Generate a music using the ExecutionParameters.seed and the trained data located in
+            // ExecutionParameters.trainedDataPath into Execution.Parameters.outputPath + ".mid"|".wav"
+        }
+
     }
 }
