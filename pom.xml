@@ -16,6 +16,12 @@
             <artifactId>jmusic</artifactId>
             <version>1.6.4</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -28,6 +34,16 @@
                 </excludes>
             </resource>
         </resources>
+
+        <testSourceDirectory>${basedir}/tests</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>${basedir}/tests</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
 
         <plugins>
             <plugin>
