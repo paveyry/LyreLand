@@ -2,6 +2,8 @@ import org.junit.*;
 
 public class TemplateTest {
 
+    // The function name is the test name
+
     @BeforeClass
     public static void initClass() throws Exception {
         // Executed before the first tests of the class
@@ -23,7 +25,7 @@ public class TemplateTest {
     }
 
     @Test
-    public void t_functionOne() {
+    public void functionOne() {
         Assert.assertTrue(true);
         Assert.assertEquals(2, 2);
         // All the tests about the function `functionOne`.
