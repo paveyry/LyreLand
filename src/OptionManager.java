@@ -40,14 +40,14 @@ public class OptionManager {
             if (cmd.hasOption("o"))
                 ExecutionParameters.outputPath = cmd.getOptionValue("o");
 
-            if (cmd.hasOption("midi-input-path"))
-                ExecutionParameters.midDirPath = cmd.getOptionValue("midi-input-path");
+            if (cmd.hasOption("midi_input_path"))
+                ExecutionParameters.midDirPath = cmd.getOptionValue("midi_input_path");
 
-            if (cmd.hasOption("training-set-path"))
-                ExecutionParameters.trainingSetPath = cmd.getOptionValue("training-set-path");
+            if (cmd.hasOption("training_set_path"))
+                ExecutionParameters.trainingSetPath = cmd.getOptionValue("training_set_path");
 
-            if (cmd.hasOption("trained-data-path"))
-                ExecutionParameters.trainedDataPath = cmd.getOptionValue("trained-data-path");
+            if (cmd.hasOption("trained_data_path"))
+                ExecutionParameters.trainedDataPath = cmd.getOptionValue("trained_data_path");
 
         } catch (ParseException e) {
             System.err.println("Wrong options");
@@ -63,12 +63,12 @@ public class OptionManager {
         options_.addOption("g", "generate", false, "Activate MIDI generation.");
         options_.addOption("w", "generate-wav", false, "Activate WAV generation.");
         options_.addOption("s", "seed", true, "Specify the seed for Music generation");
-        options_.addOption("o", "output-name", true, "Specify the filename of the generated files without the" +
+        options_.addOption("o", "output_name", true, "Specify the filename of the generated files without the" +
                 "extension. The default value is `generated`, which means the generated files will be called " +
                 "`generated.wav` and `generated.mid`.");
-        options_.addOption("midi-input-path", true, "Specify the path to the MIDI input files directory.");
-        options_.addOption("training-set-path", true, "Specify the path to the training-set directory.");
-        options_.addOption("trained-data-path", true, "Specify the path to the trained data directory.");
+        options_.addOption("midi_input_path", true, "Specify the path to the MIDI input files directory.");
+        options_.addOption("training_set_path", true, "Specify the path to the training-set directory.");
+        options_.addOption("trained_data_path", true, "Specify the path to the trained data directory.");
     }
 
     private void displayHelp() {
