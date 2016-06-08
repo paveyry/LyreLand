@@ -65,6 +65,10 @@ public class ChordDegreeProcessor {
         return new ChordDegree(degree, seventhChord);
     }
 
+    /**
+     * Create the perfect seventh chord for each chord degree of the stored tonality
+     * @return ArrayList of 7 chords
+     */
     private ArrayList<Integer[]> generateChordDegrees() {
         ArrayList<Integer[]> chords = new ArrayList<>();
         for (int i = 0; i < scale_.size(); ++i) {
