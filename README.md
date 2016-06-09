@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/paveyry/LyreLand.svg?branch=dev)](https://travis-ci.org/paveyry/LyreLand)
+[![Build Status](https://travis-ci.org/paveyry/LyreLand.svg?branch=master)](https://travis-ci.org/paveyry/LyreLand)
 
 LyreLand
 ========
