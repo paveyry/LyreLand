@@ -83,15 +83,12 @@ public class ChordLexer {
                 for (Note n : ph.getNoteArray()) {
                     double d = n.getRhythmValue();
                     double quantum = getQuantum();
-                    while (d > quantum) {
+                    while (d >= quantum) {
                         Note tmp = n.copy();
                         tmp.setRhythmValue(quantum);
                         vector.add(tmp);
                         d -= quantum;
                     }
-                    Note tmp = n.copy();
-                    tmp.setRhythmValue(quantum);
-                    vector.add(tmp);
                 }
                 ph.setNoteList(vector);
             }

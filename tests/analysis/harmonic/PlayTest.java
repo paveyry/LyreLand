@@ -19,9 +19,12 @@ public class PlayTest {
         Part[] initPart = init.getPartArray();
         double tempo = init.getTempo();
         //Play.midi(init);
-        NormalizeRhythm.normaliseRhythm(init);
-        NormalizeRhythm.normalisePhraseLength(init);
-        ArrayList<ArrayList<VerticalBand>> vb = ChordExtractor.sequenceChords(init);
+        ChordLexer nr = new ChordLexer(init);
+        System.out.println("Shortest: " + init.getShortestRhythmValue());
+        System.out.println("Normalized: " + nr.getQuantum());
+        nr.normaliseRhythm();
+        nr.normalisePhraseLength();
+        ArrayList<ArrayList<VerticalBand>> vb = nr.sequenceChords();
         Score s = new Score();
         for (ArrayList<VerticalBand> av : vb) {
             Part p = new Part();
