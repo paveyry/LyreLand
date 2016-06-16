@@ -1,11 +1,9 @@
-import analysis.harmonic.VerticalBand;
 import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;
 import jm.util.Write;
 import tonality.Scale;
 import tonality.Tonality;
-import tools.TypeConversion;
 
 import java.util.ArrayList;
 
@@ -27,20 +25,6 @@ public class Main {
         Write.midi(score, "basic_scale.mid"); // create midiFile
         View.show(score);
         Play.mid("basic_scale.mid"); // Play the sound
-    }
-
-    public static void playTest(ArrayList<ArrayList<VerticalBand>> vb) {
-        Score s = new Score();
-        for (ArrayList<VerticalBand> av : vb) {
-            Part p = new Part();
-            CPhrase cph = new CPhrase();
-            for (int j = av.size(); j > 0; j--) {
-                cph.addChord(TypeConversion.convertIntegers(av.get(j-1).getPitches()), av.get(j-1).getRythm());
-            }
-            p.addCPhrase(cph);
-            s.add(p);
-            Play.midi(p);
-        }
     }
 
     public static void main(String[] args) {
