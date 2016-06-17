@@ -73,7 +73,7 @@ public class OptionManager {
 
     private void displayHelp() {
         HelpFormatter help = new HelpFormatter();
-        help.printHelp("Main", options_);
+        help.printHelp("LyreLand", options_);
         System.exit(0);
     }
 }

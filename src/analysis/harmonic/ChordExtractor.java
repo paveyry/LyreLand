@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class ChordExtractor {
 
-
     public static void printAllResults(ArrayList<ArrayList<VerticalBand>> a) {
         for (ArrayList<VerticalBand> b: a)
             for (VerticalBand an :  b)
