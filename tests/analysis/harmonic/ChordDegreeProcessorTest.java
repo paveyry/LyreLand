@@ -22,7 +22,7 @@ public class ChordDegreeProcessorTest {
         ArrayList<Integer> fifthChordSeventh = new ArrayList<>(Arrays.asList(G3, D2, B4, G1, D5, F6)); // Sol Re Si Sol Re Fa
         ArrayList<Integer> sixthChord = new ArrayList<>(Arrays.asList(A3, C2, A2, C5, A1, C3, E1)); // La Do La Do La Do Mi
         ArrayList<Integer> seventhChord = new ArrayList<>(Arrays.asList(B6, D2, F1)); // Si Re Fa
-        ArrayList<Integer> notADegreeChord = new ArrayList<>(Arrays.asList(C1, D4, F2)); // Do Re Fa
+        ArrayList<Integer> notADegreeChord = new ArrayList<>(Arrays.asList(C1, D4, E2, F3, G6, A1, B4)); // Do Re Mi Fa Sol La Si
 
         Assert.assertEquals(new ChordDegree(1, false, 1), cMajor.chordToDegree(firstChord, 1));
         Assert.assertEquals(new ChordDegree(2, false, 1), cMajor.chordToDegree(secondChord, 1));
@@ -33,8 +33,7 @@ public class ChordDegreeProcessorTest {
         Assert.assertEquals(new ChordDegree(5, true, 1), cMajor.chordToDegree(fifthChordSeventh, 1));
         Assert.assertEquals(new ChordDegree(6, false, 1), cMajor.chordToDegree(sixthChord, 1));
         Assert.assertEquals(new ChordDegree(7, false, 1), cMajor.chordToDegree(seventhChord, 1));
-        // FIXME: Decide whether it is normal that this chord is the seventh chord of the second degree or if it should be null
-        //Assert.assertNull(cMajor.chordToDegree(notADegreeChord));
+        Assert.assertNull(cMajor.chordToDegree(notADegreeChord, 1));
     }
 
     @Test
