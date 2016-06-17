@@ -2,17 +2,18 @@ package analysis.harmonic;
 
 public class ChordDegree {
     private int degree_;
-    private int inversionIndex_;
     private boolean seventhChord_;
+    private int barFractionDen_;
 
     /**
      * Constructor for the ChordDegree class
      * @param degree Degree of the chord
      * @param seventhChord Specify whether it is a seventh chord or not
      */
-    public ChordDegree(int degree, boolean seventhChord) {
+    public ChordDegree(int degree, boolean seventhChord, int barFractionDen) {
         this.degree_ = degree;
         this.seventhChord_ = seventhChord;
+        this.barFractionDen_ = barFractionDen;
     }
 
     public int getDegree() {
@@ -23,8 +24,8 @@ public class ChordDegree {
         return seventhChord_;
     }
 
-    public int getInversionIndex() {
-        return inversionIndex_;
+    public int getBarFractionDen_() {
+        return barFractionDen_;
     }
 
     @Override

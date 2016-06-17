@@ -28,7 +28,7 @@ public class ChordDegreeProcessor {
      * @return Degree (between 1 and 7) with a boolean specifying whether it is a seventh chord
      *         `null` if the chord does not match a degree.
      */
-    public ChordDegree chordToDegree(ArrayList<Integer> chord) {
+    public ChordDegree chordToDegree(ArrayList<Integer> chord, int barFractionDen) {
         double[] percentage = new double[chords_.size()];
         for (int i = 0; i < chords_.size(); ++i) {
             for (int j = 0; j < chord.size(); ++j) {
@@ -62,7 +62,7 @@ public class ChordDegreeProcessor {
         if (!((max > 0.51 && seventhChord) || max >= 0.75))
             return null;
 
-        return new ChordDegree(degree, seventhChord);
+        return new ChordDegree(degree, seventhChord, barFractionDen);
     }
 
     /**
