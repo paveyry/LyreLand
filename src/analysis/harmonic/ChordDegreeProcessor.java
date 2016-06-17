@@ -60,7 +60,7 @@ public class ChordDegreeProcessor {
 
 
         if (!((max > 0.51 && seventhChord) || max >= 0.75))
-            return null;
+            return new ChordDegree(0, false, barFractionDen);
 
         return new ChordDegree(degree, seventhChord, barFractionDen);
     }
