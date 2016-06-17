@@ -33,6 +33,7 @@ public class ChordDegreeProcessorTest {
         Assert.assertEquals(new ChordDegree(5, true, 1), cMajor.chordToDegree(fifthChordSeventh, 1));
         Assert.assertEquals(new ChordDegree(6, false, 1), cMajor.chordToDegree(sixthChord, 1));
         Assert.assertEquals(new ChordDegree(7, false, 1), cMajor.chordToDegree(seventhChord, 1));
+
         Assert.assertNull(cMajor.chordToDegree(notADegreeChord, 1));
     }
 
@@ -82,6 +83,5 @@ public class ChordDegreeProcessorTest {
         Assert.assertEquals(new ChordDegree(5, true, 1), gBMajor.chordToDegree(fifthChordSeventh, 1));
         Assert.assertEquals(new ChordDegree(6, false, 1), gBMajor.chordToDegree(sixthChord, 1));
         Assert.assertEquals(new ChordDegree(7, false, 1), gBMajor.chordToDegree(seventhChord, 1));
-
     }
 }

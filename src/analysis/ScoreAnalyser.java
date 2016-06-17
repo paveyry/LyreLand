@@ -1,10 +1,14 @@
 package analysis;
 
+import analysis.harmonic.ChordDegree;
+import analysis.harmonic.ChordLexer;
 import analysis.harmonic.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 import tonality.Tonality;
+
+import java.util.ArrayList;
 
 public class ScoreAnalyser {
     private String fileName_;
@@ -16,6 +20,7 @@ public class ScoreAnalyser {
     private double barUnit_;
     private int beatsPerBar_;
     private int partNb_;
+    private ArrayList<ChordDegree> degreeList_;
 
     // Extracted data
     private Scale scale_;
@@ -25,13 +30,14 @@ public class ScoreAnalyser {
         try {
             Read.midi(score_, midiFile);
             fileName_ = midiFile.substring(midiFile.lastIndexOf('/') + 1, midiFile.length());
-            System.out.println("CACA: " + fileName_);
+            System.out.println("Processed File: " + fileName_);
             title_ = score_.getTitle();
             tonality_ = MetadataExtractor.getTonality(score_.getKeySignature(), score_.getKeyQuality());
             scale_ = MetadataExtractor.computeScale(tonality_);
             barUnit_ = MetadataExtractor.computeBarUnit(score_.getDenominator());
             beatsPerBar_ = score_.getNumerator();
             partNb_ = score_.getPartArray().length;
+            degreeList_ = (new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_)).sequenceDegree();
         } catch (Exception e) {
             System.out.println("Error: ScoreAnalyser midi file can't be found");
         }
@@ -68,4 +74,6 @@ public class ScoreAnalyser {
     public int getPartNb() {
         return partNb_;
     }
+
+    public ArrayList<ChordDegree> getDegreeList() { return degreeList_; }
 }
