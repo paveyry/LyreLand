@@ -37,11 +37,9 @@ public class VerticalBand {
         if (!(o instanceof VerticalBand))
             return false;
         VerticalBand ac = (VerticalBand) o;
-        if (this.pitches_.equals(ac.getPitches()))
-            if (this.dynamic_.equals(ac.getDynamic()))
-                if (this.duration_.equals(ac.getDuration()))
-                    return true;
-        return false;
+        return this.pitches_.equals(ac.getPitches())
+                && this.dynamic_.equals(ac.getDynamic())
+                && this.duration_.equals(ac.getDuration());
     }
 
     /**
