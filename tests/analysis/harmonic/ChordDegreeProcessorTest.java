@@ -34,7 +34,7 @@ public class ChordDegreeProcessorTest {
         Assert.assertEquals(new ChordDegree(6, false, 1), cMajor.chordToDegree(sixthChord, 1));
         Assert.assertEquals(new ChordDegree(7, false, 1), cMajor.chordToDegree(seventhChord, 1));
 
-        Assert.assertNull(cMajor.chordToDegree(notADegreeChord, 1));
+        Assert.assertEquals(new ChordDegree(0, false, 1), cMajor.chordToDegree(notADegreeChord, 1));
     }
 
     @Test
