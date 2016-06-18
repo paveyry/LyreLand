@@ -8,11 +8,10 @@ import jm.util.Read;
 import tonality.Scale;
 import tonality.Tonality;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ScoreAnalyser implements Serializable {
+public class ScoreAnalyser {
     private transient String fileName_;
     private transient Score score_;
 
