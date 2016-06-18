@@ -53,13 +53,18 @@ public class ChordDegreeProcessor {
             }
         }
 
+        double seventhPercentage = 0.0;
+
         for (int i = 0; i < chord.size(); ++i) {
             if (degree > 0 && chord.get(i) % 12 == chords_.get(degree - 1)[3] % 12)
-                seventhChord = true;
+                ++seventhPercentage;
         }
+        seventhPercentage /= chord.size();
 
+        if (seventhPercentage >= 0.1)
+            seventhChord = true;
 
-        if (!((max > 0.51 && seventhChord) || max >= 0.75))
+        if (max < 0.75)
             return new ChordDegree(0, false, barFractionDen);
 
         return new ChordDegree(degree, seventhChord, barFractionDen);
