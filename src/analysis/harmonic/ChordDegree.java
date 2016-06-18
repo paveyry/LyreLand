@@ -1,8 +1,6 @@
 package analysis.harmonic;
 
-import java.io.Serializable;
-
-public class ChordDegree implements Serializable {
+public class ChordDegree {
     private int degree_;
     private boolean seventhChord_;
     private int barFractionDen_;
@@ -18,18 +16,35 @@ public class ChordDegree implements Serializable {
         this.barFractionDen_ = barFractionDen;
     }
 
+    /**
+     * Getter for the degree attribute
+     * @return the degree of the chord
+     */
     public int getDegree() {
         return degree_;
     }
 
+    /**
+     * Getter for the seventhChord attribute
+     * @return true if the chord is a seventh chord, false elsewhere
+     */
     public boolean isSeventhChord() {
         return seventhChord_;
     }
 
+    /**
+     * Getter for the barFractionDen attribute
+     * @return the denominator of the fraction of bar corresponding to this degree
+     */
     public int getBarFractionDen_() {
         return barFractionDen_;
     }
 
+    /**
+     * Equality method
+     * @param other other ChordDegree
+     * @return true if the two ChordDegrees are equal, false elsewhere and if the param is not a ChordDegree
+     */
     @Override
     public boolean equals(Object other) {
         if (other == null || !(other instanceof ChordDegree))
@@ -37,6 +52,10 @@ public class ChordDegree implements Serializable {
         return degree_ == ((ChordDegree) other).degree_ && seventhChord_== ((ChordDegree) other).seventhChord_;
     }
 
+    /**
+     * Conversion to String
+     * @return a String corresponding to the object
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
