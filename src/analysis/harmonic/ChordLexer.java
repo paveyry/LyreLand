@@ -173,7 +173,7 @@ public class ChordLexer {
                     bar.add(temp);
                 }
             }
-            result.add(partResult);
+            result.add((ArrayList<ChordDegree>) partResult.clone());
             partResult.clear();
         }
         return result;

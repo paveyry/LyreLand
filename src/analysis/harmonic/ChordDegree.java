@@ -37,11 +37,11 @@ public class ChordDegree {
 
     @Override
     public String toString() {
-        if (degree_ == 0)
-            return "Ø";
-
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("(");
         switch (degree_) {
+            case 0:
+                sb.append("Ø");
+                break;
             case 1:
                 sb.append('I');
                 break;
@@ -64,9 +64,10 @@ public class ChordDegree {
                 sb.append("VII");
                 break;
         }
-
         if (seventhChord_)
             sb.append("7");
+
+        sb.append("-1/").append(barFractionDen_).append(")");
 
         return sb.toString();
     }

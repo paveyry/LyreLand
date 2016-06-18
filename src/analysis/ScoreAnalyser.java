@@ -9,6 +9,7 @@ import tonality.Scale;
 import tonality.Tonality;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ScoreAnalyser {
     private String fileName_;
@@ -45,6 +46,8 @@ public class ScoreAnalyser {
     public void processDegreeList() {
         ChordLexer chl = new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_);
         degreeList_ = chl.sequenceDegree();
+        for (ArrayList<ChordDegree> chd : degreeList_)
+            Collections.reverse(chd);
     }
 
     public String getFileName() {
