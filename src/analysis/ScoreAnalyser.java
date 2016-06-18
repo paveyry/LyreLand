@@ -20,7 +20,7 @@ public class ScoreAnalyser {
     private double barUnit_;
     private int beatsPerBar_;
     private int partNb_;
-    private ArrayList<ChordDegree> degreeList_;
+    private ArrayList<ArrayList<ChordDegree>> degreeList_;
 
     // Extracted data
     private Scale scale_;
@@ -75,5 +75,5 @@ public class ScoreAnalyser {
         return partNb_;
     }
 
-    public ArrayList<ChordDegree> getDegreeList() { return degreeList_; }
+    public ArrayList<ArrayList<ChordDegree>> getDegreeList() { return degreeList_; }
 }

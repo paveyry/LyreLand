@@ -28,7 +28,7 @@ public class ChordLexer {
     }
 
     // Public method
-    public ArrayList<ChordDegree> sequenceDegree() {
+    public ArrayList<ArrayList<ChordDegree>> sequenceDegree() {
         normaliseRhythm();
         normalisePhraseLength();
         return sequenceBars(sequenceChords());
@@ -143,12 +143,13 @@ public class ChordLexer {
         return result;
     }
 
-    private ArrayList<ChordDegree> sequenceBars(ArrayList<ArrayList<VerticalBand>> sequencedChords) {
-        ArrayList<ChordDegree> result = new ArrayList<>();
+    private ArrayList<ArrayList<ChordDegree>> sequenceBars(ArrayList<ArrayList<VerticalBand>> sequencedChords) {
+        ArrayList<ArrayList<ChordDegree>> result = new ArrayList<>();
+        ArrayList<ChordDegree> partResult = new ArrayList<>();
         ArrayList<VerticalBand> bar = new ArrayList<>();
         double barCount = 0.0;
         for (ArrayList<VerticalBand> vbArray : sequencedChords) {
-            for (int i = vbArray.size() - 1; i >=0; i--) {
+            for (int i = vbArray.size() - 1; i >= 0; i--) {
                 VerticalBand temp = vbArray.get(i);
                 if (barCount + temp.getRythm() < (beatPerBar_ * barUnit_)) {
                     bar.add(temp);
@@ -156,7 +157,7 @@ public class ChordLexer {
                 }
                 else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
                     bar.add(temp);
-                    result.addAll(processBarDegree(bar, beatPerBar_, 1));
+                    partResult.addAll(processBarDegree(bar, beatPerBar_, 1));
                     bar.clear();
                     barCount = 0.0;
                 }
@@ -165,13 +166,15 @@ public class ChordLexer {
                     VerticalBand barSeparation = new VerticalBand(temp.getPitches(), difference,
                                                                   temp.getDuration(), temp.getDynamic());
                     bar.add(barSeparation);
-                    result.addAll(processBarDegree(bar, beatPerBar_, 1));
+                    partResult.addAll(processBarDegree(bar, beatPerBar_, 1));
                     temp.setRythm(temp.getRythm() - difference);
                     barCount = temp.getRythm();
                     bar.clear();
                     bar.add(temp);
                 }
             }
+            result.add(partResult);
+            partResult.clear();
         }
         return result;
     }
@@ -179,8 +182,11 @@ public class ChordLexer {
     private ArrayList<ChordDegree> processBarDegree(ArrayList<VerticalBand> bar, int beatCounter, int barFraction) {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ArrayList<Integer> pitches = new ArrayList<>();
+
+        // faire fusion dans la mesure
         for (VerticalBand v : bar)
             pitches.addAll(v.getPitches());
+
         ChordDegree temp = new ChordDegreeProcessor(tonality_).chordToDegree(pitches, barFraction);
         if (temp.getDegree() == 0) {
             if (beatCounter == 1)
