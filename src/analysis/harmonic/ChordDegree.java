@@ -1,6 +1,8 @@
 package analysis.harmonic;
 
-public class ChordDegree {
+import java.io.Serializable;
+
+public class ChordDegree implements Serializable {
     private int degree_;
     private boolean seventhChord_;
     private int barFractionDen_;
