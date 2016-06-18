@@ -23,16 +23,16 @@ public class DataWriter {
 
     private void fillData() {
         data_.add("---------- Metadata ----------");
-        data_.add("Title: " + scoreAnalyser_.getTitle());
+//        data_.add("Title: " + scoreAnalyser_.getTitle());
         data_.add("Music tonality: " + scoreAnalyser_.getTonality());
-        data_.add("Scale: "+ scoreAnalyser_.getScale().pitchToString());
+//        data_.add("Scale: "+ scoreAnalyser_.getScale().pitchToString());
         data_.add("Bar unit: " + scoreAnalyser_.getBarUnit());
         data_.add("Number of beat per bar: " + scoreAnalyser_.getBeatsPerBar());
         data_.add("Part Number: " + scoreAnalyser_.getPartNb());
         data_.add("Used instruments: ");
-        for (int i = 0; i < scoreAnalyser_.getScore().getPartArray().length; i++) {
-            data_.add("     (Part " + i + ") " + scoreAnalyser_.getScore().getPart(i).getInstrument());
-        }
+//        for (int i = 0; i < scoreAnalyser_.getScore().getPartArray().length; i++) {
+//            data_.add("     (Part " + i + ") " + scoreAnalyser_.getScore().getPart(i).getInstrument());
+//        }
     }
 
     public void writeData(String s) {

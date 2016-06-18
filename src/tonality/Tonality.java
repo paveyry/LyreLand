@@ -2,7 +2,9 @@ package tonality;
 
 import jm.constants.Pitches;
 
-public class Tonality {
+import java.io.Serializable;
+
+public class Tonality implements Serializable {
     public enum Mode {
         MAJOR,
         MINOR,

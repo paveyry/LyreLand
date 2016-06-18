@@ -8,15 +8,16 @@ import jm.util.Read;
 import tonality.Scale;
 import tonality.Tonality;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ScoreAnalyser {
-    private String fileName_;
-    private Score score_;
+public class ScoreAnalyser implements Serializable {
+    private transient String fileName_;
+    private transient Score score_;
 
     // Basic Meta data of the score.
-    private String title_;
+    private transient String title_;
     private Tonality tonality_;
     private double barUnit_;
     private int beatsPerBar_;
@@ -24,7 +25,7 @@ public class ScoreAnalyser {
     private ArrayList<ArrayList<ChordDegree>> degreeList_;
 
     // Extracted data
-    private Scale scale_;
+    private transient Scale scale_;
 
     public ScoreAnalyser(String midiFile) {
         score_ = new Score();
