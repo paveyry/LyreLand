@@ -24,17 +24,17 @@ public class ChordDegreeProcessorTest {
         ArrayList<Integer> seventhChord = new ArrayList<>(Arrays.asList(B6, D2, F1)); // Si Re Fa
         ArrayList<Integer> notADegreeChord = new ArrayList<>(Arrays.asList(C1, D4, E2, F3, G6, A1, B4)); // Do Re Mi Fa Sol La Si
 
-        Assert.assertEquals(new ChordDegree(1, false, 1), cMajor.chordToDegree(firstChord, 1));
-        Assert.assertEquals(new ChordDegree(2, false, 1), cMajor.chordToDegree(secondChord, 1));
-        Assert.assertEquals(new ChordDegree(2, true, 1), cMajor.chordToDegree(secondChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(3, false, 1), cMajor.chordToDegree(thirdChord, 1));
-        Assert.assertEquals(new ChordDegree(4, false, 1), cMajor.chordToDegree(fourthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, false, 1), cMajor.chordToDegree(fifthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, true, 1), cMajor.chordToDegree(fifthChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(6, false, 1), cMajor.chordToDegree(sixthChord, 1));
-        Assert.assertEquals(new ChordDegree(7, false, 1), cMajor.chordToDegree(seventhChord, 1));
+        Assert.assertTrue(new ChordDegree(1, false, 1).equals(cMajor.chordToDegree(firstChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, false, 1).equals(cMajor.chordToDegree(secondChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, true, 1).equals(cMajor.chordToDegree(secondChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(3, false, 1).equals(cMajor.chordToDegree(thirdChord, 1)));
+        Assert.assertTrue(new ChordDegree(4, false, 1).equals(cMajor.chordToDegree(fourthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, false, 1).equals(cMajor.chordToDegree(fifthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, true, 1).equals(cMajor.chordToDegree(fifthChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(6, false, 1).equals(cMajor.chordToDegree(sixthChord, 1)));
+        Assert.assertTrue(new ChordDegree(7, false, 1).equals(cMajor.chordToDegree(seventhChord, 1)));
 
-        Assert.assertEquals(new ChordDegree(0, false, 1), cMajor.chordToDegree(notADegreeChord, 1));
+        Assert.assertTrue(new ChordDegree(0, false, 1).equals(cMajor.chordToDegree(notADegreeChord, 1)));
     }
 
     @Test
@@ -50,15 +50,15 @@ public class ChordDegreeProcessorTest {
         ArrayList<Integer> sixthChord = new ArrayList<>(Arrays.asList(AF3, C2, AF2, C5, AF1, C3, EF1)); // Lab Do Lab Do Lab Do Mib
         ArrayList<Integer> seventhChord = new ArrayList<>(Arrays.asList(BF6, D2, F1)); // Sib Re Fa
 
-        Assert.assertEquals(new ChordDegree(1, false, 1), cMinor.chordToDegree(firstChord, 1));
-        Assert.assertEquals(new ChordDegree(2, false, 1), cMinor.chordToDegree(secondChord, 1));
-        Assert.assertEquals(new ChordDegree(2, true, 1), cMinor.chordToDegree(secondChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(3, false, 1), cMinor.chordToDegree(thirdChord, 1));
-        Assert.assertEquals(new ChordDegree(4, false, 1), cMinor.chordToDegree(fourthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, false, 1), cMinor.chordToDegree(fifthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, true, 1), cMinor.chordToDegree(fifthChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(6, false, 1), cMinor.chordToDegree(sixthChord, 1));
-        Assert.assertEquals(new ChordDegree(7, false, 1), cMinor.chordToDegree(seventhChord, 1));
+        Assert.assertTrue(new ChordDegree(1, false, 1).equals(cMinor.chordToDegree(firstChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, false, 1).equals(cMinor.chordToDegree(secondChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, true, 1).equals(cMinor.chordToDegree(secondChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(3, false, 1).equals(cMinor.chordToDegree(thirdChord, 1)));
+        Assert.assertTrue(new ChordDegree(4, false, 1).equals(cMinor.chordToDegree(fourthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, false, 1).equals(cMinor.chordToDegree(fifthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, true, 1).equals(cMinor.chordToDegree(fifthChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(6, false, 1).equals(cMinor.chordToDegree(sixthChord, 1)));
+        Assert.assertTrue(new ChordDegree(7, false, 1).equals(cMinor.chordToDegree(seventhChord, 1)));
 
     }
     @Test
@@ -74,14 +74,14 @@ public class ChordDegreeProcessorTest {
         ArrayList<Integer> sixthChord = new ArrayList<>(Arrays.asList(EF3, GF3, EF2, GF5, EF1, GF3, BF1)); // Mib Solb Mib Solb Mib Solb Sib
         ArrayList<Integer> seventhChord = new ArrayList<>(Arrays.asList(F6, AF2, CF1)); // Fa Lab Dob
 
-        Assert.assertEquals(new ChordDegree(1, false, 1), gBMajor.chordToDegree(firstChord, 1));
-        Assert.assertEquals(new ChordDegree(2, false, 1), gBMajor.chordToDegree(secondChord, 1));
-        Assert.assertEquals(new ChordDegree(2, true, 1), gBMajor.chordToDegree(secondChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(3, false, 1), gBMajor.chordToDegree(thirdChord, 1));
-        Assert.assertEquals(new ChordDegree(4, false, 1), gBMajor.chordToDegree(fourthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, false, 1), gBMajor.chordToDegree(fifthChord, 1));
-        Assert.assertEquals(new ChordDegree(5, true, 1), gBMajor.chordToDegree(fifthChordSeventh, 1));
-        Assert.assertEquals(new ChordDegree(6, false, 1), gBMajor.chordToDegree(sixthChord, 1));
-        Assert.assertEquals(new ChordDegree(7, false, 1), gBMajor.chordToDegree(seventhChord, 1));
+        Assert.assertTrue(new ChordDegree(1, false, 1).equals(gBMajor.chordToDegree(firstChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, false, 1).equals(gBMajor.chordToDegree(secondChord, 1)));
+        Assert.assertTrue(new ChordDegree(2, true, 1).equals(gBMajor.chordToDegree(secondChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(3, false, 1).equals(gBMajor.chordToDegree(thirdChord, 1)));
+        Assert.assertTrue(new ChordDegree(4, false, 1).equals(gBMajor.chordToDegree(fourthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, false, 1).equals(gBMajor.chordToDegree(fifthChord, 1)));
+        Assert.assertTrue(new ChordDegree(5, true, 1).equals(gBMajor.chordToDegree(fifthChordSeventh, 1)));
+        Assert.assertTrue(new ChordDegree(6, false, 1).equals(gBMajor.chordToDegree(sixthChord, 1)));
+        Assert.assertTrue(new ChordDegree(7, false, 1).equals(gBMajor.chordToDegree(seventhChord, 1)));
     }
 }
