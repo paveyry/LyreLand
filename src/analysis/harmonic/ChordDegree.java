@@ -32,8 +32,42 @@ public class ChordDegree {
     public boolean equals(Object other) {
         if (other == null || !(other instanceof ChordDegree))
             return false;
-        if (degree_ == ((ChordDegree) other).degree_ && seventhChord_== ((ChordDegree) other).seventhChord_)
-            return true;
-        return false;
+        return degree_ == ((ChordDegree) other).degree_ && seventhChord_== ((ChordDegree) other).seventhChord_;
+    }
+
+    @Override
+    public String toString() {
+        if (degree_ == 0)
+            return "Ø";
+
+        StringBuilder sb = new StringBuilder();
+        switch (degree_) {
+            case 1:
+                sb.append('I');
+                break;
+            case 2:
+                sb.append("II");
+                break;
+            case 3:
+                sb.append("III");
+                break;
+            case 4:
+                sb.append("IV");
+                break;
+            case 5:
+                sb.append('V');
+                break;
+            case 6:
+                sb.append("VI");
+                break;
+            case 7:
+                sb.append("VII");
+                break;
+        }
+
+        if (seventhChord_)
+            sb.append("7");
+
+        return sb.toString();
     }
 }
