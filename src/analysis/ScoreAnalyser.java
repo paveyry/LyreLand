@@ -37,10 +37,14 @@ public class ScoreAnalyser {
             barUnit_ = MetadataExtractor.computeBarUnit(score_.getDenominator());
             beatsPerBar_ = score_.getNumerator();
             partNb_ = score_.getPartArray().length;
-            degreeList_ = (new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_)).sequenceDegree();
+            //degreeList_ = (new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_)).sequenceDegree();
         } catch (Exception e) {
             System.out.println("Error: ScoreAnalyser midi file can't be found");
         }
+    }
+    public void processDegreeList() {
+        ChordLexer chl = new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_);
+        degreeList_ = chl.sequenceDegree();
     }
 
     public String getFileName() {
