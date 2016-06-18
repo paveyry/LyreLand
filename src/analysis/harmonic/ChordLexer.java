@@ -183,8 +183,19 @@ public class ChordLexer {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ArrayList<Integer> pitches = new ArrayList<>();
 
-        // faire fusion dans la mesure
+        // fusedBar is temporary and used only by ChordDegreeProcessor.
+        // Fusion of same chords in the bar.
+        ArrayList<VerticalBand> fusedBar = new ArrayList<>();
         for (VerticalBand v : bar)
+            fusedBar.add(v.clone());
+        for (int i = 0; i < fusedBar.size() - 2; i++) {
+            if (fusedBar.get(i).equals(fusedBar.get(i + 1))) {
+                fusedBar.get(i).setRythm(fusedBar.get(i).getRythm() + fusedBar.get(i + 1).getRythm());
+                fusedBar.remove(i+1);
+            }
+        }
+
+        for (VerticalBand v : fusedBar)
             pitches.addAll(v.getPitches());
 
         ChordDegree temp = new ChordDegreeProcessor(tonality_).chordToDegree(pitches, barFraction);
@@ -201,11 +212,11 @@ public class ChordLexer {
                     beatCounter /= 3;
                     quotient = 3;
                 }
-                int index = (int)(barUnit_ / quantum_) * beatCounter;
+                int index = bar.size() / quotient;
                 // Adding starting from the end to respect the main traversal.
-                result.addAll(processBarDegree((ArrayList<VerticalBand>) bar.subList(index, bar.size()),
+                result.addAll(processBarDegree(new ArrayList<>(bar.subList(index, bar.size())),
                         beatCounter, barFraction * quotient));
-                result.addAll(processBarDegree((ArrayList<VerticalBand>) bar.subList(0, index),
+                result.addAll(processBarDegree(new ArrayList<VerticalBand>(bar.subList(0, index)),
                         beatCounter, barFraction * quotient));
             }
         }

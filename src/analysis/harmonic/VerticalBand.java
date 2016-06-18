@@ -61,6 +61,20 @@ public class VerticalBand {
         return sb.toString();
     }
 
+    @Override
+    public VerticalBand clone() {
+        ArrayList<Integer> pitches = new ArrayList<>();
+        ArrayList<Integer> dynamic = new ArrayList<>();
+        ArrayList<Double> duration = new ArrayList<>();
+        for (int i : pitches_)
+            pitches.add(i);
+        for (int i : dynamic_)
+            dynamic.add(i);
+        for (double i : duration_)
+            duration.add(i);
+        return new VerticalBand(pitches, rhythm_, duration, dynamic);
+    }
+
     /**
      * Print the object on the standard output
      */
