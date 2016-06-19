@@ -153,6 +153,8 @@ public class ChordLexer {
         ArrayList<ArrayList<VerticalBand>> bars = new ArrayList<>();
         // Bar represent the bar of each instrument, used to fill bars.
         ArrayList<VerticalBand> bar = new ArrayList<>();
+
+
         double barCount = 0.0;
 
         ArrayList<Integer> sizes = new ArrayList<>();
@@ -161,19 +163,20 @@ public class ChordLexer {
 
         // Iterate while all the bars of all the parts have not been processed.
         while (sizes.size() != 0) {
-            // Iterate throught each part to collect the bars from the end of the score.
+            // Iterate through each part to collect the bars from the end of the score.
             for (int i = 0; i < sizes.size(); i++) {
                 int j = 1;
                 // Iterate to collect enough VerticalBand to fill a Bar for a certain Part.
-                while (barCount != beatPerBar_ * barUnit_ && j <= sizes.get(i)) {
+                while (barCount < beatPerBar_ * barUnit_ && j <= sizes.get(i)) {
                     VerticalBand temp = sequencedChords.get(i).get(sizes.get(i) - j);
                     if (barCount + temp.getRythm() < (beatPerBar_ * barUnit_)) {
                         bar.add(temp);
                         barCount += temp.getRythm();
-                    } else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
+                    }
+                    else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
                         bar.add(temp);
-                        bars.add((ArrayList<VerticalBand>) bar.clone());
-                        bar.clear();
+                        bars.add(bar);
+                        bar = new ArrayList<>();
                         barCount += temp.getRythm();
                     }
                     j++;
@@ -207,7 +210,7 @@ public class ChordLexer {
             for (int i = 0; i < fusedBar.size() - 2; i++) {
                 if (fusedBar.get(i).equals(fusedBar.get(i + 1))) {
                     fusedBar.get(i).setRythm(fusedBar.get(i).getRythm() + fusedBar.get(i + 1).getRythm());
-                    fusedBar.remove(i+1);
+                    fusedBar.remove(i + 1);
                 }
             }
             for (VerticalBand v : fusedBar)
