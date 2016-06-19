@@ -70,7 +70,7 @@ public class ChordDegreeProcessor {
 
         StringBuilder sb = new StringBuilder("DEGREELOG: ");
         for (Integer i : chord) {
-            sb.append(Tonality.pitchToString(i, true)).append(" ");
+            sb.append(Tonality.pitchToFrenchString(i, true)).append(" ");
         }
         sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen));
         System.out.println(sb.toString());

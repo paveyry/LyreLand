@@ -74,4 +74,35 @@ public class Tonality {
         }
         return null;
     }
+
+    public static String pitchToFrenchString(int pitch, boolean isSharp) {
+        pitch = pitch % 12;
+        switch (pitch) {
+            case Pitches.C0 % 12:
+                return "Do";
+            case Pitches.CS0 % 12:
+                return isSharp ? "Do#" : "Reb";
+            case Pitches.D0 % 12:
+                return "Re";
+            case Pitches.DS0 % 12:
+                return isSharp ? "Re#" : "Mib";
+            case Pitches.E0 % 12:
+                return "Mi";
+            case Pitches.F0 % 12:
+                return "Fa";
+            case Pitches.FS0 % 12:
+                return isSharp ? "Fa#" : "Solb";
+            case Pitches.G0 % 12:
+                return "Sol";
+            case Pitches.GS0 % 12:
+                return isSharp ? "Sol#" : "Lab";
+            case Pitches.A0 % 12:
+                return "La";
+            case Pitches.AS0 % 12:
+                return isSharp ? "La#" : "Sib";
+            case Pitches.B0 % 12:
+                return "Si";
+        }
+        return null;
+    }
 }
