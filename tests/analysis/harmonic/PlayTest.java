@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PlayTest {
     //@Test
     public void playTest() {
-        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/Blue_Bird.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/bach_846.mid";
         //Score init = new Score();
         //Read.midi(init, midifile);
         //double tempo = init.getTempo();
@@ -22,12 +22,11 @@ public class PlayTest {
         System.out.println("BeatPerBar : " + sa.getBeatsPerBar());
         System.out.println("Tonality : " + sa.getTonality().toString());
         System.out.println(sa.getDegreeList().size());
-        System.out.println(sa.getDegreeList().get(0).size());
-        for (ArrayList<ChordDegree> ch : sa.getDegreeList()) {
-            for (ChordDegree c : ch)
-                System.out.print(c.toString() + " ");
-            System.out.println("\n");
+        System.out.println(sa.getDegreeList().size());
+        for (ChordDegree chd : sa.getDegreeList()) {
+            System.out.print(chd.toString() + " ");
         }
+        System.out.println("\n");
         //ChordLexer nr = new ChordLexer(sa.getScore(), sa.getBarUnit(), sa.getBeatsPerBar(), sa.getTonality());
         //System.out.println("Shortest: " + init.getShortestRhythmValue());
         //System.out.println("Normalized: " + nr.getQuantum());

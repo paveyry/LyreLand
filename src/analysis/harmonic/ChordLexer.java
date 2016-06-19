@@ -28,7 +28,7 @@ public class ChordLexer {
     }
 
     // Public method
-    public ArrayList<ArrayList<ChordDegree>> sequenceDegree() {
+    public ArrayList<ChordDegree> sequenceDegree() {
         normaliseRhythm();
         normalisePhraseLength();
         return sequenceBars(sequenceChords());
@@ -143,60 +143,76 @@ public class ChordLexer {
         return result;
     }
 
-    private ArrayList<ArrayList<ChordDegree>> sequenceBars(ArrayList<ArrayList<VerticalBand>> sequencedChords) {
-        ArrayList<ArrayList<ChordDegree>> result = new ArrayList<>();
-        ArrayList<ChordDegree> partResult = new ArrayList<>();
+    // Fixme : return a ArrayList<ChordDegree> (all instruments)
+    private ArrayList<ChordDegree> sequenceBars(ArrayList<ArrayList<VerticalBand>> sequencedChords) {
+        // The variable result is the list of degree of the score based
+        // on every instrument parts.
+        ArrayList<ChordDegree> result = new ArrayList<>();
+        // The variable bars represent the bars of all the instrument which will
+        // later be used by processBarDegrees function.
+        ArrayList<ArrayList<VerticalBand>> bars = new ArrayList<>();
+        // Bar represent the bar of each instrument, used to fill bars.
         ArrayList<VerticalBand> bar = new ArrayList<>();
         double barCount = 0.0;
-        for (ArrayList<VerticalBand> vbArray : sequencedChords) {
-            for (int i = vbArray.size() - 1; i >= 0; i--) {
-                VerticalBand temp = vbArray.get(i);
-                if (barCount + temp.getRythm() < (beatPerBar_ * barUnit_)) {
-                    bar.add(temp);
-                    barCount += temp.getRythm();
+
+        ArrayList<Integer> sizes = new ArrayList<>();
+        for (int i = 0; i < sequencedChords.size(); i++)
+            sizes.add(sequencedChords.get(i).size());
+
+        // Iterate while all the bars of all the parts have not been processed.
+        while (sizes.size() != 0) {
+            // Iterate throught each part to collect the bars from the end of the score.
+            for (int i = 0; i < sizes.size(); i++) {
+                int j = 1;
+                // Iterate to collect enough VerticalBand to fill a Bar for a certain Part.
+                while (barCount != beatPerBar_ * barUnit_ && j <= sizes.get(i)) {
+                    VerticalBand temp = sequencedChords.get(i).get(sizes.get(i) - j);
+                    if (barCount + temp.getRythm() < (beatPerBar_ * barUnit_)) {
+                        bar.add(temp);
+                        barCount += temp.getRythm();
+                    } else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
+                        bar.add(temp);
+                        bars.add((ArrayList<VerticalBand>) bar.clone());
+                        bar.clear();
+                        barCount += temp.getRythm();
+                    }
+                    j++;
                 }
-                else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
-                    bar.add(temp);
-                    partResult.addAll(processBarDegree(bar, beatPerBar_, 1));
-                    bar.clear();
-                    barCount = 0.0;
-                }
-                else {
-                    double difference = (beatPerBar_ * barUnit_) - barCount;
-                    VerticalBand barSeparation = new VerticalBand(temp.getPitches(), difference,
-                                                                  temp.getDuration(), temp.getDynamic());
-                    bar.add(barSeparation);
-                    partResult.addAll(processBarDegree(bar, beatPerBar_, 1));
-                    temp.setRythm(temp.getRythm() - difference);
-                    barCount = temp.getRythm();
-                    bar.clear();
-                    bar.add(temp);
+                barCount = 0.0;
+                // If we have reach the end of a part, it is removed from sizes
+                // to stop iterating over it.
+                sizes.set(i, sizes.get(i) - j);
+                if (sizes.get(i) <= 0) {
+                    sizes.remove(i);
+                    i--;
                 }
             }
-            result.add((ArrayList<ChordDegree>) partResult.clone());
-            partResult.clear();
+            result.addAll(processBarDegree(bars, beatPerBar_, 1));
+            bars.clear();
         }
         return result;
     }
 
-    private ArrayList<ChordDegree> processBarDegree(ArrayList<VerticalBand> bar, int beatCounter, int barFraction) {
+    private ArrayList<ChordDegree> processBarDegree(ArrayList<ArrayList<VerticalBand>> bars, int beatCounter, int barFraction) {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ArrayList<Integer> pitches = new ArrayList<>();
 
         // fusedBar is temporary and used only by ChordDegreeProcessor.
-        // Fusion of same chords in the bar.
-        ArrayList<VerticalBand> fusedBar = new ArrayList<>();
-        for (VerticalBand v : bar)
-            fusedBar.add(v.clone());
-        for (int i = 0; i < fusedBar.size() - 2; i++) {
-            if (fusedBar.get(i).equals(fusedBar.get(i + 1))) {
-                fusedBar.get(i).setRythm(fusedBar.get(i).getRythm() + fusedBar.get(i + 1).getRythm());
-                fusedBar.remove(i+1);
+        // Fusion of same chords in the bar and adding them to the pitches
+        // That will be given to ChordDegreeProcessor.
+        for (ArrayList<VerticalBand> bar :  bars) {
+            ArrayList<VerticalBand> fusedBar = new ArrayList<>();
+            for (VerticalBand v : bar)
+                fusedBar.add(v.clone());
+            for (int i = 0; i < fusedBar.size() - 2; i++) {
+                if (fusedBar.get(i).equals(fusedBar.get(i + 1))) {
+                    fusedBar.get(i).setRythm(fusedBar.get(i).getRythm() + fusedBar.get(i + 1).getRythm());
+                    fusedBar.remove(i+1);
+                }
             }
+            for (VerticalBand v : fusedBar)
+                pitches.addAll(v.getPitches());
         }
-
-        for (VerticalBand v : fusedBar)
-            pitches.addAll(v.getPitches());
 
         ChordDegree temp = new ChordDegreeProcessor(tonality_).chordToDegree(pitches, barFraction);
         if (temp.getDegree() == 0) {
@@ -207,17 +223,42 @@ public class ChordLexer {
                 if (beatCounter % 2 == 0) {
                     beatCounter /= 2;
                     quotient = 2;
+                    int index = 0;
+                    for (ArrayList<VerticalBand> bar : bars) {
+                        if (bar.size() > index)
+                            index = bar.size();
+                    }
+                    index /= 2;
+                    ArrayList<ArrayList<VerticalBand>> subBars1 = new ArrayList<>();
+                    ArrayList<ArrayList<VerticalBand>> subBars2 = new ArrayList<>();
+                    for (ArrayList<VerticalBand> bar : bars) {
+                        subBars1.add(new ArrayList<>(bar.subList(index, bar.size())));
+                        subBars2.add(new ArrayList<>(bar.subList(0, index)));
+                    }
+                    result.addAll(processBarDegree(subBars1, beatCounter, barFraction * quotient));
+                    result.addAll(processBarDegree(subBars2, beatCounter, barFraction * quotient));
                 }
                 else if (beatCounter % 3 == 0) {
                     beatCounter /= 3;
                     quotient = 3;
+                    int index = 0;
+                    for (ArrayList<VerticalBand> bar : bars) {
+                        if (bar.size() > index)
+                            index = bar.size();
+                    }
+                    index /= 3;
+                    ArrayList<ArrayList<VerticalBand>> subBars1 = new ArrayList<>();
+                    ArrayList<ArrayList<VerticalBand>> subBars2 = new ArrayList<>();
+                    ArrayList<ArrayList<VerticalBand>> subBars3 = new ArrayList<>();
+                    for (ArrayList<VerticalBand> bar : bars) {
+                        subBars1.add(new ArrayList<>(bar.subList(index * 2, bar.size())));
+                        subBars2.add(new ArrayList<>(bar.subList(index, index * 2)));
+                        subBars3.add(new ArrayList<>(bar.subList(0, index)));
+                    }
+                    result.addAll(processBarDegree(subBars1, beatCounter, barFraction * quotient));
+                    result.addAll(processBarDegree(subBars2, beatCounter, barFraction * quotient));
+                    result.addAll(processBarDegree(subBars3, beatCounter, barFraction * quotient));
                 }
-                int index = bar.size() / quotient;
-                // Adding starting from the end to respect the main traversal.
-                result.addAll(processBarDegree(new ArrayList<>(bar.subList(index, bar.size())),
-                        beatCounter, barFraction * quotient));
-                result.addAll(processBarDegree(new ArrayList<VerticalBand>(bar.subList(0, index)),
-                        beatCounter, barFraction * quotient));
             }
         }
         else
