@@ -21,7 +21,7 @@ public class ScoreAnalyser {
     private double barUnit_;
     private int beatsPerBar_;
     private int partNb_;
-    private ArrayList<ArrayList<ChordDegree>> degreeList_;
+    private ArrayList<ChordDegree> degreeList_;
 
     // Extracted data
     private transient Scale scale_;
@@ -46,8 +46,9 @@ public class ScoreAnalyser {
     public void processDegreeList() {
         ChordLexer chl = new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_);
         degreeList_ = chl.sequenceDegree();
-        for (ArrayList<ChordDegree> chd : degreeList_)
-            Collections.reverse(chd);
+        // The degree are processed from the end of a score. Hence they are reverse
+        // so they can be seen from the beginning.
+        Collections.reverse(degreeList_);
     }
 
     public String getFileName() {
@@ -82,5 +83,5 @@ public class ScoreAnalyser {
         return partNb_;
     }
 
-    public ArrayList<ArrayList<ChordDegree>> getDegreeList() { return degreeList_; }
+    public ArrayList<ChordDegree> getDegreeList() { return degreeList_; }
 }
