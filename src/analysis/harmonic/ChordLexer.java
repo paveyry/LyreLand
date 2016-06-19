@@ -153,16 +153,43 @@ public class ChordLexer {
         ArrayList<ArrayList<VerticalBand>> bars = new ArrayList<>();
         // Bar represent the bar of each instrument, used to fill bars.
         ArrayList<VerticalBand> bar = new ArrayList<>();
-
-
         double barCount = 0.0;
 
-        ArrayList<Integer> sizes = new ArrayList<>();
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for (ArrayList<VerticalBand> part : sequencedChords)
+            indexes.add(0);
+        while (!indexes.isEmpty()) {
+            for (int i = 0; i < indexes.size(); i++) {
+                while ((barCount < beatPerBar_ * barUnit_) && indexes.get(i) < sequencedChords.get(i).size()) {
+                    VerticalBand temp = sequencedChords.get(i).get(indexes.get(i));
+                    if (barCount + temp.getRythm() < (beatPerBar_ * barUnit_)) {
+                        bar.add(temp);
+                        barCount += temp.getRythm();
+                        indexes.set(i, indexes.get(i) + 1);
+                    }
+                    else if (barCount + temp.getRythm() == (beatPerBar_ * barUnit_)) {
+                        bar.add(temp);
+                        bars.add(bar);
+                        bar = new ArrayList<>();
+                        barCount += temp.getRythm();
+                    }
+                }
+                barCount = 0.0;
+                if (indexes.get(i) >= sequencedChords.get(i).size()) {
+                    indexes.remove(i);
+                    i--;
+                }
+            }
+            result.addAll(processBarDegree(bars, beatPerBar_, 1));
+            bars.clear();
+        }
+        return result;
+        /*ArrayList<Integer> sizes = new ArrayList<>();
         for (int i = 0; i < sequencedChords.size(); i++)
-            sizes.add(sequencedChords.get(i).size());
+            sizes.add(sequencedChords.get(i).size());*/
 
         // Iterate while all the bars of all the parts have not been processed.
-        while (sizes.size() != 0) {
+        /*while (sizes.size() != 0) {
             // Iterate through each part to collect the bars from the end of the score.
             for (int i = 0; i < sizes.size(); i++) {
                 int j = 1;
@@ -192,8 +219,7 @@ public class ChordLexer {
             }
             result.addAll(processBarDegree(bars, beatPerBar_, 1));
             bars.clear();
-        }
-        return result;
+        }*/
     }
 
     private ArrayList<ChordDegree> processBarDegree(ArrayList<ArrayList<VerticalBand>> bars, int beatCounter, int barFraction) {
@@ -235,8 +261,8 @@ public class ChordLexer {
                     ArrayList<ArrayList<VerticalBand>> subBars1 = new ArrayList<>();
                     ArrayList<ArrayList<VerticalBand>> subBars2 = new ArrayList<>();
                     for (ArrayList<VerticalBand> bar : bars) {
-                        subBars1.add(new ArrayList<>(bar.subList(index, bar.size())));
-                        subBars2.add(new ArrayList<>(bar.subList(0, index)));
+                        subBars1.add(new ArrayList<>(bar.subList(0, index)));
+                        subBars2.add(new ArrayList<>(bar.subList(index, bar.size())));
                     }
                     result.addAll(processBarDegree(subBars1, beatCounter, barFraction * quotient));
                     result.addAll(processBarDegree(subBars2, beatCounter, barFraction * quotient));
@@ -254,9 +280,9 @@ public class ChordLexer {
                     ArrayList<ArrayList<VerticalBand>> subBars2 = new ArrayList<>();
                     ArrayList<ArrayList<VerticalBand>> subBars3 = new ArrayList<>();
                     for (ArrayList<VerticalBand> bar : bars) {
-                        subBars1.add(new ArrayList<>(bar.subList(index * 2, bar.size())));
+                        subBars1.add(new ArrayList<>(bar.subList(0, index)));
                         subBars2.add(new ArrayList<>(bar.subList(index, index * 2)));
-                        subBars3.add(new ArrayList<>(bar.subList(0, index)));
+                        subBars3.add(new ArrayList<>(bar.subList(index * 2, bar.size())));
                     }
                     result.addAll(processBarDegree(subBars1, beatCounter, barFraction * quotient));
                     result.addAll(processBarDegree(subBars2, beatCounter, barFraction * quotient));
