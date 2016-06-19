@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class PlayTest {
-    //@Test
+    @Test
     public void playTest() {
-        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/bach_846.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/prelude.mid";
         //Score init = new Score();
         //Read.midi(init, midifile);
         //double tempo = init.getTempo();

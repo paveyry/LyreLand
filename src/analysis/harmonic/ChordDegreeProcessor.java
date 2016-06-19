@@ -64,8 +64,16 @@ public class ChordDegreeProcessor {
         if (seventhPercentage >= 0.1)
             seventhChord = true;
 
+
         if (max < 0.50)
             return new ChordDegree(0, false, barFractionDen);
+
+        StringBuilder sb = new StringBuilder("DEGREELOG: ");
+        for (Integer i : chord) {
+            sb.append(Tonality.pitchToString(i, true)).append(" ");
+        }
+        sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen));
+        System.out.println(sb.toString());
 
         return new ChordDegree(degree, seventhChord, barFractionDen);
     }
