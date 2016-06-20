@@ -1,6 +1,7 @@
 package analysis.harmonic;
 
 import analysis.containers.CircularArrayList;
+import jm.constants.Pitches;
 import tonality.Scale;
 import tonality.Tonality;
 
@@ -30,8 +31,16 @@ public class ChordDegreeProcessor {
      */
     public ChordDegree chordToDegree(ArrayList<Integer> chord, int barFractionDen) {
         double[] percentage = new double[chords_.size()];
+        int chordsize = 0;
+
+        for (Integer n : chord)
+            if (n != null && n >= 0)
+                chordsize++;
+
         for (int i = 0; i < chords_.size(); ++i) {
             for (int j = 0; j < chord.size(); ++j) {
+                if (chord.get(j) == null || chord.get(j) < 0)
+                    continue;
                 for (int k = 0; k < chords_.get(i).length - 1; ++k) {
                     if (chords_.get(i)[k] % 12 == chord.get(j) % 12) {
                         percentage[i] += 1.0;
@@ -39,7 +48,7 @@ public class ChordDegreeProcessor {
                     }
                 }
             }
-            percentage[i] /= chord.size();
+            percentage[i] /= chordsize;
         }
 
         double max = 0.0;
@@ -61,19 +70,18 @@ public class ChordDegreeProcessor {
         }
         seventhPercentage /= chord.size();
 
-        if (seventhPercentage >= 0.1)
+        if (seventhPercentage >= 0.05)
             seventhChord = true;
-
 
         if (max < 0.50)
             return new ChordDegree(0, false, barFractionDen);
 
+        // Logging the chord and the detected degree
         StringBuilder sb = new StringBuilder("DEGREELOG: ");
-        for (Integer i : chord) {
-            sb.append(Tonality.pitchToFrenchString(i, true)).append(" ");
-        }
-        sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen));
-        System.out.println(sb.toString());
+        for (Integer i : chord)
+            if (i != null && i != Pitches.REST)
+                sb.append(Tonality.pitchToFrenchString(i, true)).append(" ");
+        System.out.println(sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen)).toString());
 
         return new ChordDegree(degree, seventhChord, barFractionDen);
     }
