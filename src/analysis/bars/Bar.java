@@ -1,6 +1,4 @@
-package bars;
-
-import jm.music.data.Note;
+package analysis.bars;
 
 import java.util.ArrayList;
 

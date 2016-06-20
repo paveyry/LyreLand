@@ -1,4 +1,4 @@
-package bars;
+package analysis.bars;
 
 public class BarNote {
     private double startTime_;
@@ -21,5 +21,17 @@ public class BarNote {
 
     public int getPitch() {
         return pitch_;
+    }
+
+    public void setStartTime(double startTime_) {
+        this.startTime_ = startTime_;
+    }
+
+    public void setDuration(double duration_) {
+        this.duration_ = duration_;
+    }
+
+    public void setPitch(int pitch_) {
+        this.pitch_ = pitch_;
     }
 }
