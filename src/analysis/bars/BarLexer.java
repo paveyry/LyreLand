@@ -71,6 +71,11 @@ public class BarLexer {
                     Note note = phrase.getNote(i);
                     double time = phrase.getNoteStartTime(i);
                     double duration = normalizeDuration(note.getRhythmValue());
+                    if (time % barDuration_ + duration > barDuration_) {
+                        BarNote newHalfNote = new BarNote(0.0, (time + duration) % barDuration_, note.getPitch());
+                        bars_.get((int)(time / barDuration_) + 1).addNote(newHalfNote);
+                        duration -= (time + duration) % barDuration_;
+                    }
                     BarNote newNote = new BarNote(time % barDuration_, duration, note.getPitch());
                     bars_.get((int)(time / barDuration_)).addNote(newNote);
                 }
