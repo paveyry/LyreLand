@@ -1,5 +1,6 @@
 package analysis;
 
+import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ChordLexer;
 import analysis.harmonic.MetadataExtractor;
@@ -22,6 +23,7 @@ public class ScoreAnalyser {
     private int beatsPerBar_;
     private int partNb_;
     private ArrayList<ChordDegree> degreeList_;
+    private BarLexer barLexer_;
 
     // Extracted data
     private transient Scale scale_;
@@ -38,17 +40,12 @@ public class ScoreAnalyser {
             barUnit_ = MetadataExtractor.computeBarUnit(score_.getDenominator());
             beatsPerBar_ = score_.getNumerator();
             partNb_ = score_.getPartArray().length;
-            //degreeList_ = (new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_)).sequenceDegree();
-        } catch (Exception e) {
-            System.out.println("Error: ScoreAnalyser midi file can't be found");
+            barLexer_ = new BarLexer(score_, tonality_);
+            degreeList_ = barLexer_.getDegreeSequence();
         }
-    }
-    public void processDegreeList() {
-        ChordLexer chl = new ChordLexer(score_.copy(), barUnit_, beatsPerBar_, tonality_);
-        degreeList_ = chl.sequenceDegree();
-        // The degree are processed from the end of a score. Hence they are reverse
-        // so they can be seen from the beginning.
-        Collections.reverse(degreeList_);
+        catch (Exception e) {
+            System.err.println("Error: ScoreAnalyser midi file can't be found");
+        }
     }
 
     public String getFileName() {
