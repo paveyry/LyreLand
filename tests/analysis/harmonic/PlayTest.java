@@ -18,7 +18,6 @@ public class PlayTest {
         //double tempo = init.getTempo();
         //Play.midi(init);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.processDegreeList();
         System.out.println("BeatPerBar : " + sa.getBeatsPerBar());
         System.out.println("Tonality : " + sa.getTonality().toString());
         System.out.println(sa.getDegreeList().size());
