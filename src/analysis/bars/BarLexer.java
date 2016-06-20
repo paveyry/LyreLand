@@ -1,4 +1,4 @@
-package bars;
+package analysis.bars;
 
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ChordDegreeProcessor;
@@ -18,14 +18,43 @@ public class BarLexer {
     private double r_;
     private Tonality tonality_;
 
+    /**
+     * Constructor. Lexes the score bar by bar and segments rythms.
+     * @param score The score to lex
+     * @param tonality The tonality of the score
+     */
     public BarLexer(Score score, Tonality tonality) {
         barDuration_ = MetadataExtractor.computeBarUnit(score.getDenominator()) * score.getNumerator();
         bars_ = new ArrayList<>();
         tonality_ = tonality;
         findQuantum(score);
         lexBarsFromScore(score);
+        segmentRhythms();
     }
 
+    /**
+     * Processes the sequence of chord degrees in the lexed score
+     * @return
+     */
+    public ArrayList<ChordDegree> getDegreeSequence() {
+        ArrayList<ChordDegree> degrees = new ArrayList<>();
+        ChordDegreeProcessor cdp = new ChordDegreeProcessor(tonality_);
+
+        for (Bar bar : bars_) {
+            ArrayList<Integer> pitches = new ArrayList<>();
+
+            for (BarNote bn : bar.getNotes())
+                pitches.add(bn.getPitch());
+
+            degrees.add(cdp.chordToDegree(pitches, 1));
+        }
+        return degrees;
+    }
+
+    /**
+     * Getter for the Bar list
+     * @return The list of lexed bars
+     */
     public ArrayList<Bar> getBars() {
         return bars_;
     }
@@ -49,18 +78,17 @@ public class BarLexer {
         }
     }
 
-    public ArrayList<ChordDegree> getDegreeSequence() {
-        ArrayList<ChordDegree> degrees = new ArrayList<>();
-        ChordDegreeProcessor cdp = new ChordDegreeProcessor(tonality_);
-
+    private void segmentRhythms() {
         for (Bar bar : bars_) {
-            ArrayList<Integer> pitches = new ArrayList<>();
-            for (BarNote bn : bar.getNotes()) {
-                pitches.add(bn.getPitch());
+            for (int i = 0; i < bar.getNotes().size(); ++i) {
+                BarNote barNote = bar.getNotes().get(i);
+                while (barNote.getDuration() > quantum_) {
+                    double newNoteStartTime = barNote.getStartTime() + barNote.getDuration() - quantum_;
+                    bar.getNotes().add(new BarNote(newNoteStartTime, quantum_, barNote.getPitch()));
+                    barNote.setDuration(barNote.getDuration() - quantum_);
+                }
             }
-            degrees.add(cdp.chordToDegree(pitches, 1));
         }
-        return degrees;
     }
 
     private double normalizeDuration(double duration) {
