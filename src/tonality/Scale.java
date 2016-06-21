@@ -1,11 +1,5 @@
 package tonality;
 
-import jm.music.data.Note;
-import jm.music.data.Part;
-import jm.music.data.Phrase;
-import jm.music.data.Score;
-import jm.util.View;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,27 +36,13 @@ public class Scale {
         return result;
     }
 
-    // Show the scale on GUI FIXME: need to repair Notate
-    public void showScale() {
-        Score score = new Score();
-        Part p = new Part();
-        Phrase phr = new Phrase();
-        System.out.print("Scale pitch values : ");
-        for (int i = 0; i < notes_.size(); i++) {
-            Note n = new Note(notes_.get(i), 1.0);
-            System.out.print(notes_.get(i) + " ");
-            phr.add(n);
-        }
-        System.out.println();
-        p.add(phr);
-        score.add(p);
-        View.show(score);
-    }
-
-    public int getDegree(int degree) {
-        if (notes_ != null && degree <= 6)
-            return notes_.get(degree);
-        return 0;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (int n : notes_)
+            sb.append(n).append(" ");
+        sb.append(" ]");
+        return sb.toString();
     }
 
     public ArrayList<Integer> getScale(){
@@ -82,7 +62,7 @@ public class Scale {
         if (tonic + (octaveNumber * 12) > 127)
             return null;
 
-        ArrayList<Integer> notes = new ArrayList<Integer>();
+        ArrayList<Integer> notes = new ArrayList<>();
         for (int i = 0; i < octaveNumber; i++) {
             switch (mode) {
                 case MAJOR:
