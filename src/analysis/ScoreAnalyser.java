@@ -2,7 +2,6 @@ package analysis;
 
 import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
-import analysis.harmonic.ChordLexer;
 import analysis.harmonic.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
@@ -10,7 +9,6 @@ import tonality.Scale;
 import tonality.Tonality;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ScoreAnalyser {
     private transient String fileName_;
@@ -33,7 +31,6 @@ public class ScoreAnalyser {
         try {
             Read.midi(score_, midiFile);
             fileName_ = midiFile.substring(midiFile.lastIndexOf('/') + 1, midiFile.length());
-            System.out.println("Processed File: " + fileName_);
             title_ = score_.getTitle();
             tonality_ = MetadataExtractor.getTonality(score_.getKeySignature(), score_.getKeyQuality());
             scale_ = MetadataExtractor.computeScale(tonality_);
@@ -46,6 +43,19 @@ public class ScoreAnalyser {
         catch (Exception e) {
             System.err.println("Error: ScoreAnalyser midi file can't be found");
         }
+    }
+
+    public void printScoreInfo() {
+        StringBuilder sb = new StringBuilder("--------------------- Score MetaData ------------------------\n");
+        sb.append("Processed File: ").append(fileName_).append("\n");
+        sb.append("Score's Tonality: ").append(tonality_.toString()).append("\n");
+        sb.append("Score's Scale: ").append(scale_.toString()).append("\n");
+        sb.append("Score's Bar Unit: ").append(+ barUnit_).append("\n");
+        sb.append("Score's Beat Per Bar: ").append(beatsPerBar_).append("\n");
+        sb.append("Score's Bar Number: ").append(barLexer_.getBarNumber_()).append("\n");
+        sb.append("------------------------ DegreeList ------------------------\n");
+        sb.append(barLexer_.getDegreeSequence()).append("\n\n");
+        System.out.println(sb);
     }
 
     public String getFileName() {

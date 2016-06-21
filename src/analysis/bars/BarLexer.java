@@ -17,6 +17,7 @@ public class BarLexer {
     private double quantum_;
     private double r_;
     private Tonality tonality_;
+    private int barNumber_;
 
     /**
      * Constructor. Lexes the score bar by bar and segments rythms.
@@ -27,6 +28,7 @@ public class BarLexer {
         barDuration_ = MetadataExtractor.computeBarUnit(score.getDenominator()) * score.getNumerator();
         bars_ = new ArrayList<>();
         tonality_ = tonality;
+        barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
         findQuantum(score);
         lexBarsFromScore(score);
         segmentRhythms();
@@ -60,9 +62,7 @@ public class BarLexer {
     }
 
     private void lexBarsFromScore(Score score) {
-        int barNumber = (int)((score.getEndTime() + barDuration_) / barDuration_);
-
-        for (int i = 0; i < barNumber; ++i)
+        for (int i = 0; i < barNumber_; ++i)
             bars_.add(i, new Bar());
 
         for (Part p : score.getPartArray()) {
@@ -100,7 +100,7 @@ public class BarLexer {
         // truncate three decimals and convert to int.
         r_ += duration;
         int result = ((int)(r_ * 10000.0));
-        // Rounded to the superior 250 multiple.
+        // Rounded to the superior quantum_ multiple.
         int mod = ((int)(quantum_ * 10000.0));
         int rest = result % mod;
         if (rest != 0.0) {
@@ -133,4 +133,5 @@ public class BarLexer {
             quantum_ = 8.00;
     }
 
+    public int getBarNumber_() { return barNumber_; }
 }
