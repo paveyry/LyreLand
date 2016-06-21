@@ -17,6 +17,6 @@ public class PlayTest {
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         sa.printScoreInfo();
-        Play.midi(init);
+        //Play.midi(init);
     }
 }
