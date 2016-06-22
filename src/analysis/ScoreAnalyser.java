@@ -49,7 +49,10 @@ public class ScoreAnalyser {
         StringBuilder sb = new StringBuilder("--------------------- Score MetaData ------------------------\n");
         sb.append("Processed File: ").append(fileName_).append("\n");
         sb.append("Score's Tonality: ").append(tonality_.toString()).append("\n");
-        sb.append("Score's Scale: ").append(scale_.toString()).append("\n");
+        sb.append("Score's Scale: ").append(scale_.toString()).append(" = [ ");
+        for (int n : scale_.getNotes_())
+            sb.append(Tonality.pitchToFrenchString(n, true)).append(" ");
+        sb.append("]\n");
         sb.append("Score's Bar Unit: ").append(+ barUnit_).append("\n");
         sb.append("Score's Beat Per Bar: ").append(beatsPerBar_).append("\n");
         sb.append("Score's Bar Number: ").append(barLexer_.getBarNumber_()).append("\n");
