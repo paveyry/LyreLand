@@ -73,7 +73,7 @@ public class ChordDegreeProcessor {
         if (seventhPercentage >= 0.05)
             seventhChord = true;
 
-        if (max < 0.50)
+        if (max < 0.5)
             return new ChordDegree(0, false, barFractionDen);
 
         // Logging the chord and the detected degree
