@@ -1,5 +1,9 @@
 import org.apache.commons.cli.*;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 public class OptionManager {
     private String[] args_;
     private Options options_;
@@ -19,11 +23,17 @@ public class OptionManager {
             if (cmd.hasOption("h"))
                 displayHelp();
 
-            if (cmd.hasOption("v"))
-                ExecutionParameters.verboseMode = true;
+            if (cmd.hasOption("m"))
+                System.setOut(new PrintStream(new OutputStream() {
+                    @Override
+                    public void write(int b) throws IOException {}
+                }));
 
             if (cmd.hasOption("a"))
                 ExecutionParameters.analyze = true;
+
+            if (cmd.hasOption("p"))
+                ExecutionParameters.parallel = true;
 
             if (cmd.hasOption("t"))
                 ExecutionParameters.train = true;
@@ -57,8 +67,9 @@ public class OptionManager {
 
     private void setOptions() {
         options_.addOption("h", "help", false, "Display help message.");
-        options_.addOption("v", "verbose", false, "Activate verbose mode.");
+        options_.addOption("m", "mute", false, "Disable all stdout prints");
         options_.addOption("a", "analyze", false, "Activate MIDI analysis to generate the training set.");
+        options_.addOption("p", "parallel", false, "Activate parallel computing for MIDI analysis");
         options_.addOption("t", "train", false, "Activate training from training set.");
         options_.addOption("g", "generate", false, "Activate MIDI generation.");
         options_.addOption("w", "generate-wav", false, "Activate WAV generation.");

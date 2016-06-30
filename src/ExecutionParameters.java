@@ -9,14 +9,14 @@ import java.util.Random;
  */
 public class ExecutionParameters {
     /**
-     * Specify if Verbose mode is activated
-     */
-    public static boolean verboseMode = false;
-
-    /**
      * Specify if we create the training set (analyze .mid files and create input files for training)
      */
     public static boolean analyze = false;
+
+    /**
+     * Specify if the training-set generation is parallelized
+     */
+    public static boolean parallel = false;
 
     /**
      * Specify if we train the program (if we fill and save the Markov chains)
