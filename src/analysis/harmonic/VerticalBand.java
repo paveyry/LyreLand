@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class VerticalBand {
     private ArrayList<Integer> pitches_;
-    private double rhythm_; // Only one rythm for the all band.
+    private double rhythm_; // Only one rhythm for the all band.
     private ArrayList<Double> duration_;
     private ArrayList<Integer> dynamic_;
 

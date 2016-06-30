@@ -2,12 +2,12 @@ package analysis.bars;
 
 public class BarNote {
     private double startTime_;
-    private double duration_;
+    private double rhythm_;
     private int pitch_;
 
-    public BarNote(double startTime, double duration, int pitch) {
+    public BarNote(double startTime, double rhythm, int pitch) {
         this.startTime_ = startTime;
-        this.duration_ = duration;
+        this.rhythm_ = rhythm;
         this.pitch_ = pitch;
     }
 
@@ -16,19 +16,19 @@ public class BarNote {
     }
 
     public double getDuration() {
-        return duration_;
+        return rhythm_;
     }
 
     public int getPitch() {
         return pitch_;
     }
 
-    public void setStartTime(double startTime_) {
+    public void setStartTime(double startTime) {
         this.startTime_ = startTime_;
     }
 
-    public void setDuration(double duration_) {
-        this.duration_ = duration_;
+    public void setDuration(double rhythm) {
+        this.rhythm_ = rhythm;
     }
 
     public void setPitch(int pitch_) {
