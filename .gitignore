@@ -9,6 +9,7 @@ LyreLand.iws
 
 # Personnal dev scores
 assets/midi/dev_midi/scores/*
+assets/training
 
 # Personal Score
 Analysis_Music/*/*.pdf
