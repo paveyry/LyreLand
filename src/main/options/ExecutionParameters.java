@@ -28,6 +28,11 @@ public class ExecutionParameters {
     public static boolean parallel = false;
 
     /**
+     * Specify the number of thread for parallel computing
+     */
+    public static int threads = 4;
+
+    /**
      * Specify if we train the program (if we fill and save the Markov chains)
      */
     public static boolean train = false;

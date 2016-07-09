@@ -29,8 +29,10 @@ public class OptionManager {
             if (cmd.hasOption("a"))
                 ExecutionParameters.analyze = true;
 
-            if (cmd.hasOption("p"))
+            if (cmd.hasOption("p")) {
                 ExecutionParameters.parallel = true;
+                ExecutionParameters.threads = Integer.parseInt(cmd.getOptionValue("p"));
+            }
 
             if (cmd.hasOption("t"))
                 ExecutionParameters.train = true;
@@ -66,7 +68,7 @@ public class OptionManager {
         options_.addOption("v", "verbose", false, "Enable verbose mode");
         options_.addOption("h", "help", false, "Display help message.");
         options_.addOption("a", "analyze", false, "Activate MIDI analysis to generate the training set.");
-        options_.addOption("p", "parallel", false, "Activate parallel computing for MIDI analysis");
+        options_.addOption("p", "parallel", true, "Activate parallel computing with N threads for MIDI analysis.");
         options_.addOption("t", "train", false, "Activate training from training set.");
         options_.addOption("g", "generate", false, "Activate MIDI generation.");
         options_.addOption("w", "generate-wav", false, "Activate WAV generation.");

@@ -25,7 +25,7 @@ public class Main {
         if (ExecutionParameters.analyze) {
             try {
                 // Create our threadpool
-                ExecutorService threadPool = Executors.newFixedThreadPool(4);
+                ExecutorService threadPool = Executors.newFixedThreadPool(ExecutionParameters.threads);
 
                 // Store starting time to mesure analysis execution duration
                 double startTime = System.currentTimeMillis();
