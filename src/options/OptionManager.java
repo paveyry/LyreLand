@@ -1,8 +1,6 @@
-import org.apache.commons.cli.*;
+package options;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import org.apache.commons.cli.*;
 
 public class OptionManager {
     private String[] args_;
@@ -23,11 +21,8 @@ public class OptionManager {
             if (cmd.hasOption("h"))
                 displayHelp();
 
-            if (cmd.hasOption("m"))
-                System.setOut(new PrintStream(new OutputStream() {
-                    @Override
-                    public void write(int b) throws IOException {}
-                }));
+            if (cmd.hasOption("v"))
+                ExecutionParameters.verbose = true;
 
             if (cmd.hasOption("a"))
                 ExecutionParameters.analyze = true;
@@ -66,8 +61,8 @@ public class OptionManager {
     }
 
     private void setOptions() {
+        options_.addOption("v", "verbose", false, "Enable verbose mode");
         options_.addOption("h", "help", false, "Display help message.");
-        options_.addOption("m", "mute", false, "Disable all stdout prints");
         options_.addOption("a", "analyze", false, "Activate MIDI analysis to generate the training set.");
         options_.addOption("p", "parallel", false, "Activate parallel computing for MIDI analysis");
         options_.addOption("t", "train", false, "Activate training from training set.");
