@@ -98,7 +98,11 @@ public class ScoreAnalyser {
         return partNb_;
     }
 
-    public ArrayList<ChordDegree> getDegreeList() { return degreeList_; }
+    public ArrayList<ChordDegree> getDegreeList() {
+        return degreeList_;
+    }
 
-    public double getQuantum() { return quantum_; }
+    public double getQuantum() {
+        return quantum_;
+    }
 }
