@@ -25,24 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void demoScale(int tonic, Tonality.Mode s, int octaveNumber, double rythm){
-        Score score = new Score();
-        Part p = new Part();
-        Phrase phr = new Phrase();
-        Scale scale = new Scale(tonic, s, octaveNumber);
-        ArrayList<Integer> basicScale = scale.getScale();
-        for (int i = 0; i < basicScale.size(); i++) {
-            Note n = new Note(basicScale.get(i), rythm);
-            System.out.println(basicScale.get(i));
-            phr.add(n);
-        }
-        p.add(phr);
-        score.add(p);
-        Write.midi(score, "basic_scale.mid"); // create midiFile
-        View.show(score);
-        Play.mid("basic_scale.mid"); // Play the sound
-    }
-
     public static void main(String[] args) {
         OptionManager optionManager = new OptionManager(args);
         optionManager.parse();
