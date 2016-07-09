@@ -4,6 +4,7 @@ import analysis.containers.CircularArrayList;
 import jm.constants.Pitches;
 import tonality.Scale;
 import tonality.Tonality;
+import options.ExecutionParameters;
 
 import java.util.ArrayList;
 
@@ -77,11 +78,13 @@ public class ChordDegreeProcessor {
             return new ChordDegree(0, false, barFractionDen);
 
         // Logging the chord and the detected degree
-        /*StringBuilder sb = new StringBuilder("DEGREELOG: ");
-        for (Integer i : chord)
-            if (i != null && i != Pitches.REST)
-                sb.append(Tonality.pitchToFrenchString(i, true)).append(" ");
-        System.out.println(sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen)).toString());*/
+        if (ExecutionParameters.verbose) {
+            StringBuilder sb = new StringBuilder("DEGREELOG: ");
+            for (Integer i : chord)
+                if (i != null && i != Pitches.REST)
+                    sb.append(Tonality.pitchToFrenchString(i, true)).append(" ");
+            System.out.println(sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen)).toString());
+        }
 
         return new ChordDegree(degree, seventhChord, barFractionDen);
     }

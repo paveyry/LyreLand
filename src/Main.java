@@ -2,6 +2,8 @@ import jm.music.data.*;
 import jm.util.Play;
 import jm.util.View;
 import jm.util.Write;
+import options.ExecutionParameters;
+import options.OptionManager;
 import tonality.Scale;
 import tonality.Tonality;
 
@@ -32,16 +34,16 @@ public class Main {
         optionManager.parse();
 
         if (ExecutionParameters.analyze) {
-            // Launch analysis for each file in ExecutionParameters.midDirPath and create training set
-            // in ExecutionParameters.trainingSetPath directory.
+            // Launch analysis for each file in options.ExecutionParameters.midDirPath and create training set
+            // in options.ExecutionParameters.trainingSetPath directory.
         }
         if (ExecutionParameters.train) {
-            // Launch training from the training set in ExecutionParameters.trainingSetPath and create
-            // trained data in ExecutionParameters.trainedDataPath directory.
+            // Launch training from the training set in options.ExecutionParameters.trainingSetPath and create
+            // trained data in options.ExecutionParameters.trainedDataPath directory.
         }
         if (ExecutionParameters.generate) {
-            // Generate a music using the ExecutionParameters.seed and the trained data located in
-            // ExecutionParameters.trainedDataPath into Execution.Parameters.outputPath + ".mid"|".wav"
+            // Generate a music using the options.ExecutionParameters.seed and the trained data located in
+            // options.ExecutionParameters.trainedDataPath into Execution.Parameters.outputPath + ".mid"|".wav"
         }
 
     }

@@ -1,3 +1,5 @@
+package options;
+
 import tools.Misc;
 
 import java.util.Random;
@@ -8,6 +10,11 @@ import java.util.Random;
  * Initialization is the default value
  */
 public class ExecutionParameters {
+    /**
+     * Specify if the verbose mode is activated
+     */
+    public static boolean verbose = false;
+
     /**
      * Specify if we create the training set (analyze .mid files and create input files for training)
      */
