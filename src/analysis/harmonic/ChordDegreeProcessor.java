@@ -8,6 +8,9 @@ import main.options.ExecutionParameters;
 
 import java.util.ArrayList;
 
+/**
+ * Class for Chord Degree detection
+ */
 public class ChordDegreeProcessor {
     private Tonality tonality_;
     private CircularArrayList<Integer> scale_;
@@ -25,10 +28,11 @@ public class ChordDegreeProcessor {
     }
 
     /**
-     * Finds the degree of a chord
-     * @param chord Analyzed chord
-     * @return Degree (between 1 and 7) with a boolean specifying whether it is a seventh chord
-     *         `null` if the chord does not match a degree.
+     * Finds the degree of a set of notes
+     * @param chord Set of note pitches to analyse
+     * @param barFractionDen Denominator of the fraction of bar contaning the set of notes (3 for 1/3 of bar)
+     * @return Degree (between 1 and 7) with a boolean specifying whether it is a seventh chord and the barFractionDen
+     *         `Degree 0` if the notes do not match a degree.
      */
     public ChordDegree chordToDegree(ArrayList<Integer> chord, int barFractionDen) {
         double[] percentage = new double[chords_.size()];

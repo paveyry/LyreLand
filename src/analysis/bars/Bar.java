@@ -2,23 +2,41 @@ package analysis.bars;
 
 import java.util.ArrayList;
 
+/**
+ * Class that describes a bar
+ */
 public class Bar {
     private ArrayList<BarNote> notes_;
     private ArrayList<ArrayList<Integer>> notesByBeat_;
 
+    /**
+     * Constructor for an empty Bar.
+     */
     public Bar() {
         this.notes_ = new ArrayList<>();
         this.notesByBeat_ = null;
     }
 
+    /**
+     * Constructor for a Bar with a set of BarNotes
+     * @param notes_ Set of BarNotes of the Bar
+     */
     public Bar(ArrayList<BarNote> notes_) {
         this.notes_ = notes_;
     }
 
+    /**
+     * Add a note to the Bar
+     * @param note BarNote to insert
+     */
     public void addNote(BarNote note) {
         notes_.add(note);
     }
 
+    /**
+     * Getter for the BarNotes contained in the Bar
+     * @return List of BarNotes
+     */
     public ArrayList<BarNote> getNotes() {
         return notes_;
     }
@@ -35,6 +53,11 @@ public class Bar {
         }
     }
 
+    /**
+     * Reorganize notes in a List of List of BarNotes that groupes the notes by beat in the bar
+     * @param beatsPerBar Number of beats in a bar
+     * @param barUnit Beat rhythmic value
+     */
     public void groupNotesByBeat(int beatsPerBar, double barUnit) {
         notesByBeat_ = new ArrayList<>();
         for (int i = 0; i < beatsPerBar; ++i)
@@ -45,6 +68,10 @@ public class Bar {
         }
     }
 
+    /**
+     * Getter for the beat-organized BarNotes
+     * @return List of List of BarNotes (each sublist corresponds to a beat)
+     */
     public ArrayList<ArrayList<Integer>> getNotesByBeat() {
         return notesByBeat_;
     }

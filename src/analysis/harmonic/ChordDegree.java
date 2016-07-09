@@ -1,5 +1,8 @@
 package analysis.harmonic;
 
+/**
+ * Class that describes a chord degree
+ */
 public class ChordDegree {
     private int degree_;
     private boolean seventhChord_;
@@ -18,7 +21,7 @@ public class ChordDegree {
 
     /**
      * Getter for the degree attribute
-     * @return the degree of the chord
+     * @return Degree of the chord
      */
     public int getDegree() {
         return degree_;
@@ -26,7 +29,7 @@ public class ChordDegree {
 
     /**
      * Getter for the seventhChord attribute
-     * @return true if the chord is a seventh chord, false elsewhere
+     * @return True if the chord is a seventh chord, False elsewhere
      */
     public boolean isSeventhChord() {
         return seventhChord_;
@@ -34,7 +37,7 @@ public class ChordDegree {
 
     /**
      * Getter for the barFractionDen attribute
-     * @return the denominator of the fraction of bar corresponding to this degree
+     * @return Denominator of the fraction of bar corresponding to this degree
      */
     public int getBarFractionDen_() {
         return barFractionDen_;
@@ -43,7 +46,7 @@ public class ChordDegree {
     /**
      * Equality method
      * @param other other ChordDegree
-     * @return true if the two ChordDegrees are equal, false elsewhere and if the param is not a ChordDegree
+     * @return True if the two ChordDegrees are equal, False elsewhere and if the param is not a ChordDegree
      */
     @Override
     public boolean equals(Object other) {
@@ -54,7 +57,7 @@ public class ChordDegree {
 
     /**
      * Conversion to String
-     * @return a String corresponding to the object
+     * @return Formatted String corresponding to the object
      */
     @Override
     public String toString() {

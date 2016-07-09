@@ -4,10 +4,17 @@ import org.apache.commons.cli.*;
 
 import java.nio.file.Paths;
 
+/**
+ * Class for option parsing using apache.commons.cli library
+ */
 public class OptionManager {
     private String[] args_;
     private Options options_;
 
+    /**
+     * Constructor
+     * @param args Program arguments
+     */
     public OptionManager(String[] args) {
         this.args_ = args;
         this.options_ = new Options();

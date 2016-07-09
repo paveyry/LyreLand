@@ -10,13 +10,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Runnable class that processes analysis on a mid file and generates a XML file with the extracted data
+ * in the training set directory.
+ */
 public class TrainingExampleGenerator implements Runnable {
     private Path filepath_;
 
+    /**
+     * Constructor
+     * @param filepath Path to mid file
+     */
     public TrainingExampleGenerator(Path filepath) {
         filepath_ = filepath;
     }
 
+    /**
+     * Run method. Execute analysis, create the new path for the XML file, and serialize the ScoreAnalyzer.
+     */
     public void run() {
         ScoreAnalyser sa = new ScoreAnalyser(filepath_.toString());
         try {

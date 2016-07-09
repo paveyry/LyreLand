@@ -2,7 +2,13 @@ package tonality;
 
 import jm.constants.Pitches;
 
+/**
+ * Class that describes a tonality.
+ */
 public class Tonality {
+    /**
+     * Enum for the mode
+     */
     public enum Mode {
         MAJOR,
         MINOR,
@@ -14,20 +20,38 @@ public class Tonality {
     private Mode mode_;
     private Boolean isSharp_; // Already applied on the tonic pitch. Just useful to distinguish C sharp from D flat
 
+    /**
+     * Tonality constructor
+     * @param tonic Tonic note pitch
+     * @param mode Mode
+     * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
+     */
     public Tonality(int tonic, Mode mode, boolean isSharp) {
         this.tonic_ = tonic;
         this.mode_ = mode;
         this.isSharp_ = isSharp;
     }
 
+    /**
+     * Getter for Mode
+     * @return Mode
+     */
     public Mode getMode() {
         return this.mode_;
     }
 
+    /**
+     * Getter for Tonic
+     * @return Tonic note pitch
+     */
     public Integer getTonic() {
         return this.tonic_;
     }
 
+    /**
+     * Convert Tonality to string
+     * @return Formatted string
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -44,6 +68,12 @@ public class Tonality {
         return sb.toString();
     }
 
+    /**
+     * Convert a note pitch to a human readable string with English notation (A, B, C...)
+     * @param pitch Pitch to convert
+     * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
+     * @return English notation of the note
+     */
     public static String pitchToString(int pitch, boolean isSharp) {
         pitch = pitch % 12;
         switch (pitch) {
@@ -74,7 +104,12 @@ public class Tonality {
         }
         return null;
     }
-
+    /**
+     * Convert a note pitch to a human readable string with French notation (Do, Re, Mi...)
+     * @param pitch Pitch to convert
+     * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
+     * @return French notation of the note
+     */
     public static String pitchToFrenchString(int pitch, boolean isSharp) {
         pitch = pitch % 12;
         switch (pitch) {

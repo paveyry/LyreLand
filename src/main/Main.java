@@ -1,21 +1,20 @@
 package main;
 
-import analysis.ScoreAnalyser;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import main.options.ExecutionParameters;
 import main.options.OptionManager;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
 
+    /**
+     * Main method.
+     * @param args Program arguments
+     */
     public static void main(String[] args) {
         OptionManager optionManager = new OptionManager(args);
         optionManager.parse();

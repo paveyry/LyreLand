@@ -4,19 +4,17 @@ import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ChordDegreeExtractor;
 import analysis.metadata.MetadataExtractor;
-import jm.midi.MidiParser;
-import jm.midi.MidiSynth;
-import jm.midi.SMF;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 import tonality.Tonality;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 
+/**
+ * Class for Score analysis. Executes all the step of the analysis on a specific score.
+ * This class can be serialized in XML using the XStream library to create an input file for the training.
+ */
 public class ScoreAnalyser {
     private transient String fileName_;
     private transient Score score_;
@@ -35,6 +33,10 @@ public class ScoreAnalyser {
     // Extracted data
     private transient Scale scale_;
 
+    /**
+     * Constructor for ScoreAnalyser
+     * @param midiFile Path to MIDI file to analyse
+     */
     public ScoreAnalyser(String midiFile) {
         score_ = new Score();
         try {
@@ -56,12 +58,15 @@ public class ScoreAnalyser {
         }
     }
 
+    /**
+     * Display the important extracted data after analysis.
+     */
     public void printScoreInfo() {
         StringBuilder sb = new StringBuilder("--------------------- Score MetaData ------------------------\n");
         sb.append("Processed File: ").append(fileName_).append("\n");
         sb.append("Score's Tonality: ").append(tonality_.toString()).append("\n");
         sb.append("Score's Scale: ").append(scale_.toString()).append(" = [ ");
-        for (int n : scale_.getNotes_())
+        for (int n : scale_.getScale())
             sb.append(Tonality.pitchToFrenchString(n, true)).append(" ");
         sb.append("]\n");
         sb.append("Score's Bar Unit: ").append(+ barUnit_).append("\n");

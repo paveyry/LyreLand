@@ -3,39 +3,42 @@ package tonality;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class that contains the pitches of a tonal scale.
+ */
 public class Scale {
     private int tonic_;
     private Tonality.Mode mode_; // Minor or Major ?
     private ArrayList<Integer> notes_;
 
-    // ---------- Constructors ----------
+    /**
+     * Scale constructor
+     * @param tonic Tonic note pitch
+     * @param mode Mode (Major, Minor, Melodic Minor, Harmonic minor)
+     * @param octaveNumber Number of octaves in the notes array contained in the scale
+     */
     public Scale(int tonic, Tonality.Mode mode, int octaveNumber) {
         tonic_ = tonic;
         mode_ = mode;
         setScale(octaveNumber);
     }
 
+    /**
+     * Check if a specific pitch is in the scale
+     * @param pitch Pitch to find
+     * @return Result of the search
+     */
     public boolean isInScale(int pitch) {
-        boolean result = false;
-        for (int i = 0; i < notes_.size() && !result; i++) {
-            result = (notes_.get(i) % 12 == pitch % 12);
-        }
-        return result;
+        for (int i = 0; i < 7; i++)
+            if (notes_.get(i) % 12 == pitch % 12)
+                return true;
+        return false;
     }
 
-    // Convert the array pitch composing the scale into
-    // a string witch can latter be written in a file
-    public String pitchToString() {
-        String result = "[";
-        for (int i = 0; i < notes_.size(); i++) {
-            if (i < notes_.size() - 1)
-                result += notes_.get(i) + ", ";
-            else
-                result += notes_.get(i) + "]";
-        }
-        return result;
-    }
-
+    /**
+     * Convert Scale to String
+     * @return Formatted String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
@@ -45,18 +48,29 @@ public class Scale {
         return sb.toString();
     }
 
+    /**
+     * Getter for the Scale notes
+     * @return ArrayList of the scale notes pitches
+     */
     public ArrayList<Integer> getScale(){
         return notes_;
     }
 
-    public ArrayList<Integer> getNotes_() {
-        return notes_;
-    }
-
+    /**
+     * Reset the Scale with the specified octave number (previous tonic and mode are kept)
+     * @param octaveNumber Number of octaves contained in the scale
+     */
     public void setScale (int octaveNumber) {
         notes_ = createScale(tonic_, mode_, octaveNumber);
     }
 
+    /**
+     * Create the arraylist of note pitches of the scale
+     * @param tonic Tonic
+     * @param mode Mode
+     * @param octaveNumber Number of octaves contained in the scale
+     * @return ArrayList of note pitches of the created scale
+     */
     private ArrayList<Integer> createScale(int tonic, Tonality.Mode mode, int octaveNumber) {
         // We have to check what we ask don't exceed G9 = 127 (highest pitch)
         if (tonic + (octaveNumber * 12) > 127)
