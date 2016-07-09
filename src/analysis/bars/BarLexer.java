@@ -1,7 +1,5 @@
 package analysis.bars;
 
-import analysis.harmonic.ChordDegree;
-import analysis.harmonic.ChordDegreeProcessor;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -10,7 +8,6 @@ import jm.music.data.Score;
 import tonality.Tonality;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BarLexer {
     private double barDuration_;
@@ -39,54 +36,6 @@ public class BarLexer {
     }
 
     /**
-     * Process the sequence of chord degrees in the lexed score
-     * @return the degree sequence of the score
-     */
-    public ArrayList<ChordDegree> getDegreeSequence() {
-        preprocessDegreeExtraction();
-
-        ArrayList<ChordDegree> degrees = new ArrayList<>();
-        ChordDegreeProcessor cdp = new ChordDegreeProcessor(tonality_);
-
-        for (Bar bar : bars_)
-            degrees.addAll(getDegreesInSubBar(bar, beatsPerBar_, 1, 0, beatsPerBar_, cdp));
-
-        return degrees;
-    }
-
-    private ArrayList<ChordDegree> getDegreesInSubBar(Bar bar, int num, int divider, int start, int end,
-                                                     ChordDegreeProcessor cdp)
-    {
-        // Concatenate all notes to use in degree detection
-        ArrayList<Integer> notes = new ArrayList<>();
-        for (int i = start; i < end; ++i) {
-            notes.addAll(bar.getNotesByBeat().get(i));
-        }
-
-        // Try to find degree
-        ChordDegree cd = cdp.chordToDegree(notes, divider);
-
-        // Return degree if found or if we cannot divide more
-        if (cd.getDegree() > 0 || num / divider <= 1)
-            return new ArrayList<>(Arrays.asList(cd));
-
-        // Find the smallest divider of num / divider
-        int sd;
-        for (sd = 2; sd <= num; ++sd)
-            if ((num / divider) % sd == 0)
-                break;
-
-        ArrayList<ChordDegree> degrees = new ArrayList<>();
-
-        // Call recursively on sub-bars
-        for (int i = 0; i < sd; ++i)
-            degrees.addAll(getDegreesInSubBar(bar, num, divider * sd, start + i * ((end - start) / sd),
-                    start + (i + 1) * ((end - start) / sd) - 1, cdp));
-
-        return degrees;
-    }
-
-    /**
      * Split the score in a list of bars
      * @param score
      */
@@ -109,16 +58,6 @@ public class BarLexer {
                     bars_.get((int)(time / barDuration_)).addNote(newNote);
                 }
             }
-        }
-    }
-
-    /**
-     * Segment rhythms in quantum-long notes and group notes by beat unit
-     */
-    private void preprocessDegreeExtraction() {
-        for (Bar bar : bars_) {
-            bar.segmentRhythms(quantum_);
-            bar.groupNotesByBeat(beatsPerBar_, barUnit_);
         }
     }
 
@@ -149,7 +88,16 @@ public class BarLexer {
     public ArrayList<Bar> getBars() {
         return bars_;
     }
+
     public int getBarNumber() {
         return barNumber_;
     }
+
+    public double getQuantum() { return quantum_; }
+
+    public int getBeatsPerBar() { return beatsPerBar_; }
+
+    public double getBarUnit_() { return  barUnit_; }
+
+    public Tonality getTonality() { return tonality_; }
 }
