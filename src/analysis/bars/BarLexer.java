@@ -2,7 +2,7 @@ package analysis.bars;
 
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ChordDegreeProcessor;
-import analysis.harmonic.MetadataExtractor;
+import analysis.metadata.MetadataExtractor;
 import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
@@ -27,14 +27,14 @@ public class BarLexer {
      * @param score The score to lex
      * @param tonality The tonality of the score
      */
-    public BarLexer(Score score, Tonality tonality) {
+    public BarLexer(Score score, Tonality tonality, double quantum) {
         barUnit_ = MetadataExtractor.computeBarUnit(score.getDenominator());
         beatsPerBar_ = score.getNumerator();
         barDuration_ = barUnit_ * beatsPerBar_;
         bars_ = new ArrayList<>();
         tonality_ = tonality;
         barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
-        findQuantum(score);
+        quantum_ = quantum;
         lexBarsFromScore(score);
     }
 
@@ -84,14 +84,6 @@ public class BarLexer {
                     start + (i + 1) * ((end - start) / sd) - 1, cdp));
 
         return degrees;
-    }
-
-    /**
-     * Getter for the Bar list
-     * @return The list of lexed bars
-     */
-    public ArrayList<Bar> getBars() {
-        return bars_;
     }
 
     /**
@@ -150,28 +142,13 @@ public class BarLexer {
         return (double) result / 10000.0;
     }
 
-    private void findQuantum(Score score) {
-        double srm = score.getShortestRhythmValue();
-        if (srm < (0.0625 - 0.03125 / 2))
-            quantum_ = 0.03125;
-        else if (srm < (0.125 - 0.0625 / 2))
-            quantum_ = 0.0625;
-        else if (srm < (0.250 - 0.125 / 2))
-            quantum_ =  0.125;
-        else if (srm < (0.500 - 0.250 / 2))
-            quantum_ = 0.250;
-        else if (srm < (1 - 0.5 / 2))
-            quantum_ =  0.500;
-        else if (srm < (2.0 - 1.0 / 2.0))
-            quantum_ = 1.00;
-        else if (srm < (4.0 - 2.0 / 2.0))
-            quantum_ = 2.00;
-        else if (srm < (8.0 - 4.0 / 2.0))
-            quantum_ = 4.00;
-        else
-            quantum_ = 8.00;
+    /**
+     * Getter for the Bar list
+     * @return The list of lexed bars
+     */
+    public ArrayList<Bar> getBars() {
+        return bars_;
     }
-
     public int getBarNumber() {
         return barNumber_;
     }
