@@ -1,6 +1,8 @@
-package options;
+package main.options;
 
 import org.apache.commons.cli.*;
+
+import java.nio.file.Paths;
 
 public class OptionManager {
     private String[] args_;
@@ -46,16 +48,16 @@ public class OptionManager {
                 ExecutionParameters.outputPath = cmd.getOptionValue("o");
 
             if (cmd.hasOption("midi_input_path"))
-                ExecutionParameters.midDirPath = cmd.getOptionValue("midi_input_path");
+                ExecutionParameters.midDirPath = Paths.get(cmd.getOptionValue("midi_input_path"));
 
             if (cmd.hasOption("training_set_path"))
-                ExecutionParameters.trainingSetPath = cmd.getOptionValue("training_set_path");
+                ExecutionParameters.trainingSetPath = Paths.get(cmd.getOptionValue("training_set_path"));
 
             if (cmd.hasOption("trained_data_path"))
-                ExecutionParameters.trainedDataPath = cmd.getOptionValue("trained_data_path");
+                ExecutionParameters.trainedDataPath = Paths.get(cmd.getOptionValue("trained_data_path"));
 
         } catch (ParseException e) {
-            System.err.println("Wrong options");
+            System.err.println("Wrong main.options");
             displayHelp();
         }
     }

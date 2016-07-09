@@ -4,7 +4,7 @@ import analysis.containers.CircularArrayList;
 import jm.constants.Pitches;
 import tonality.Scale;
 import tonality.Tonality;
-import options.ExecutionParameters;
+import main.options.ExecutionParameters;
 
 import java.util.ArrayList;
 
