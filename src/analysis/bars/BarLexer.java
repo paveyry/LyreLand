@@ -93,11 +93,19 @@ public class BarLexer {
         return barNumber_;
     }
 
-    public double getQuantum() { return quantum_; }
+    public double getQuantum() {
+        return quantum_;
+    }
 
-    public int getBeatsPerBar() { return beatsPerBar_; }
+    public int getBeatsPerBar() {
+        return beatsPerBar_;
+    }
 
-    public double getBarUnit_() { return  barUnit_; }
+    public double getBarUnit() {
+        return  barUnit_;
+    }
 
-    public Tonality getTonality() { return tonality_; }
+    public Tonality getTonality() {
+        return tonality_;
+    }
 }

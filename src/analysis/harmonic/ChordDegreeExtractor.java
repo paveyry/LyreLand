@@ -36,7 +36,7 @@ public class ChordDegreeExtractor {
     private void preprocessDegreeExtraction() {
         for (Bar bar : barLexer_.getBars()) {
             bar.segmentRhythms(barLexer_.getQuantum());
-            bar.groupNotesByBeat(barLexer_.getBeatsPerBar(), barLexer_.getBarUnit_());
+            bar.groupNotesByBeat(barLexer_.getBeatsPerBar(), barLexer_.getBarUnit());
         }
     }
 
