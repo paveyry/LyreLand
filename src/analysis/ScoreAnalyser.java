@@ -4,11 +4,17 @@ import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ChordDegreeExtractor;
 import analysis.metadata.MetadataExtractor;
+import jm.midi.MidiParser;
+import jm.midi.MidiSynth;
+import jm.midi.SMF;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
 import tonality.Tonality;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class ScoreAnalyser {

@@ -1,7 +1,9 @@
-package options;
+package main.options;
 
 import tools.Misc;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 /**
@@ -48,17 +50,17 @@ public class ExecutionParameters {
     /**
      * Specify the path to input mid Files
     */
-    public static String midDirPath = Misc.getJarPath() + "../assets/midi/";
+    public static Path midDirPath = Paths.get(Misc.getJarPath() + "../assets/midi/");
 
     /**
      * Specify the path to the training set (for writing or reading)
      */
-    public static String trainingSetPath = Misc.getJarPath() + "training/training-set";
+    public static Path trainingSetPath = Paths.get(Misc.getJarPath() + "training/training-set");
 
     /**
      * Specify the path to the trained data (created after training and used for generation)
      */
-    public static String trainedDataPath = Misc.getJarPath() + "training/trained-data";
+    public static Path trainedDataPath = Paths.get(Misc.getJarPath() + "training/trained-data");
 
     /**
      * Specify the path to the generated files without the extension. Default value is `generated.mid` and `generated.wav`
