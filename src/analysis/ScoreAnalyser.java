@@ -2,6 +2,7 @@ package analysis;
 
 import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
+import analysis.harmonic.ChordDegreeExtractor;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
@@ -23,6 +24,7 @@ public class ScoreAnalyser {
     private ArrayList<ChordDegree> degreeList_;
     private BarLexer barLexer_;
     private double quantum_;
+    private ChordDegreeExtractor chordDegreeExtrator_;
 
     // Extracted data
     private transient Scale scale_;
@@ -40,7 +42,8 @@ public class ScoreAnalyser {
             partNb_ = score_.getPartArray().length;
             quantum_ = MetadataExtractor.findQuantum(score_);
             barLexer_ = new BarLexer(score_, tonality_, quantum_);
-            degreeList_ = barLexer_.getDegreeSequence();
+            chordDegreeExtrator_ = new ChordDegreeExtractor(barLexer_);
+            degreeList_ = chordDegreeExtrator_.getDegreeSequence();
         }
         catch (Exception e) {
             System.err.println("Error: ScoreAnalyser midi file can't be found");
@@ -59,7 +62,7 @@ public class ScoreAnalyser {
         sb.append("Score's Beat Per Bar: ").append(beatsPerBar_).append("\n");
         sb.append("Score's Bar Number: ").append(barLexer_.getBarNumber()).append("\n");
         sb.append("------------------------ DegreeList ------------------------\n");
-        sb.append(barLexer_.getDegreeSequence()).append("\n\n");
+        sb.append(chordDegreeExtrator_.getDegreeSequence()).append("\n\n");
         System.out.println(sb);
     }
 

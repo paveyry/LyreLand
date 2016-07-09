@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PlayTest {
     @Test
     public void playTest() {
-        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/Blue_Bird.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/dev_midi/prelude.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
