@@ -49,7 +49,7 @@ public class Main {
 
         if (ExecutionParameters.analyze) {
             // Launch analysis for each file in ExecutionParameters.midDirPath and create training set
-            // in ExecutionParameters.trainingSetPath directory.
+            // in options.ExecutionParameters.trainingSetPath directory.
             try {
                 double startTime = System.currentTimeMillis();
                 ExecutorService service = Executors.newFixedThreadPool(10);
