@@ -49,8 +49,6 @@ public class Main {
                             else
                                 teg.run();
                         });
-                System.err.println("JIHDJSHIUSHDIUHUDIHSIUDHUISHIUDHIUSHDIUHS");
-
 
                 // Close the threadpool and wait for the end of execution
                 threadPool.shutdown();

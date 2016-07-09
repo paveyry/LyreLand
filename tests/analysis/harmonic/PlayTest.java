@@ -4,7 +4,7 @@ import analysis.ScoreAnalyser;
 
 import jm.music.data.Score;
 import jm.util.Read;
-import options.ExecutionParameters;
+import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
