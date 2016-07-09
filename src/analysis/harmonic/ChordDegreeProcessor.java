@@ -28,7 +28,7 @@ public class ChordDegreeProcessor {
     }
 
     /**
-     * Finds the degree of a set of notes
+     * Find the degree of a set of notes
      * @param chord Set of note pitches to analyse
      * @param barFractionDen Denominator of the fraction of bar contaning the set of notes (3 for 1/3 of bar)
      * @return Degree (between 1 and 7) with a boolean specifying whether it is a seventh chord and the barFractionDen
@@ -38,10 +38,12 @@ public class ChordDegreeProcessor {
         double[] percentage = new double[chords_.size()];
         int chordsize = 0;
 
+        // Calculate chord size without null notes
         for (Integer n : chord)
             if (n != null && n >= 0)
                 chordsize++;
 
+        // Compute the matching percentage for each possible degree
         for (int i = 0; i < chords_.size(); ++i) {
             for (int j = 0; j < chord.size(); ++j) {
                 if (chord.get(j) == null || chord.get(j) < 0)
@@ -58,8 +60,8 @@ public class ChordDegreeProcessor {
 
         double max = 0.0;
         int degree = 0;
-        boolean seventhChord = false;
 
+        // Find the degree with the best matching percentage
         for (int i = 0; i < percentage.length; ++i) {
             if (percentage[i] > max) {
                 max = percentage[i];
@@ -67,8 +69,10 @@ public class ChordDegreeProcessor {
             }
         }
 
+        boolean seventhChord = false;
         double seventhPercentage = 0.0;
 
+        // Determine if the chord degree is a seventh chord
         for (int i = 0; i < chord.size(); ++i) {
             if (degree > 0 && chord.get(i) % 12 == chords_.get(degree - 1)[3] % 12)
                 ++seventhPercentage;
@@ -78,6 +82,7 @@ public class ChordDegreeProcessor {
         if (seventhPercentage >= 0.05)
             seventhChord = true;
 
+        // If the matching percentage is not sufficient, return a 0 degree to specify that no degree was found
         if (max < 0.5)
             return new ChordDegree(0, false, barFractionDen);
 
@@ -90,6 +95,7 @@ public class ChordDegreeProcessor {
             System.out.println(sb.append(" -> ").append(new ChordDegree(degree, seventhChord, barFractionDen)).toString());
         }
 
+        // Return the degree
         return new ChordDegree(degree, seventhChord, barFractionDen);
     }
 
