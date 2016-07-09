@@ -2,7 +2,7 @@ package analysis;
 
 import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
-import analysis.harmonic.MetadataExtractor;
+import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 import tonality.Scale;
@@ -22,6 +22,7 @@ public class ScoreAnalyser {
     private int partNb_;
     private ArrayList<ChordDegree> degreeList_;
     private BarLexer barLexer_;
+    private double quantum_;
 
     // Extracted data
     private transient Scale scale_;
@@ -37,7 +38,8 @@ public class ScoreAnalyser {
             barUnit_ = MetadataExtractor.computeBarUnit(score_.getDenominator());
             beatsPerBar_ = score_.getNumerator();
             partNb_ = score_.getPartArray().length;
-            barLexer_ = new BarLexer(score_, tonality_);
+            quantum_ = MetadataExtractor.findQuantum(score_);
+            barLexer_ = new BarLexer(score_, tonality_, quantum_);
             degreeList_ = barLexer_.getDegreeSequence();
         }
         catch (Exception e) {
@@ -94,4 +96,6 @@ public class ScoreAnalyser {
     }
 
     public ArrayList<ChordDegree> getDegreeList() { return degreeList_; }
+
+    public double getQuantum() { return quantum_; }
 }

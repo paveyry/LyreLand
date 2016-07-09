@@ -1,6 +1,7 @@
-package analysis.harmonic;
+package analysis.metadata;
 
 import analysis.containers.CircularArrayList;
+import jm.music.data.Score;
 import tonality.Scale;
 import tonality.Tonality;
 import static jm.constants.Pitches.*;
@@ -82,5 +83,34 @@ public class MetadataExtractor {
         Integer tonic = tonality.getTonic();
         Tonality.Mode mode = tonality.getMode();
         return new Scale(tonic, mode, 1);
+    }
+
+    /**
+     * Determine the quantum unit of a given score
+     * @param score The score whose quantum need to be found
+     * @return quantum
+     */
+    public static double findQuantum(Score score) {
+        double srm = score.getShortestRhythmValue();
+        double quantum = 0.0;
+        if (srm < (0.0625 - 0.03125 / 2))
+            quantum = 0.03125;
+        else if (srm < (0.125 - 0.0625 / 2))
+            quantum = 0.0625;
+        else if (srm < (0.250 - 0.125 / 2))
+            quantum =  0.125;
+        else if (srm < (0.500 - 0.250 / 2))
+            quantum = 0.250;
+        else if (srm < (1 - 0.5 / 2))
+            quantum =  0.500;
+        else if (srm < (2.0 - 1.0 / 2.0))
+            quantum = 1.00;
+        else if (srm < (4.0 - 2.0 / 2.0))
+            quantum = 2.00;
+        else if (srm < (8.0 - 4.0 / 2.0))
+            quantum = 4.00;
+        else
+            quantum = 8.00;
+        return quantum;
     }
 }
