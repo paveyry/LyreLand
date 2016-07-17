@@ -18,6 +18,7 @@ public class BarLexer {
     private int barNumber_;
     private double barUnit_;
     private int beatsPerBar_;
+    private double barsRhythmicMean_;
 
     /**
      * Constructor. Lex the score bar by bar
@@ -33,6 +34,7 @@ public class BarLexer {
         barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
         quantum_ = quantum;
         lexBarsFromScore(score);
+        barsRhythmicMean_ = computeBarsRhythmicMeans();
     }
 
     /**
@@ -66,7 +68,7 @@ public class BarLexer {
      * @param rhythm
      * @return the normalized rhythm
      */
-    private double normalizeRhythm(double rhythm) {
+    public double normalizeRhythm(double rhythm) {
         // truncate three decimals and convert to int.
         r_ += rhythm;
         int result = ((int)(r_ * 10000.0));
@@ -79,6 +81,18 @@ public class BarLexer {
         }
         r_ =  (double) - rest / 10000.0;
         return (double) result / 10000.0;
+    }
+
+    /**
+     * Compute the rhythmic mean of all the bars of the score.
+     */
+    private double computeBarsRhythmicMeans() {
+        double result = 0.0;
+        for (Bar b : bars_) {
+            b.setBarRythmicMean(normalizeRhythm(b.computeBarRhythmMean()));
+            result += b.getBarRythmicMean();
+        }
+        return normalizeRhythm(result / bars_.size());
     }
 
     /**
@@ -107,5 +121,9 @@ public class BarLexer {
 
     public Tonality getTonality() {
         return tonality_;
+    }
+
+    public double getBarsRhythmicMean() {
+        return barsRhythmicMean_;
     }
 }

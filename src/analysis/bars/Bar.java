@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Bar {
     private ArrayList<BarNote> notes_;
     private ArrayList<ArrayList<Integer>> notesByBeat_;
+    private double barRhythmicMean_;
 
     /**
      * Constructor for an empty Bar.
@@ -69,10 +70,42 @@ public class Bar {
     }
 
     /**
+     * Compute the rythmic mean including rest but excluding negative rhythms.
+     * @return The rhythmic means in double of the bar.
+     */
+    public double computeBarRhythmMean() {
+        double result = 0.0;
+        int counter = 0;
+        for (BarNote barNote : notes_) {
+            if (barNote.getDuration() > 0)
+                result += barNote.getDuration();
+            else
+                ++counter;
+        }
+        return result / (notes_.size() - counter);
+    }
+
+    /**
      * Getter for the beat-organized BarNotes
      * @return List of List of BarNotes (each sublist corresponds to a beat)
      */
     public ArrayList<ArrayList<Integer>> getNotesByBeat() {
         return notesByBeat_;
+    }
+
+    /**
+     * Getter for the bar rhythmic mean
+     * @return the rythmic mean once the bar has been filled by the barLexer
+     */
+    public double getBarRythmicMean() {
+        return barRhythmicMean_;
+    }
+
+    /**
+     * Setter for the bar rhythmic mean.
+     * @param mean computed by the barlexer
+     */
+    public void setBarRythmicMean(double mean) {
+        barRhythmicMean_ = mean;
     }
 }

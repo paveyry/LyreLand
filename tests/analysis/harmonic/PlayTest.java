@@ -2,6 +2,8 @@ package analysis.harmonic;
 
 import analysis.ScoreAnalyser;
 
+import analysis.bars.Bar;
+import analysis.bars.BarLexer;
 import jm.music.data.Score;
 import jm.util.Read;
 import main.options.ExecutionParameters;
@@ -20,6 +22,7 @@ public class PlayTest {
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
+        BarLexer bal = sa.getBarLexer();
         sa.printScoreInfo();
         //Play.midi(init);
     }
