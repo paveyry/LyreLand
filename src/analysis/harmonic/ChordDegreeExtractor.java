@@ -6,6 +6,9 @@ import analysis.bars.BarLexer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class that finds the complete ChordDegree sequence of a score
+ */
 public class ChordDegreeExtractor {
     private BarLexer barLexer_;
     private ArrayList<ChordDegree> degreeList_;

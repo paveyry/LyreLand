@@ -9,7 +9,7 @@ import main.options.ExecutionParameters;
 import java.util.ArrayList;
 
 /**
- * Class for Chord Degree detection
+ * Class that finds Chord Degree on a specific bar of bar part.
  */
 public class ChordDegreeProcessor {
     private Tonality tonality_;
@@ -86,7 +86,7 @@ public class ChordDegreeProcessor {
         if (max < 0.5)
             return new ChordDegree(0, false, barFractionDen);
 
-        // Logging the chord and the detected degree
+        // Log the chord and the detected degree
         if (ExecutionParameters.verbose) {
             StringBuilder sb = new StringBuilder("DEGREELOG: ");
             for (Integer i : chord)
