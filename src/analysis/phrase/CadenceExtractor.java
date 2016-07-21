@@ -37,19 +37,19 @@ public class CadenceExtractor {
         int endBar = 0;
 
         // Iterate through the degree list to extract the wanted cadences.
-        for (int i = 0; i < degreeList_.size() - 1; ++i) {
-            ChordDegree firstChord = degreeList_.get(i);
-            ChordDegree secondChord = degreeList_.get(i + 1);
-            if (isCadence(firstChord.getDegree(), secondChord.getDegree())) {
-                int offset = (fractionCounter + (1 / firstChord.getBarFractionDen_()) == 1.0) ? 1 : 0;
-                Cadence cadence = new Cadence(firstChord, secondChord, beginBar, endBar + offset);
-                result.add(cadence);
-                beginBar = endBar + offset;
-            }
+        for (int i = 1; i < degreeList_.size(); ++i) {
+            ChordDegree firstChord = degreeList_.get(i - 1);
+            ChordDegree secondChord = degreeList_.get(i);
+
             fractionCounter += (1/firstChord.getBarFractionDen_());
             if (fractionCounter == 1.0) {
                 ++endBar;
                 fractionCounter = 0;
+            }
+            if (isCadence(firstChord.getDegree(), secondChord.getDegree())) {
+                Cadence cadence = new Cadence(firstChord, secondChord, beginBar, endBar);
+                result.add(cadence);
+                beginBar = endBar;
             }
         }
         return result;

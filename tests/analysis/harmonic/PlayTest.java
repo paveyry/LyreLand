@@ -28,11 +28,11 @@ public class PlayTest {
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         BarLexer bal = sa.getBarLexer();
         sa.printScoreInfo();
-        /*CadenceExtractor lol = new CadenceExtractor(bal, sa.getDegreeList());
+        CadenceExtractor lol = new CadenceExtractor(bal, sa.getDegreeList());
         ArrayList<Cadence> test = lol.extractCadences();
         System.out.println(test.size());
         for (Cadence cadence : test)
-            System.out.println(cadence.toString());*/
+            System.out.println(cadence.toString());
         //Play.midi(init);
     }
 }
