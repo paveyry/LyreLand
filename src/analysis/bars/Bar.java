@@ -1,5 +1,7 @@
 package analysis.bars;
 
+import analysis.harmonic.ChordDegree;
+
 import java.util.ArrayList;
 
 /**
@@ -14,8 +16,8 @@ public class Bar {
      * Constructor for an empty Bar.
      */
     public Bar() {
-        this.notes_ = new ArrayList<>();
-        this.notesByBeat_ = null;
+        notes_ = new ArrayList<>();
+        notesByBeat_ = null;
     }
 
     /**
