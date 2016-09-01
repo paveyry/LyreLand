@@ -1,6 +1,7 @@
 package analysis.bars;
 
 import analysis.harmonic.ChordDegree;
+import tonality.Tonality;
 
 import java.util.ArrayList;
 
@@ -11,13 +12,15 @@ public class Bar {
     private ArrayList<BarNote> notes_;
     private ArrayList<ArrayList<Integer>> notesByBeat_;
     private double barRhythmicMean_;
+    private Tonality tonality_;
 
     /**
      * Constructor for an empty Bar.
      */
-    public Bar() {
+    public Bar(Tonality tonality) {
         notes_ = new ArrayList<>();
         notesByBeat_ = null;
+        tonality_ = tonality;
     }
 
     /**
@@ -109,5 +112,21 @@ public class Bar {
      */
     public void setBarRythmicMean(double mean) {
         barRhythmicMean_ = mean;
+    }
+
+    /**
+     * Getter for the tonality
+     * @return Tonality of the bar
+     */
+    public Tonality getTonality_() {
+        return tonality_;
+    }
+
+    /**
+     * Setter for the tonality
+     * @param tonality New tonality for the bar
+     */
+    public void setTonality_(Tonality tonality) {
+        tonality_ = tonality;
     }
 }

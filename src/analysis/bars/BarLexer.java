@@ -43,7 +43,7 @@ public class BarLexer {
      */
     private void lexBarsFromScore(Score score) {
         for (int i = 0; i < barNumber_; ++i)
-            bars_.add(i, new Bar());
+            bars_.add(i, new Bar(tonality_));
 
         for (Part p : score.getPartArray()) {
             for (Phrase phrase : p.getPhraseArray()) {
