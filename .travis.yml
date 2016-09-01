@@ -1,5 +1,6 @@
-language: java
+dist: trusty
 sudo: required
+language: java
 jdk:
     - oraclejdk8
 
@@ -12,7 +13,7 @@ before_install:
     - git lfs install
     - git config -f .lfsconfig lfs.url http://travis:travis@pa.veyry.fr:9999
     - git lfs env
-    - sudo apt-get update
+    - sudo apt-get -qq update
     - sudo apt-get install oracle-java8-installer
 
 script:

@@ -24,6 +24,17 @@ public class Scale {
     }
 
     /**
+     * Scale constructor
+     * @param tonality Tonality for the scale
+     * @param octaveNumber Number of octaves in the notes array contained in the scale
+     */
+    public Scale(Tonality tonality, int octaveNumber) {
+        tonic_ = tonality.getTonic();
+        mode_ = tonality.getMode();
+        setScale(octaveNumber);
+    }
+
+    /**
      * Check if a specific pitch is in the scale
      * @param pitch Pitch to find
      * @return Result of the search

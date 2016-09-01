@@ -19,7 +19,7 @@ public class ScoreAnalyser {
     private transient String fileName_;
     private transient Score score_;
 
-    // Basic Meta data of the score.
+    // Data of the score.
     private transient String title_;
     private Tonality tonality_;
     private double barUnit_;
@@ -29,8 +29,6 @@ public class ScoreAnalyser {
     private transient BarLexer barLexer_;
     private double quantum_;
     private transient ChordDegreeExtractor chordDegreeExtrator_;
-
-    // Extracted data
     private transient Scale scale_;
 
     /**
