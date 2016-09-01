@@ -1,6 +1,11 @@
 package tonality;
 
+import analysis.containers.CircularArrayList;
 import jm.constants.Pitches;
+
+import java.util.Arrays;
+
+import static jm.constants.Pitches.*;
 
 /**
  * Class that describes a tonality.
@@ -30,6 +35,50 @@ public class Tonality {
         this.tonic_ = tonic;
         this.mode_ = mode;
         this.isSharp_ = isSharp;
+    }
+
+    /**
+     * Tonality constructor that processes tonality from key signature and quality
+     * @param keySignature Key Signature of the Score
+     * @param keyQuality Key Quality of the Score
+     */
+    public Tonality(int keySignature, int keyQuality)
+    {
+        isSharp_ = false;
+
+        if (keySignature == 0) {
+            if (keyQuality == 0) {
+                tonic_ = C0;
+                mode_ = Mode.MAJOR;
+            }
+            else {
+                tonic_ = A0;
+                mode_ = Mode.MINOR;
+            }
+            return;
+        }
+
+        mode_ = (keyQuality == 0) ? Tonality.Mode.MAJOR : Tonality.Mode.MINOR;
+
+        CircularArrayList<Integer> order = new CircularArrayList<>(); // Sharp or flat order
+        if (keySignature > 0) {
+            order.addAll(Arrays.asList(F4, C4, G4, D4, A4, E4, B4));
+            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) : order.get(keySignature - 1) - 3;
+
+            for (int i = 0; i < keySignature; ++i)
+                if (order.get(i) % 12 == tonic_ % 12) {
+                    ++tonic_;
+                    isSharp_ = true;
+                }
+        }
+        else {
+            order.addAll(Arrays.asList(B4, E4, A4, D4, G4, C4, F4));
+            tonic_ = (mode_ == Mode.MAJOR) ? order.get((keySignature * -1) - 2) : order.get((keySignature * -1) - 2) - 3;
+
+            for (int i = 0; i < keySignature; ++i)
+                if (order.get(i) % 12 == tonic_ % 12)
+                    --tonic_;
+        }
     }
 
     /**

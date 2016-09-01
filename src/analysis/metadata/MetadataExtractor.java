@@ -1,10 +1,8 @@
 package analysis.metadata;
 
-import analysis.containers.CircularArrayList;
 import jm.music.data.Score;
 import tonality.Scale;
 import tonality.Tonality;
-import static jm.constants.Pitches.*;
 
 import java.util.Arrays;
 
@@ -34,44 +32,7 @@ public class MetadataExtractor {
      * @return Tonality of the song
      */
     public static Tonality getTonality(int keySignature, int keyQuality) {
-        if (keySignature == 0)
-            return (keyQuality == 0)
-                    ? new Tonality(C0, Tonality.Mode.MAJOR, false)
-                    : new Tonality(A0, Tonality.Mode.MINOR, false);
-
-        boolean keySignatureIsSharp = keySignature > 0;
-        Tonality.Mode mode = (keyQuality == 0) ? Tonality.Mode.MAJOR : Tonality.Mode.MINOR;
-        Integer tonic;
-
-        boolean isSharp = false;
-
-        CircularArrayList<Integer> order = new CircularArrayList<>(); // Sharp or flat order
-        if (keySignatureIsSharp) {
-            order.addAll(Arrays.asList(F4, C4, G4, D4, A4, E4, B4));
-            if (mode == Tonality.Mode.MAJOR)
-                tonic = order.get(keySignature + 1);
-            else
-                tonic = order.get(keySignature - 3);
-
-            for (int i = 0; i < keySignature; ++i)
-                if (order.get(i) % 12 == tonic % 12) {
-                    ++tonic;
-                    isSharp = true;
-                }
-        }
-        else {
-            order.addAll(Arrays.asList(B4, E4, A4, D4, G4, C4, F4));
-            if (mode == Tonality.Mode.MAJOR)
-                tonic = order.get((keySignature * -1) - 2);
-            else
-                tonic = order.get((keySignature * -1) - 3);
-
-            for (int i = 0; i < keySignature; ++i)
-                if (order.get(i) % 12 == tonic % 12)
-                    --tonic;
-        }
-
-        return new Tonality(tonic, mode, isSharp);
+        return new Tonality(keySignature, keyQuality);
     }
 
     /**
