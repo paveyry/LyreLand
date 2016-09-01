@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 import static jm.constants.Pitches.*;
 
+import java.util.ArrayList;
+
 /**
  * Class that describes a tonality.
  */
@@ -24,6 +26,8 @@ public class Tonality {
     private Integer tonic_;
     private Mode mode_;
     private Boolean isSharp_; // Already applied on the tonic pitch. Just useful to distinguish C sharp from D flat
+    private int keySignature_;
+    private int keyQuality_;
 
     /**
      * Tonality constructor
@@ -31,10 +35,12 @@ public class Tonality {
      * @param mode Mode
      * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
      */
-    public Tonality(int tonic, Mode mode, boolean isSharp) {
-        this.tonic_ = tonic;
-        this.mode_ = mode;
-        this.isSharp_ = isSharp;
+    public Tonality(int tonic, Mode mode, boolean isSharp, int keySignature, int keyQuality) {
+        tonic_ = tonic;
+        mode_ = mode;
+        isSharp_ = isSharp;
+        keySignature_ = keySignature;
+        keyQuality_ = keyQuality;
     }
 
     /**
@@ -79,6 +85,21 @@ public class Tonality {
                 if (order.get(i) % 12 == tonic_ % 12)
                     --tonic_;
         }
+    }
+
+    /**
+     * @return A list of all relatives tonality (major and minor) of the score tonality.
+     */
+    public ArrayList<Tonality> computeRelativesTonality() {
+        ArrayList<Tonality> relativesTonality = new ArrayList<>();
+        int val = (keyQuality_ == 0) ? 1 : 0;
+        // Case the base tonality is major
+        relativesTonality.add(new Tonality(keySignature_ - 1, 0));
+        relativesTonality.add(new Tonality(keySignature_ + 1, 0));
+        relativesTonality.add(new Tonality(keySignature_, val));
+        relativesTonality.add(new Tonality(keySignature_ - 1, 1));
+        relativesTonality.add(new Tonality(keySignature_ + 1, 1));
+        return relativesTonality;
     }
 
     /**
