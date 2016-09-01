@@ -26,8 +26,6 @@ public class Tonality {
     private Integer tonic_;
     private Mode mode_;
     private Boolean isSharp_; // Already applied on the tonic pitch. Just useful to distinguish C sharp from D flat
-    private int keySignature_;
-    private int keyQuality_;
 
     /**
      * Tonality constructor
@@ -35,12 +33,10 @@ public class Tonality {
      * @param mode Mode
      * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
      */
-    public Tonality(int tonic, Mode mode, boolean isSharp, int keySignature, int keyQuality) {
+    public Tonality(int tonic, Mode mode, boolean isSharp) {
         tonic_ = tonic;
         mode_ = mode;
         isSharp_ = isSharp;
-        keySignature_ = keySignature;
-        keyQuality_ = keyQuality;
     }
 
     /**
@@ -88,17 +84,17 @@ public class Tonality {
     }
 
     /**
-     * @return A list of all relatives tonality (major and minor) of the score tonality.
+     * Compute all the relative tonalities of the current tonality
+     * @return List of relative Tonalities
      */
-    public ArrayList<Tonality> computeRelativesTonality() {
+    public ArrayList<Tonality> computeRelativeTonalities(int keySignature, int keyQuality) {
         ArrayList<Tonality> relativesTonality = new ArrayList<>();
-        int val = (keyQuality_ == 0) ? 1 : 0;
         // Case the base tonality is major
-        relativesTonality.add(new Tonality(keySignature_ - 1, 0));
-        relativesTonality.add(new Tonality(keySignature_ + 1, 0));
-        relativesTonality.add(new Tonality(keySignature_, val));
-        relativesTonality.add(new Tonality(keySignature_ - 1, 1));
-        relativesTonality.add(new Tonality(keySignature_ + 1, 1));
+        relativesTonality.add(new Tonality(keySignature - 1, 0));
+        relativesTonality.add(new Tonality(keySignature + 1, 0));
+        relativesTonality.add(new Tonality(keySignature, (keyQuality == 0) ? 1 : 0));
+        relativesTonality.add(new Tonality(keySignature - 1, 1));
+        relativesTonality.add(new Tonality(keySignature + 1, 1));
         return relativesTonality;
     }
 
@@ -138,6 +134,11 @@ public class Tonality {
         return sb.toString();
     }
 
+    /**
+     * Comparator between two tonalities
+     * @param other Another tonality
+     * @return True if equal, False otherwise
+     */
     @Override
     public boolean equals(Object other)
     {

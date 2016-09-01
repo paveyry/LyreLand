@@ -119,4 +119,5 @@ public class ScoreAnalyser {
     public BarLexer getBarLexer() {
         return barLexer_;
     }
+
 }
