@@ -1,6 +1,5 @@
 package tonality;
 
-import main.options.ExecutionParameters;
 import org.junit.*;
 import static jm.constants.Pitches.*;
 import static tonality.Tonality.Mode.*;

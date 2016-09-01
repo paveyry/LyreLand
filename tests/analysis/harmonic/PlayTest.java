@@ -4,17 +4,13 @@ import analysis.ScoreAnalyser;
 
 import analysis.bars.BarLexer;
 import analysis.metadata.MetadataExtractor;
-import analysis.phrase.Cadence;
-import analysis.phrase.CadenceExtractor;
 import jm.music.data.Score;
-import jm.util.Play;
 import jm.util.Read;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import tonality.Tonality;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlayTest {
@@ -32,7 +28,7 @@ public class PlayTest {
         BarLexer bal = sa.getBarLexer();
         sa.printScoreInfo();
         Tonality t = sa.getTonality();
-        ArrayList<Tonality> ts = t.computeRelativesTonality();
+        ArrayList<Tonality> ts = t.computeRelativeTonalities(init.getKeySignature(), init.getKeyQuality());
         for (Tonality to : ts)
             System.out.println(to.toString());
         Tonality test = MetadataExtractor.getTonality(-1, 1);
