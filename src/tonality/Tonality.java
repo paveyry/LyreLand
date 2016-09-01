@@ -63,7 +63,7 @@ public class Tonality {
         CircularArrayList<Integer> order = new CircularArrayList<>(); // Sharp or flat order
         if (keySignature > 0) {
             order.addAll(Arrays.asList(F4, C4, G4, D4, A4, E4, B4));
-            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) : order.get(keySignature - 1) - 3;
+            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) + 1 : order.get(keySignature - 1) - 2;
 
             for (int i = 0; i < keySignature; ++i)
                 if (order.get(i) % 12 == tonic_ % 12) {
