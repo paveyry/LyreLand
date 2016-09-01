@@ -138,6 +138,21 @@ public class Tonality {
         return sb.toString();
     }
 
+    @Override
+    public boolean equals(Object other)
+    {
+        if (!(other instanceof Tonality))
+            return false;
+        Tonality tonality = (Tonality) other;
+        return tonality.mode_ == mode_
+                && tonality.tonic_ % 12 == tonic_ % 12
+                && tonality.isSharp_.equals(isSharp_);
+    }
+
+    public Boolean isSharp() {
+        return isSharp_;
+    }
+
     /**
      * Convert a note pitch to a human readable string with English notation (A, B, C...)
      * @param pitch Pitch to convert
