@@ -118,7 +118,7 @@ public class Bar {
      * Getter for the tonality
      * @return Tonality of the bar
      */
-    public Tonality getTonality_() {
+    public Tonality getTonality() {
         return tonality_;
     }
 
@@ -126,7 +126,7 @@ public class Bar {
      * Setter for the tonality
      * @param tonality New tonality for the bar
      */
-    public void setTonality_(Tonality tonality) {
+    public void setTonality(Tonality tonality) {
         tonality_ = tonality;
     }
 }
