@@ -70,7 +70,7 @@ public class Tonality {
         }
         else {
             order.addAll(Arrays.asList(B4, E4, A4, D4, G4, C4, F4));
-            tonic_ = (mode_ == Mode.MAJOR) ? order.get((keySignature * -1) - 2) : order.get((keySignature * -1) - 2) - 3;
+            tonic_ = (mode_ == Mode.MAJOR) ? order.get((keySignature * -1) - 2) : order.get((keySignature * -1) - 2 - 3);
             for (int i = 0; i < (keySignature * -1); ++i)
                 if ((order.get(i) % 12) == tonic_ % 12) {
                     alteration_ = -1;
