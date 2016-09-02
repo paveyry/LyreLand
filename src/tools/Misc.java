@@ -21,6 +21,6 @@ public class Misc {
             e.printStackTrace();
         }
 
-        return dir;
+        return System.getProperty("os.name").contains("indow") ? dir.substring(1) : dir;
     }
 }
