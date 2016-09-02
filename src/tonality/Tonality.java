@@ -74,8 +74,7 @@ public class Tonality {
             for (int i = 0; i < (keySignature * -1); ++i)
                 if ((order.get(i) % 12) == tonic_ % 12) {
                     alteration_ = -1;
-                    if (mode_ == Mode.MAJOR)
-                        --tonic_;
+                    --tonic_;
                 }
         }
     }

@@ -37,9 +37,9 @@ public class PlayTest {
         for (Tonality to : ts)
             System.out.println(to.toString());
         Tonality test = MetadataExtractor.getTonality(-1, 1);*/
-
-        Tonality t1 = new Tonality(G4, MINOR, 0);
-        Tonality t2 = new Tonality(-2, 1);
+        
+        Tonality t1 = new Tonality(F4, MINOR, 0);
+        Tonality t2 = new Tonality(-4, 1);
         System.out.println(t1.toString() + "        " + t2.toString());
         System.out.println("Tonality 1 : " + "        ||     Tonality 2 : ");
         System.out.println("Tonic : " + t1.getTonic() % 12 + "        ||     " + t2.getTonic() % 12);
