@@ -25,18 +25,19 @@ public class Tonality {
 
     private Integer tonic_;
     private Mode mode_;
-    private Boolean isSharp_; // Already applied on the tonic pitch. Just useful to distinguish C sharp from D flat
+    private int alteration_; // Already applied on the tonic pitch. -1 flat, 0 no alteration, 1 sharp
+                             // Just useful to distinguish C sharp from D flat for printing purpose.
 
     /**
      * Tonality constructor
      * @param tonic Tonic note pitch
      * @param mode Mode
-     * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
+     * @param alteration Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
      */
-    public Tonality(int tonic, Mode mode, boolean isSharp) {
+    public Tonality(int tonic, Mode mode, int alteration) {
         tonic_ = tonic;
         mode_ = mode;
-        isSharp_ = isSharp;
+        alteration_ = alteration;
     }
 
     /**
@@ -46,8 +47,7 @@ public class Tonality {
      */
     public Tonality(int keySignature, int keyQuality)
     {
-        isSharp_ = false;
-
+        alteration_ = 0;
         if (keySignature == 0) {
             if (keyQuality == 0) {
                 tonic_ = C0;
@@ -59,27 +59,24 @@ public class Tonality {
             }
             return;
         }
-
         mode_ = (keyQuality == 0) ? Tonality.Mode.MAJOR : Tonality.Mode.MINOR;
-
         CircularArrayList<Integer> order = new CircularArrayList<>(); // Sharp or flat order
         if (keySignature > 0) {
             order.addAll(Arrays.asList(F4, C4, G4, D4, A4, E4, B4));
-            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) + 1 : order.get(keySignature - 1) - 2;
-
+            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) + 2 : order.get(keySignature - 1) - 1;
             for (int i = 0; i < keySignature; ++i)
-                if (order.get(i) % 12 == tonic_ % 12) {
-                    ++tonic_;
-                    isSharp_ = true;
-                }
+                if ((order.get(i) % 12 + 1) == tonic_ % 12)
+                    alteration_ = 1;
         }
         else {
             order.addAll(Arrays.asList(B4, E4, A4, D4, G4, C4, F4));
             tonic_ = (mode_ == Mode.MAJOR) ? order.get((keySignature * -1) - 2) : order.get((keySignature * -1) - 2) - 3;
-
-            for (int i = 0; i < keySignature; ++i)
-                if (order.get(i) % 12 == tonic_ % 12)
-                    --tonic_;
+            for (int i = 0; i < (keySignature * -1); ++i)
+                if ((order.get(i) % 12) == tonic_ % 12) {
+                    alteration_ = -1;
+                    if (mode_ == Mode.MAJOR)
+                        --tonic_;
+                }
         }
     }
 
@@ -126,7 +123,7 @@ public class Tonality {
         else if (mode_ == Mode.MELODICMINOR)
             sb.append("Melodic ");
 
-        sb.append(pitchToString(tonic_, isSharp_)).append(" ");
+        sb.append(pitchToString(tonic_, alteration_)).append(" ");
         if (mode_ == Mode.MAJOR)
             sb.append("Major");
         else
@@ -147,46 +144,46 @@ public class Tonality {
         Tonality tonality = (Tonality) other;
         return tonality.mode_ == mode_
                 && tonality.tonic_ % 12 == tonic_ % 12
-                && tonality.isSharp_.equals(isSharp_);
+                && tonality.alteration_ == alteration_ && tonality.toString().equals(this.toString());
     }
 
-    public Boolean isSharp() {
-        return isSharp_;
+    public int getAlteration() {
+        return alteration_;
     }
 
     /**
      * Convert a note pitch to a human readable string with English notation (A, B, C...)
      * @param pitch Pitch to convert
-     * @param isSharp Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
+     * @param alteration Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
      * @return English notation of the note
      */
-    public static String pitchToString(int pitch, boolean isSharp) {
+    public static String pitchToString(int pitch, int alteration) {
         pitch = pitch % 12;
         switch (pitch) {
             case Pitches.C0 % 12:
                 return "C";
             case Pitches.CS0 % 12:
-                return isSharp ? "C#" : "Db";
+                return alteration > 0 ? "C#" : "Db";
             case Pitches.D0 % 12:
                 return "D";
             case Pitches.DS0 % 12:
-                return isSharp ? "D#" : "Eb";
+                return alteration > 0 ? "D#" : "Eb";
             case Pitches.E0 % 12:
                 return "E";
             case Pitches.F0 % 12:
                 return "F";
             case Pitches.FS0 % 12:
-                return isSharp ? "F#" : "Gb";
+                return alteration > 0 ? "F#" : "Gb";
             case Pitches.G0 % 12:
                 return "G";
             case Pitches.GS0 % 12:
-                return isSharp ? "G#" : "Ab";
+                return alteration > 0 ? "G#" : "Ab";
             case Pitches.A0 % 12:
                 return "A";
             case Pitches.AS0 % 12:
-                return isSharp ? "A#" : "Bb";
+                return alteration > 0 ? "A#" : "Bb";
             case Pitches.B0 % 12:
-                return "B";
+                return alteration == -1 ? "Cb" : "B";
         }
         return null;
     }
