@@ -12,7 +12,7 @@ public class ChordDegreeProcessorTest {
     @Test
     public void CMajorChordToDegree() {
         // Testing with C Major
-        ChordDegreeProcessor cMajor = new ChordDegreeProcessor(new Tonality(C4, Mode.MAJOR, 0));
+        ChordDegreeProcessor cMajor = new ChordDegreeProcessor(new Tonality(C4, Mode.MAJOR, 0, 0, 0));
         ArrayList<Integer> firstChord = new ArrayList<>(Arrays.asList(C4, E2, G6)); // Do Mi Sol
         ArrayList<Integer> secondChord = new ArrayList<>(Arrays.asList(D2, F1, A7)); // Re Fa La
         ArrayList<Integer> secondChordSeventh = new ArrayList<>(Arrays.asList(D1, F3, A3, C6)); // Re Fa La Do
@@ -39,7 +39,7 @@ public class ChordDegreeProcessorTest {
 
     @Test
     public void CMinorChordToDegree() {
-        ChordDegreeProcessor cMinor = new ChordDegreeProcessor(new Tonality(C4, Mode.MINOR, -1));
+        ChordDegreeProcessor cMinor = new ChordDegreeProcessor(new Tonality(C4, Mode.MINOR, -1, -3, 1));
         ArrayList<Integer> firstChord = new ArrayList<>(Arrays.asList(C4, EF2, G6)); // Do Mib Sol
         ArrayList<Integer> secondChord = new ArrayList<>(Arrays.asList(D2, F1, AF7)); // Re Fa La
         ArrayList<Integer> secondChordSeventh = new ArrayList<>(Arrays.asList(D1, F3, AF3, C6)); // Re Fa Lab Do
@@ -63,7 +63,7 @@ public class ChordDegreeProcessorTest {
     }
     @Test
     public void GbMajorChordToDegree() {
-        ChordDegreeProcessor gBMajor = new ChordDegreeProcessor(new Tonality(GF4, Mode.MAJOR, -1));
+        ChordDegreeProcessor gBMajor = new ChordDegreeProcessor(new Tonality(GF4, Mode.MAJOR, -1, -6, 0));
         ArrayList<Integer> firstChord = new ArrayList<>(Arrays.asList(GF4, BF2, DF6)); // Solb Sib Reb
         ArrayList<Integer> secondChord = new ArrayList<>(Arrays.asList(AF2, CF1, EF7)); // Lab Dob Mib
         ArrayList<Integer> secondChordSeventh = new ArrayList<>(Arrays.asList(AF2, CF1, EF7, GF6)); // Lab Dob Mib Solb

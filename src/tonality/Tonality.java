@@ -3,6 +3,7 @@ package tonality;
 import analysis.containers.CircularArrayList;
 import jm.constants.Pitches;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static jm.constants.Pitches.*;
@@ -27,6 +28,8 @@ public class Tonality {
     private Mode mode_;
     private int alteration_; // Already applied on the tonic pitch. -1 flat, 0 no alteration, 1 sharp
                              // Just useful to distinguish C sharp from D flat for printing purpose.
+    private int keySignature_;
+    private int keyQuality_;
 
     /**
      * Tonality constructor
@@ -34,10 +37,12 @@ public class Tonality {
      * @param mode Mode
      * @param alteration Specify if the key signature contains sharps or flats (the pitch is not impacted by this value)
      */
-    public Tonality(int tonic, Mode mode, int alteration) {
+    public Tonality(int tonic, Mode mode, int alteration, int keySignature, int keyQuality) {
         tonic_ = tonic;
         mode_ = mode;
         alteration_ = alteration;
+        keySignature_ = keySignature;
+        keyQuality_ = keyQuality;
     }
 
     /**
@@ -47,6 +52,8 @@ public class Tonality {
      */
     public Tonality(int keySignature, int keyQuality)
     {
+        keySignature_ = keySignature;
+        keyQuality_ = keyQuality;
         alteration_ = 0;
         if (keySignature == 0) {
             if (keyQuality == 0) {
@@ -83,15 +90,45 @@ public class Tonality {
      * Compute all the relative tonalities of the current tonality
      * @return List of relative Tonalities
      */
-    public ArrayList<Tonality> computeRelativeTonalities(int keySignature, int keyQuality) {
+    public ArrayList<Tonality> computeRelativeTonalities() {
         ArrayList<Tonality> relativesTonality = new ArrayList<>();
         // Case the base tonality is major
-        relativesTonality.add(new Tonality(keySignature - 1, 0));
-        relativesTonality.add(new Tonality(keySignature + 1, 0));
-        relativesTonality.add(new Tonality(keySignature, (keyQuality == 0) ? 1 : 0));
-        relativesTonality.add(new Tonality(keySignature - 1, 1));
-        relativesTonality.add(new Tonality(keySignature + 1, 1));
+        relativesTonality.add(new Tonality(keySignature_ - 1, 0));
+        relativesTonality.add(new Tonality(keySignature_ + 1, 0));
+
+        relativesTonality.add(new Tonality(keySignature_ - 1, 1));
+        Tonality harmonicMinor1 = new Tonality(keySignature_ - 1, 1);
+        harmonicMinor1.setMode_(Mode.HARMONICMINOR);
+        Tonality melodicMinor1 = new Tonality(keySignature_ - 1, 1);
+        melodicMinor1.setMode_(Mode.MELODICMINOR);
+        relativesTonality.add(harmonicMinor1);
+        relativesTonality.add(melodicMinor1);
+
+        relativesTonality.add(new Tonality(keySignature_ + 1, 1));
+        Tonality harmonicMinor2 = new Tonality(keySignature_ + 1, 1);
+        harmonicMinor2.setMode_(Mode.HARMONICMINOR);
+        Tonality melodicMinor2 = new Tonality(keySignature_ + 1, 1);
+        melodicMinor2.setMode_(Mode.MELODICMINOR);
+        relativesTonality.add(harmonicMinor2);
+        relativesTonality.add(melodicMinor2);
+
+        relativesTonality.add(new Tonality(keySignature_, (keyQuality_ == 0) ? 1 : 0));
+        Tonality harmonicMinor3 = new Tonality(keySignature_, 1);
+        harmonicMinor3.setMode_(Mode.HARMONICMINOR);
+        Tonality melodicMinor3 = new Tonality(keySignature_, 1);
+        melodicMinor3.setMode_(Mode.MELODICMINOR);
+        relativesTonality.add(harmonicMinor3);
+        relativesTonality.add(melodicMinor3);
+
         return relativesTonality;
+    }
+
+    public boolean isMatching(ArrayList<Integer> notes) {
+        ArrayList<Integer> tonalityScale = new Scale(this, 1).getScale();
+        boolean result = true;
+        for (int i = 0; i < notes.size() && result; ++i)
+            result = tonalityScale.contains(notes.get(i) % 12);
+        return result;
     }
 
     /**
@@ -150,6 +187,8 @@ public class Tonality {
         Tonality tonality = (Tonality) other;
         return tonality.mode_ == mode_
                 && tonality.tonic_ % 12 == tonic_ % 12
+                && tonality.keySignature_ == keySignature_
+                && tonality.keyQuality_ == keyQuality_
                 && tonality.alteration_ == alteration_ && tonality.toString().equals(this.toString());
     }
 

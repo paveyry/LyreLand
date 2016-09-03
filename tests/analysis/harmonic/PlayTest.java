@@ -29,7 +29,7 @@ public class PlayTest {
         BarLexer bal = sa.getBarLexer();
         sa.printScoreInfo();
         Tonality t = sa.getTonality();
-        ArrayList<Tonality> ts = t.computeRelativeTonalities(init.getKeySignature(), init.getKeyQuality());
+        ArrayList<Tonality> ts = t.computeRelativeTonalities();
         for (Tonality to : ts)
             System.out.println(to.toString());
         Tonality test = MetadataExtractor.getTonality(-1, 1);
