@@ -47,6 +47,23 @@ public class Scale {
     }
 
     /**
+     * This function is used in ScaleTests to evaluate if given a tonality.
+     * The resulting scale is true.
+     * @param scale is an Arraylist of Integer containing a Scale of 1 octave
+     * @return boolean
+     */
+    public boolean checkScale(ArrayList<Integer> scale)
+    {
+        if (this.notes_.size() != scale.size())
+            return false;
+        boolean result = true;
+        for (int i = 0; i < this.notes_.size() && result; ++i)
+            if (this.notes_.get(i) % 12 != scale.get(i) % 12)
+                result = false;
+        return result;
+    }
+
+    /**
      * Convert Scale to String
      * @return Formatted String
      */
@@ -55,7 +72,7 @@ public class Scale {
         StringBuilder sb = new StringBuilder("[ ");
         for (int n : notes_)
             sb.append(n).append(" ");
-        sb.append(" ]");
+        sb.append("]");
         return sb.toString();
     }
 

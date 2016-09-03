@@ -111,6 +111,13 @@ public class Tonality {
     }
 
     /**
+     * Setter for Tonality Mode, used only to transform a Minor Tonality
+     * into an Harmonic or Melodic Minor.
+     * @param mode
+     */
+    public void setMode_(Tonality.Mode mode) { mode_ = mode; }
+
+    /**
      * Convert Tonality to string
      * @return Formatted string
      */
