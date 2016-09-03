@@ -1,4 +1,4 @@
-package scale;
+package tonality;
 
 import org.junit.*;
 import tonality.Scale;

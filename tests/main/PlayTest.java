@@ -1,4 +1,4 @@
-package analysis.harmonic;
+package main;
 
 import analysis.ScoreAnalyser;
 
