@@ -69,20 +69,18 @@ public class Tonality {
         mode_ = (keyQuality == 0) ? Tonality.Mode.MAJOR : Tonality.Mode.MINOR;
         CircularArrayList<Integer> order = new CircularArrayList<>(); // Sharp or flat order
         if (keySignature > 0) {
-            order.addAll(Arrays.asList(F4, C4, G4, D4, A4, E4, B4));
-            tonic_ = (mode_ == Mode.MAJOR) ? order.get(keySignature - 1) + 2 : order.get(keySignature - 1) - 1;
+            order.addAll(Arrays.asList(FS4, CS4, GS4, DS4, AS4, ES4, BS4));
+            tonic_ = order.get(keySignature - 1) + 1 - ((mode_ != Mode.MAJOR) ? 3 : 0);
             for (int i = 0; i < keySignature; ++i)
-                if ((order.get(i) % 12 + 1) == tonic_ % 12)
+                if (order.get(i) % 12 == tonic_ % 12)
                     alteration_ = 1;
         }
         else {
-            order.addAll(Arrays.asList(B4, E4, A4, D4, G4, C4, F4));
-            tonic_ = (mode_ == Mode.MAJOR) ? order.get((keySignature * -1) - 2) : order.get((keySignature * -1) - 2 - 3);
+            order.addAll(Arrays.asList(BF4, EF4, AF4, DF4, GF4, CF4, F4));
+            tonic_ = order.get(keySignature * -1 - 2) - ((mode_ != Mode.MAJOR) ? 3 : 0);
             for (int i = 0; i < (keySignature * -1); ++i)
-                if ((order.get(i) % 12) == tonic_ % 12) {
+                if (order.get(i) % 12 == tonic_ % 12)
                     alteration_ = -1;
-                    --tonic_;
-                }
         }
     }
 
