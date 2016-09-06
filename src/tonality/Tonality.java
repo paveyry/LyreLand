@@ -3,7 +3,6 @@ package tonality;
 import analysis.containers.CircularArrayList;
 import jm.constants.Pitches;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static jm.constants.Pitches.*;

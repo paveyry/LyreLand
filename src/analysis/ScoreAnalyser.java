@@ -70,7 +70,6 @@ public class ScoreAnalyser {
         sb.append("Score's Bar Unit: ").append(+ barUnit_).append("\n");
         sb.append("Score's Beat Per Bar: ").append(beatsPerBar_).append("\n");
         sb.append("Score's Bar Number: ").append(barLexer_.getBarNumber()).append("\n");
-        sb.append("Score's Bar Rhythmic Mean: ").append(barLexer_.getScoreRhythmicMean()).append("\n");
         sb.append("------------------------ DegreeList ------------------------\n");
         sb.append(chordDegreeExtrator_.getDegreeSequence()).append("\n\n");
         System.out.println(sb);

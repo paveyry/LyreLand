@@ -20,7 +20,6 @@ public class CadenceExtractor {
 
     public CadenceExtractor (BarLexer barlexer, ArrayList<ChordDegree> degreeList) {
         barLexer_ = barlexer;
-        scoreRhythmicMean_ = barlexer.getScoreRhythmicMean();
         degreeList_ = degreeList;
     }
 
