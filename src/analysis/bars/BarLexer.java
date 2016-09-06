@@ -14,7 +14,6 @@ public class BarLexer {
     private ArrayList<Bar> bars_;
     private double quantum_;
     private double r_;
-    private Tonality tonality_;
     private int barNumber_;
     private double barUnit_;
     private int beatsPerBar_;
@@ -22,14 +21,12 @@ public class BarLexer {
     /**
      * Constructor. Lex the score bar by bar
      * @param score The score to lex
-     * @param tonality The tonality of the score
      */
-    public BarLexer(Score score, Tonality tonality, double quantum) {
+    public BarLexer(Score score, double quantum) {
         barUnit_ = MetadataExtractor.computeBarUnit(score.getDenominator());
         beatsPerBar_ = score.getNumerator();
         barDuration_ = barUnit_ * beatsPerBar_;
         bars_ = new ArrayList<>();
-        tonality_ = tonality;
         barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
         quantum_ = quantum;
         lexBarsFromScore(score);
@@ -103,10 +100,6 @@ public class BarLexer {
 
     public double getBarUnit() {
         return  barUnit_;
-    }
-
-    public Tonality getTonality() {
-        return tonality_;
     }
 
 }

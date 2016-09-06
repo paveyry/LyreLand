@@ -2,6 +2,7 @@ package analysis.harmonic;
 
 import analysis.bars.Bar;
 import analysis.bars.BarLexer;
+import tonality.Tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +12,12 @@ import java.util.Arrays;
  */
 public class ChordDegreeExtractor {
     private BarLexer barLexer_;
+    private Tonality tonality_;
     private ArrayList<ChordDegree> degreeList_;
 
-    public ChordDegreeExtractor(BarLexer barLexer) {
+    public ChordDegreeExtractor(BarLexer barLexer, Tonality tonality) {
         barLexer_ = barLexer;
+        tonality_ = tonality;
     }
 
     /**
@@ -25,7 +28,7 @@ public class ChordDegreeExtractor {
         preprocessDegreeExtraction();
 
         ArrayList<ChordDegree> degrees = new ArrayList<>();
-        ChordDegreeProcessor cdp = new ChordDegreeProcessor(barLexer_.getTonality());
+        ChordDegreeProcessor cdp = new ChordDegreeProcessor(tonality_);
 
         for (Bar bar : barLexer_.getBars())
             degrees.addAll(getDegreesInSubBar(bar, barLexer_.getBeatsPerBar(), 1, 0, barLexer_.getBeatsPerBar(), cdp));

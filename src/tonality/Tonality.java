@@ -89,34 +89,14 @@ public class Tonality {
      */
     public ArrayList<Tonality> computeRelativeTonalities() {
         ArrayList<Tonality> relativesTonality = new ArrayList<>();
-        // Case the base tonality is major
-        relativesTonality.add(new Tonality(keySignature_ - 1, 0));
-        relativesTonality.add(new Tonality(keySignature_ + 1, 0));
-
-        relativesTonality.add(new Tonality(keySignature_ - 1, 1));
-        Tonality harmonicMinor1 = new Tonality(keySignature_ - 1, 1);
-        harmonicMinor1.setMode_(Mode.HARMONICMINOR);
-        Tonality melodicMinor1 = new Tonality(keySignature_ - 1, 1);
-        melodicMinor1.setMode_(Mode.MELODICMINOR);
-        relativesTonality.add(harmonicMinor1);
-        relativesTonality.add(melodicMinor1);
-
-        relativesTonality.add(new Tonality(keySignature_ + 1, 1));
-        Tonality harmonicMinor2 = new Tonality(keySignature_ + 1, 1);
-        harmonicMinor2.setMode_(Mode.HARMONICMINOR);
-        Tonality melodicMinor2 = new Tonality(keySignature_ + 1, 1);
-        melodicMinor2.setMode_(Mode.MELODICMINOR);
-        relativesTonality.add(harmonicMinor2);
-        relativesTonality.add(melodicMinor2);
-
+        Tonality harmonicMinor = new Tonality(keySignature_, 1);
+        harmonicMinor.setMode_(Mode.HARMONICMINOR);
+        Tonality melodicMinor = new Tonality(keySignature_, 1);
+        melodicMinor.setMode_(Mode.MELODICMINOR);
+        
+        relativesTonality.add(harmonicMinor);
+        relativesTonality.add(melodicMinor);
         relativesTonality.add(new Tonality(keySignature_, (keyQuality_ == 0) ? 1 : 0));
-        Tonality harmonicMinor3 = new Tonality(keySignature_, 1);
-        harmonicMinor3.setMode_(Mode.HARMONICMINOR);
-        Tonality melodicMinor3 = new Tonality(keySignature_, 1);
-        melodicMinor3.setMode_(Mode.MELODICMINOR);
-        relativesTonality.add(harmonicMinor3);
-        relativesTonality.add(melodicMinor3);
-
         return relativesTonality;
     }
 
