@@ -1,10 +1,8 @@
 package analysis.metadata;
 
 import jm.music.data.Score;
-import tonality.Scale;
-import tonality.Tonality;
-
-import java.util.Arrays;
+import analysis.harmonic.Scale;
+import analysis.harmonic.Tonality;
 
 public class MetadataExtractor {
 

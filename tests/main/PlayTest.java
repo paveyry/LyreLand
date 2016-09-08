@@ -2,16 +2,11 @@ package main;
 
 import analysis.ScoreAnalyser;
 
-import analysis.bars.BarLexer;
-import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import tonality.Tonality;
-
-import java.util.ArrayList;
 
 
 public class PlayTest {

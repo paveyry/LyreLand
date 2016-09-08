@@ -1,13 +1,11 @@
-package tonality;
+package analysis.harmonic;
 
-import analysis.containers.CircularArrayList;
+import tools.containers.CircularArrayList;
 import jm.constants.Pitches;
 
 import java.util.Arrays;
 
 import static jm.constants.Pitches.*;
-
-import java.util.ArrayList;
 
 /**
  * Class that describes a tonality.

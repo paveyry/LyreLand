@@ -1,8 +1,9 @@
-package tonality;
+package analysis.harmonic;
 
+import analysis.harmonic.Tonality;
 import org.junit.*;
 import static jm.constants.Pitches.*;
-import static tonality.Tonality.Mode.*;
+import static analysis.harmonic.Tonality.Mode.*;
 
 public class TonalityTest {
 

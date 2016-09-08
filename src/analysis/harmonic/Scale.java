@@ -1,4 +1,4 @@
-package tonality;
+package analysis.harmonic;
 
 import java.util.ArrayList;
 import java.util.Arrays;

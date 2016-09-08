@@ -2,13 +2,13 @@ package analysis;
 
 import analysis.bars.BarLexer;
 import analysis.harmonic.ChordDegree;
-import analysis.harmonic.ChordDegreeExtractor;
+import analysis.harmonic.ChordDegreeSequenceExtractor;
 import analysis.harmonic.HarmonicProcessor;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
-import tonality.Scale;
-import tonality.Tonality;
+import analysis.harmonic.Scale;
+import analysis.harmonic.Tonality;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class ScoreAnalyser {
     private ArrayList<ChordDegree> degreeList_;
     private transient BarLexer barLexer_;
     private double quantum_;
-    private transient ChordDegreeExtractor chordDegreeExtrator_;
+    private transient ChordDegreeSequenceExtractor chordDegreeExtrator_;
     private transient Scale scale_;
 
     /**

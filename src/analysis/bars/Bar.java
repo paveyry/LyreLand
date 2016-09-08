@@ -1,8 +1,7 @@
 package analysis.bars;
 
-import tonality.Tonality;
+import analysis.harmonic.Tonality;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

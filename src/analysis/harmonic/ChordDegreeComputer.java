@@ -1,9 +1,7 @@
 package analysis.harmonic;
 
-import analysis.containers.CircularArrayList;
+import tools.containers.CircularArrayList;
 import jm.constants.Pitches;
-import tonality.Scale;
-import tonality.Tonality;
 import main.options.ExecutionParameters;
 
 import java.util.ArrayList;
@@ -11,16 +9,16 @@ import java.util.ArrayList;
 /**
  * Class that finds Chord Degree on a specific bar of bar part.
  */
-public class ChordDegreeProcessor {
+public class ChordDegreeComputer {
     private Tonality tonality_;
     private CircularArrayList<Integer> scale_;
     private ArrayList<Integer[]> chords_;
 
     /**
-     * Constructor for the ChordDegreeProcessor class. Defines chords and scales for specified tonality
+     * Constructor for the ChordDegreeComputer class. Defines chords and scales for specified tonality
      * @param tonality Tonality used for the chord degree analysis
      */
-    public ChordDegreeProcessor(Tonality tonality) {
+    public ChordDegreeComputer(Tonality tonality) {
         this.tonality_ = tonality;
         this.scale_ = new CircularArrayList<>();
         this.scale_.addAll(new Scale(tonality_.getTonic(), tonality_.getMode(), 1).getScale());

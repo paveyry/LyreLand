@@ -1,14 +1,14 @@
-package tonality;
+package analysis.harmonic;
 
 import org.junit.*;
-import tonality.Scale;
-import tonality.Tonality;
+import analysis.harmonic.Scale;
+import analysis.harmonic.Tonality;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static jm.constants.Pitches.*;
-import static tonality.Tonality.Mode.*;
+import static analysis.harmonic.Tonality.Mode.*;
 
 public class ScaleTest {
 

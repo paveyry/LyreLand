@@ -2,8 +2,6 @@ package analysis.harmonic;
 
 import analysis.bars.Bar;
 import analysis.bars.BarLexer;
-import tonality.Scale;
-import tonality.Tonality;
 
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ public class HarmonicProcessor {
         //System.out.println(computeBarTonality(bar, t.getKeySignature(), t.getKeyQuality()));
         //System.out.println(closeTonalitySearch(bar, 0, 0, 1));
         //deepTonalitySearch();
-        ChordDegreeExtractor chordDegreeExtrator_ = new ChordDegreeExtractor(barLexer_, tonality_);
+        ChordDegreeSequenceExtractor chordDegreeExtrator_ = new ChordDegreeSequenceExtractor(barLexer_, tonality_);
         degreeList_ = chordDegreeExtrator_.getDegreeSequence();
     }
 
