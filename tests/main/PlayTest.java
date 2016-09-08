@@ -26,13 +26,7 @@ public class PlayTest {
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        BarLexer bal = sa.getBarLexer();
         sa.printScoreInfo();
-        Tonality t = sa.getTonality();
-        ArrayList<Tonality> ts = t.computeRelativeTonalities();
-        for (Tonality to : ts)
-            System.out.println(to.toString());
-        Tonality test = MetadataExtractor.getTonality(-1, 1);
         //Play.midi(init);
     }
 }

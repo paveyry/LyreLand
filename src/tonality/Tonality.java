@@ -83,34 +83,10 @@ public class Tonality {
         }
     }
 
-    /**
-     * Compute all the relative tonalities of the current tonality
-     * @return List of relative Tonalities
-     */
-    public ArrayList<Tonality> computeRelativeTonalities() {
-        ArrayList<Tonality> relativesTonality = new ArrayList<>();
-        Tonality harmonicMinor = new Tonality(keySignature_, 1);
-        harmonicMinor.setMode_(Mode.HARMONICMINOR);
-        Tonality melodicMinor = new Tonality(keySignature_, 1);
-        melodicMinor.setMode_(Mode.MELODICMINOR);
-        
-        relativesTonality.add(harmonicMinor);
-        relativesTonality.add(melodicMinor);
-        relativesTonality.add(new Tonality(keySignature_, (keyQuality_ == 0) ? 1 : 0));
-        return relativesTonality;
-    }
-
-    public boolean isMatching(ArrayList<Integer> notes) {
-        ArrayList<Integer> tonalityScale = new Scale(this, 1).getScale();
-        boolean result = true;
-        for (int i = 0; i < notes.size() && result; ++i)
-            result = tonalityScale.contains(notes.get(i) % 12);
-        return result;
-    }
 
     /**
      * Getter for Mode
-     * @return Mode
+     * @return Mode of the tonality
      */
     public Mode getMode() {
         return this.mode_;
@@ -122,6 +98,22 @@ public class Tonality {
      */
     public Integer getTonic() {
         return this.tonic_;
+    }
+
+    /**
+     * Getter for keySignature
+     * @return keySignature of the tonality.
+     */
+    public int getKeySignature() {
+        return keySignature_;
+    }
+
+    /**
+     * Getter for keyQuality
+     * @return keyQuality of the tonality
+     */
+    public int getKeyQuality() {
+        return keyQuality_;
     }
 
     /**

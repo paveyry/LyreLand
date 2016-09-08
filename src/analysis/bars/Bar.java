@@ -2,6 +2,7 @@ package analysis.bars;
 
 import tonality.Tonality;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -70,6 +71,19 @@ public class Bar {
             int barBeat = (int) (barNote.getStartTime() / barUnit);
             notesByBeat_.get(barBeat).add(barNote.getPitch());
         }
+    }
+
+    /**
+     * This function gather all pitches of a bar in a single array. (used by HarmonicProcessor)
+     * @return ArrayList containing all the pitches of the bar.
+     */
+    public ArrayList<Integer> getBarPitches() {
+        ArrayList<Integer> result = new ArrayList<>();
+        for (BarNote barnote : notes_) {
+            if (barnote.getPitch() > 0)
+                result.add(barnote.getPitch() % 12);
+        }
+        return result;
     }
 
     /**

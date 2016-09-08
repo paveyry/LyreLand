@@ -124,6 +124,8 @@ public class Scale {
             }
             tonic += 12;
         }
+        for(int i = 0; i < notes.size(); ++i)
+            notes.set(i, notes.get(i) % 12);
         return notes;
     }
 }
