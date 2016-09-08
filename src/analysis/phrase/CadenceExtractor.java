@@ -5,7 +5,7 @@ import analysis.harmonic.ChordDegree;
 
 import java.util.ArrayList;
 
-// fixme: this code is in pause waiting for detection of change in tonality within a score.
+// FIXME: this code is in pause waiting for detection of change in tonality within a score.
 /*      CadenceExtractor lol = new CadenceExtractor(bal, sa.getDegreeList());
         ArrayList<Cadence> test = lol.extractCadences();
         System.out.println(test.size());

@@ -5,12 +5,20 @@ import analysis.bars.BarLexer;
 
 import java.util.ArrayList;
 
+/**
+ * Class that finds all the tonality modulations throughout a score
+ */
 public class HarmonicProcessor {
 
     private Tonality tonality_;
     private BarLexer barLexer_;
     private ArrayList<ChordDegree> degreeList_;
 
+    /**
+     * HarmonicProcessor constructor
+     * @param tonality Main tonality of the score
+     * @param barLexer Sequence of bars of the score
+     */
     public HarmonicProcessor(Tonality tonality, BarLexer barLexer) {
         tonality_ = tonality;
         barLexer_ = barLexer;

@@ -5,7 +5,6 @@ import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
 
 public class MetadataExtractor {
-
     /**
      * Extract the bar unit using score_.get(Denominator)
      * EG: 4 -> 1.0 | 2 -> 2.0 | 8 -> 0.5 | 1 -> 4.0

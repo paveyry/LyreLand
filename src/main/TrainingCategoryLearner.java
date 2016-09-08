@@ -11,13 +11,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Runnable class that processes learning on all the training examples for a specific music genre
+ * and generates a XML file with the learned data in the trained-data directory.
+ */
 public class TrainingCategoryLearner implements Runnable {
     private File categoryDir_;
 
+    /**
+     * Constructor
+     * @param categoryDir Directory of the music genre
+     */
     public TrainingCategoryLearner(File categoryDir) {
         categoryDir_ = categoryDir;
     }
 
+    /**
+     * Run method. Execute training, process the output path and serialize data in XML
+     */
     public void run() {
         // Instantiate the learner for the whole category
         GenreLearner learner = new GenreLearner(categoryDir_.getName());

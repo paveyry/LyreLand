@@ -14,7 +14,13 @@ public class ChordDegreeSequenceExtractor {
     private Tonality tonality_;
     private ArrayList<ChordDegree> degreeList_;
 
+    /**
+     * ChordDegreeSequenceExtractor constructor
+     * @param barLexer Sequence of bars of the score
+     * @param tonality Main tonality of the score
+     */
     public ChordDegreeSequenceExtractor(BarLexer barLexer, Tonality tonality) {
+        // FIXME: Handle modulations using the HarmonicProcessor
         barLexer_ = barLexer;
         tonality_ = tonality;
     }

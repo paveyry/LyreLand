@@ -3,7 +3,6 @@ package analysis.phrase;
 import analysis.harmonic.ChordDegree;
 
 public class Cadence {
-
     private int beginBar_;
     private int endBar_;
 

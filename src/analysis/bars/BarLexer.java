@@ -8,6 +8,9 @@ import jm.music.data.Score;
 
 import java.util.ArrayList;
 
+/**
+ * Class that splits a score in an ArrayList of Bars
+ */
 public class BarLexer {
     private double barDuration_;
     private ArrayList<Bar> bars_;
