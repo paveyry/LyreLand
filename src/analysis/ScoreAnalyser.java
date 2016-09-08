@@ -13,7 +13,7 @@ import tonality.Tonality;
 import java.util.ArrayList;
 
 /**
- * Class for Score analysis. Executes all the step of the analysis on a specific score.
+ * Class for Score analysis. Execute all the steps of the analysis on a specific score.
  * This class can be serialized in XML using the XStream library to create an input file for the training.
  */
 public class ScoreAnalyser {
