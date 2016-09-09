@@ -132,7 +132,7 @@ public class Main {
 
             // Calculate and display the execution time
             double endTime = System.currentTimeMillis();
-            System.out.println("ANALYSIS EXECUTION TIME: " + (endTime - startTime));
+            System.out.println("TRAINING EXECUTION TIME: " + (endTime - startTime));
 
             // Reenable stdout
             if (!ExecutionParameters.verbose)

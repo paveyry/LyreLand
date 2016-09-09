@@ -65,7 +65,7 @@ public class ExecutionParameters {
     /**
      * Specify the path to the trained data (created after training and used for generation)
      */
-    public static Path trainedDataPath = Paths.get(Misc.getJarPath() + "assets/training/trained-data");
+    public static Path trainedDataPath = Paths.get("assets/training/trained-data");
 
     /**
      * Specify the path to the generated files without the extension. Default value is `generated.mid` and `generated.wav`

@@ -51,6 +51,11 @@ public class TrainingCategoryLearner implements Runnable {
         Path outputDir = ExecutionParameters.trainedDataPath.resolve(relPath);
         Path outputPath = outputDir.resolve("trained_data.xml");
 
+        // If the destination path does not exist, create it
+        File dir = new File(outputDir.toString());
+        if (!dir.exists())
+            dir.mkdirs();
+
         // Serialize learner to XML
         XStream xstream = new XStream(new DomDriver());
         try {
