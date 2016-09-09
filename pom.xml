@@ -35,6 +35,17 @@
             <artifactId>xstream</artifactId>
             <version>1.4.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -130,6 +141,10 @@
                         <program>
                             <mainClass>main.Main</mainClass>
                             <id>app</id>
+                        </program>
+                        <program>
+                            <mainClass>web.Main</mainClass>
+                            <id>webserv</id>
                         </program>
                     </programs>
                 </configuration>
