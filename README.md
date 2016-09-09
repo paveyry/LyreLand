@@ -20,3 +20,29 @@ File storage
 
 This repository uses git lfs to store binary files. You need to install git-lfs
 to work on this repository.
+
+Building
+--------
+
+The project dependencies are handles using maven. We use the plugin
+`appassembler` to provide simple run scripts.
+To build the project, run the following command:
+
+```
+mvn package appassembler:assemble
+```
+
+Running
+-------
+
+Once the project is built, you can run the script with the following command:
+
+```
+sh target/appassembler/bin/app
+```
+
+If you want to run the servlet, use the following command:
+
+```
+sh target/appasembler/bin/webserv
+```
