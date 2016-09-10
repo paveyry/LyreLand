@@ -23,7 +23,7 @@ before_install:
     - sudo apt-get install oracle-java8-installer
 
 script:
-    - git lfs pull
+    - git lfs pull --exclude=assets/soundfonts
     - mvn clean test
     - mvn package appassembler:assemble
 
@@ -31,8 +31,10 @@ after_success:
     - test $TRAVIS_PULL_REQUEST == "false" && tar cjvf package.tar.bz2 *
     - test $TRAVIS_PULL_REQUEST == "false" && ssh-keygen -R $DEPLOY_HOST
     - test $TRAVIS_PULL_REQUEST == "false" && export SSHPASS=$DEPLOY_PASS
+    - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no root@$DEPLOY_HOST "killall java" && echo yes || echo no
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e scp -o stricthostkeychecking=no package.tar.bz2 $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST $DEPLOY_PATH/deploy.sh && echo yes || echo no
+    - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no root@$DEPLOY_HOST "service lyreland start" && echo yes || echo no
 
 
 notifications:
