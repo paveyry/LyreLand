@@ -1,8 +1,14 @@
 dist: trusty
 sudo: required
 language: java
+
 jdk:
     - oraclejdk8
+
+addons:
+    apt:
+        packages:
+            - sshpass
 
 before_install:
     - mkdir -p $HOME/bin
@@ -19,7 +25,23 @@ before_install:
 script:
     - git lfs pull
     - mvn clean test
+    - mvn package appassembler:assemble
+
+after_success:
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && tar cjvf package.tar.bz2 *
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && ssh-keygen -R $DEPLOY_HOST
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && export SSHPASS=$DEPLOY_PASS
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && sshpass -e scp -o stricthostkeychecking=no package.tar.bz2 $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST $DEPLOY_PATH/deploy.sh && echo yes || echo no
+
 
 notifications:
-  slack:
-    secure: C/LIWqciaDTiw7SDoV/LJKlU4zdiE5+8zyJfUAwXXD08ioN3ciaX9OGzMO/Jx/U6I7BLgsPWsUoOlqGL8/9ISitZprSu6ADtd1ZuqE/h376vuPlDd/VNk3xSDe6/v7OBk7WRIzrwiEARVZmjD3J165suS+s7/lYLs1Vq6T33emfISN3669lMQ8xEvxq9EkwipxmcxcS3mK5N+x84HT5oM8oft7pggHC7ZEVsgonvFgLh5/+0p5iI12deadGu4wKZzaX6dxMaQtLYP70AG9CwJh8r3YpqGHZoEoNNpHDfa753sIHejCjGKGGEyqpf7MS7wv2iePREWRYKiaVIXyw3aCjG4Xlmr1ckqUNbJj1jpjecugG0/L+c5yzj4jC2VnhkA8G7g1mNnUor8nS42ZfCeTnbGIFvHqpQQm6tTvOuPExoL6lJjT1aZ5/s0tMeXzRy/VY/Vxs1RM6quZZD4WnI/1pvQaeEwOh6h6ipJuxEawXkydAuUXYIoOhYdkURJ1X5XsLIBC4mA4mLf8YgKlYdsKD2zvj0q/KY8ZCVk8mn5HbO3GGWGEPKrOFh8ITpuZQhA8FwnQ6UrBunHPvZk8O/f58wZYQV1X0zi0LlyjVK+FJMoMICnVyPH+6ImgmauLdGr3/PxlzCdko+rdC6BhqYH9saleB9L69uLK/rdOh1eoY=
+    slack:
+        secure: C/LIWqciaDTiw7SDoV/LJKlU4zdiE5+8zyJfUAwXXD08ioN3ciaX9OGzMO/Jx/U6I7BLgsPWsUoOlqGL8/9ISitZprSu6ADtd1ZuqE/h376vuPlDd/VNk3xSDe6/v7OBk7WRIzrwiEARVZmjD3J165suS+s7/lYLs1Vq6T33emfISN3669lMQ8xEvxq9EkwipxmcxcS3mK5N+x84HT5oM8oft7pggHC7ZEVsgonvFgLh5/+0p5iI12deadGu4wKZzaX6dxMaQtLYP70AG9CwJh8r3YpqGHZoEoNNpHDfa753sIHejCjGKGGEyqpf7MS7wv2iePREWRYKiaVIXyw3aCjG4Xlmr1ckqUNbJj1jpjecugG0/L+c5yzj4jC2VnhkA8G7g1mNnUor8nS42ZfCeTnbGIFvHqpQQm6tTvOuPExoL6lJjT1aZ5/s0tMeXzRy/VY/Vxs1RM6quZZD4WnI/1pvQaeEwOh6h6ipJuxEawXkydAuUXYIoOhYdkURJ1X5XsLIBC4mA4mLf8YgKlYdsKD2zvj0q/KY8ZCVk8mn5HbO3GGWGEPKrOFh8ITpuZQhA8FwnQ6UrBunHPvZk8O/f58wZYQV1X0zi0LlyjVK+FJMoMICnVyPH+6ImgmauLdGr3/PxlzCdko+rdC6BhqYH9saleB9L69uLK/rdOh1eoY=
+
+env:
+    global:
+        - secure: OF+TyanBbFEAqZn6ybW8zh2w+gTkZH/bABdXeBtXRlbrOtHK2hWov9R1zffE8v7rjiaKp04+wGTip4tVA3x1sCnXjK29gLMo1+tGf68dXV9BYJL+4muWdX0snc98MT6ln32j/LtjhRqm0raYcBeOH7lywakM60oUOC0/rPJEp3Lc8VEiZb3EsrZowkFFAS8dEUPjqw64/VW5XPH48CmNMgF52OnD8iXKv9igjndw7wWDHtkHp2sdPvXTqgjrZLJNeFWiMxkUpjD9nYkidTxL2EHPCMX4AZhb0m2jmMWDOwKIaZGIMl/zz2OQVQduf0zh23fqTfmOhU75GXyO8CK0QtnsnKysyYzOeqFYXaZ5w3QvncGvNtZXnd6tdKWe0NTUMhon6L4KA85zXoHzbOz7+3wgaJH3t+sdMyBCftDlU3KBfu9wWMiTvCYNesiLc/RuLJb51z8+cj3xPjUYBEGRfi0Skt1R8smoHBtD6OMQtf1FsUdLwUrFe8nYWZcl0Cc4RMVmqEKek5G4wudyZO3E0t+Q3eC/rl55ayLHO25bxx++4+ttggWy3xdU5SzCFOtAqbwQsCWOtcj3V9oOrWUunsYYHxtAJmKhFaEMr4fQVAA1FwurxWQAm3VeRR3eKys66aJvK9h6emuBYGtIvnni2uymTUUOmm4rAdjXakjgxV8=
+  - secure: O0WGcFqojzoHlKMaJpwqZDE/s/fH7zcR5j4yGocVmRaqn4BJJQO9/lcrM8oNBDReZWmsOKqrSP7EiUtzndQgjf4S2RtK3QoAnzcoQLMiOzqLoQjU85whvarr1yy4m4X8QMIhozaBdWJ2Zl8QGDa2SQzIm+b8Y5YQkNBq8HO56p7XLW0PlX8A87cXNW8wu5adS9KKY2HGegkRyGiJOvh07Kt8Rs2w0XFlTBuJht/pWRA2NN6dk3GA/QAmOn4tQDQbC9GJU2c6DZlHc8O2Jfx1dbhNjeB4pMyOJFL/4e7oUrdWIU9GM5s2mH+TzTNZcskG/yrPn1nfmWD/+1n0e7WG15QVGjsjb0GeVt7a1pYZpmJ2I5iJ33BAyuJ/7xNUuY5nfOsGRavGT4kLAtiVIQyz+FnAccjdxBi4D8Mmp7gTh1CIK88ug6a47j424LLZHgw9QfqfuZGx3TNviM3d9psKDic698ksj/01bA3R5lH4q51S0k4abIZtO0K/0uNmqXqqohKt4qxlxWWXY9ViFpnkxHzHydrkhI38gV1SNwbGPoPifYLbjn+OR0PIGQ8eo4R5NlzLLLIcupxARyachwPg9km16wOgYeNdXLEz8kfYMV9O2mOpyxoWyS2kWVfveE7jyq9CCN7edADOrTgscL+fAmvFyBfCqMPqhdT+xrZj4Bw=
+  - secure: cBZVGVQJZBSEDN7eoW3JBzDU2T5zoyTd+WJaHU5OD2ngfoyN24C4twTHRtQGdHELYhz8OYSg9GSKJTMR4ED/RRN/nVrddWS/MoIZglh0VOM141ewgKg1BBHcL6lg8cw/QXJ6XoiPZS7l86nip08oXd6++r5zaT7PuWiFq5czLo0FWYpdIQ1TcgN5ImImmM6ox8RblkfG0kpY/2+eS/sD9Uo4FAddesLpKJzoVR30aXeTOUrb/6LuLleG4qN27ZrQROyolMPJfoyrzYsu8T+Zy1mRv/zD94ccsPuOWP9NH37+d9QUh9jHMJiogIDAycb/jLCEFbMJ0Hgmp3PjJhfdUEd1fH2dbDiE9QIOC/wUMpr+lwyE3FLdfoE0bGPqi+OW9LXhO3GFLCMFR9bQZ8r0RflOua9CrvLIjLhdPXHrxHaR6TdEwa2bIKsXQz6/Yetq0FPNLPd+PId16Znl2Z5hjORDBYx51URbx24gh5loAxQPatl3guiOY/B+Gxlu9+mpOSDGi1Tq4N7W+Itl4BzMPryiD+agaPF+YjTG7N85c/DTfLgE6XRUlIJQx5fq2WyQzSpqg6mVEnWsYmqwYrCs1addOtKd7j4Zry3MRxTLIr1aRqZDOD0CpAR7tV+Owo/3s2HTzkd7ygNLZS6OQ6fmQNNs4LFX2Kk6ucUsgnWlMMA=
+  - secure: Bs7wpnwyeMGp9+tmQITe639XwNxuzUE7fVxiVMhV5TeuVmYdyKiFH3wng2X7B100JfSr74Wv1XcC8hCzGZ1kPJmLtHEsmW3ThT1kUenub8PkzSEXLVmy28Yrwawg3dbQfkxkTl8SjsyN1vwqDh1V1rpJiu0tZgxEjZVrrVxq8Mi+KeUPxrAz84o1dRLGAqJPadaGMP8B2hvS9FVPa2vz9YzHF/7ctyy8jFPlNXBsHqldxTyMJ8ZWjOfG+2XIvU4b44mRxqm2K2+XbgThnsrcxdg6Wf0KzqSPje3E3xCivRTnmEX7+CDHGyGr88CkQJVCm+Q02g7oWBhiq06R9ea9uZ/nkDnVnI97r/FmZLPAD4MWIvsY/9XvXrkcH5aPHf8HeU7OojsCfzPtPiUe/xSNeXJ3XkCeVZsJ0dE9NE5hwRbcHw6Tp39v/6nmAxbOi5qDbeUCfw5UIZp/Qo2ttDZGqoQ8ZVhQf6poGt8gzCCpaq/i7fFXr9yfrkm+/Yb6m+mDJ8/GiF8ngHdTE1EN+r9cB4TO6D3uK0bEBsjg7v6pEpiuNwTtUtYBw2KOnBfA5aprD71wnJFWN74nd8PV91oTn73rXdgOhL1cB04RFjBqysAFBFfUmXbbMVb29hgM3ESgr7YRu02lVANpcXX0gyLbwS9EQ8frhSEeK9PWztYApw8=
