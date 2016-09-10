@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (C) 2016 Pierre-Alexandre VEYRY, Florian HUCKEL, Olivier LAUGIER, Arnaud OU
+Copyright (C) 2016 Pierre-Alexandre VEYRY, Olivier LAUGIER, Arnaud OU
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),

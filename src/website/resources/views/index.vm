@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <title>LyreLand - Music Procedural Generation</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="/assets/css/styles.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll">
+
+    <!---//Facebook button code-->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- ******HEADER****** -->
+    <header id="header" class="header">
+        <div class="container">
+            <h1 class="logo pull-left">
+                <a class="scrollto" href="#promo">
+                    <span class="logo-title">LyreLand</span>
+                </a>
+            </h1><!--//logo-->
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->
+                <div class="navbar-collapse collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#about">About</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#features">Presentation</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#demo">Demo</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#license">License</a></li>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->
+        </div>
+    </header><!--//header-->
+
+    <!-- ******PROMO****** -->
+    <section id="promo" class="promo section offset-header">
+        <div class="container text-center">
+            <img class="img-responsive center-block" src="assets/images/lyreland_no_bg.png" width="200px"/>
+            <h2 class="title">LyreLand</h2>
+            <p class="intro">A free music procedural generator based on <br/> machine-learning and pseudo-random algorithms.</p>
+            <div class="btns">
+                <a class="btn btn-cta-secondary scrollto" href="#demo">Try now!</a>
+                <a class="btn btn-cta-primary" href="https://github.com/paveyry/LyreLand" target="_blank">Download</a>
+            </div>
+            <ul class="meta list-inline">
+                <li><a href="https://github.com/paveyry/LyreLand" target="_blank">View on GitHub</a></li>
+                <li>Created by:
+                    <a href="https://lnkd.in/d4c3xvn" target="_blank">
+                        Pierre-Alexandre Veyry</a>, <a href="https://fr.linkedin.com/in/olivier-laugier-6a2a90114" target="_blank">
+                        Olivier Laugier</a>, and <a href="#" target="_blank">
+                        Arnaud Ou</a> at <a href="http://www.epita.fr" target="_blank">
+                        EPITA</a>
+                </li>
+            </ul><!--//meta-->
+        </div><!--//container-->
+        <div class="social-media">
+            <div class="social-media-inner container text-center">
+                <ul class="list-inline">
+                    <li class="twitter-follow"><a href="https://twitter.com/EPITA" class="twitter-follow-button" data-show-count="false">Follow @3rdwave_themes</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                    </li><!--//twitter-follow-->
+
+                    <li class="facebook-like">
+                         <div class="fb-like" data-href="https://www.facebook.com/epita/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                    </li><!--//facebook-like-->
+                    <!--// Generate github buttons: https://github.com/mdo/github-buttons -->
+                    <li class="github-star"><iframe src="http://ghbtns.com/github-btn.html?user=paveyry&repo=LyreLand&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
+                    <li class="github-fork"><iframe src="http://ghbtns.com/github-btn.html?user=paveyry&repo=LyreLand&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe></li>
+                    <!--//
+                    <li class="github-follow"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&type=follow&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe></li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </section><!--//promo-->
+
+    <!-- ******ABOUT****** -->
+    <section id="about" class="about section">
+        <div class="container">
+            <h2 class="title text-center">What is LyreLand?</h2>
+            <p class="intro text-center">LyreLand is an application that composes music for any purpose.</p>
+            <div class="row">
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Accessible to anyone</h3>
+                        <p>LyreLand is incredibly easy to use and works on Windows, Mac OS X, and Linux</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Time saver</h3>
+                        <p>You need free music for a specific purpose but do not want to send time looking for it? Just generate it using LyreLand.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Designed for creators</h3>
+                        <p>You can be a composer, a game developer, a movie director, or an artistic performer. LyreLand can create the right music for you.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="clearfix visible-md"></div>
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-music"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Created by musicians</h3>
+                        <p>LyreLand does not juste create random music. It actually respects tonal music rules and can learn new Music genres.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-code"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Open-source and free</h3>
+                        <p>LyrLand is completely free and open-source. You can get the code on <a href="http://github.com/paveyry/LyreLand">Github</a> and modify it as you like.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+                <div class="item col-md-4 col-sm-6 col-xs-12">
+                    <div class="icon-holder">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <div class="content">
+                        <h3 class="sub-title">Made by students</h3>
+                        <p>LyreLand is developed by students from French Computer Science school <a href="http://www.epita.fr"> EPITA</a>.</p>
+                    </div><!--//content-->
+                </div><!--//item-->
+            </div><!--//row-->
+            <div class="row text-center">
+                </div>
+        </div><!--//container-->
+    </section><!--//about-->
+
+    <!-- ******FEATURES****** -->
+    <section id="features" class="features section">
+        <div class="container text-center">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/ePbKGoIGAXY"></iframe>
+            </div>
+        </div><!--//container-->
+    </section><!--//features-->
+
+    <!-- ******DOCS****** -->
+    <section id="demo" class="docs section">
+        <div class="container">
+            <div class="docs-inner">
+            <h2 class="title text-center">Try it now!</h2>
+            <div class="block">
+                <form>
+                  <div class="form-group">
+                    <label for="musicstyle">Music Genre</label>
+                    <select class="form-control" id="musicstyle">
+                        <option>Rock</option>
+                        <option>Chill</option>
+                        <option>Jazz</option>
+                        <option>Blues</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="musicstyle">Speed</label>
+                    <select class="form-control" id="musicstyle">
+                        <option>Slow</option>
+                        <option>Medium</option>
+                        <option>Fast</option>
+                        <option>Very fast</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Duration</label>
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">Seed</label>
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+
+                <div class="text-center"><button type="submit" class="btn btn-info">Generate!</button></div>
+            </form>
+
+            </div>
+            </div><!--//docs-inner-->
+        </div><!--//container-->
+    </section><!--//features-->
+
+    <!-- ******LICENSE****** -->
+    <section id="license" class="license section">
+        <div class="container">
+            <div class="license-inner">
+            <h2 class="title text-center">License</h2>
+                <div class="info">
+                    <p>This program is made by Pierre-Alexandre Veyry, Olivier Laugier, and Arnaud Ou at EPITA and is <strong>100% FREE</strong> under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License.</a></p>
+                </div><!--//info-->
+                <div class="cta-container">
+                    <div class="speech-bubble">
+                        <p class="intro">If you like LyreLand, you can show your support and buy us a a beer or coffee.</p>
+                        <div class="icon-holder  text-center"><i class="fa fa-smile-o"></i></div>
+                    </div><!--//speech-bubble-->
+                </div><!--//cta-container-->
+            </div><!--//license-inner-->
+        </div><!--//container-->
+    </section><!--//how-->
+
+
+    <!-- ******CONTACT****** -->
+    <!--
+    <section id="contact" class="contact section has-pattern">
+        <div class="container">
+            <div class="contact-inner">
+                <h2 class="title  text-center">Contact</h2>
+                <p class="intro  text-center">I hope you find this Bootstrap template useful. <br />Feel free to get in touch if you have any questions or suggestions.</p>
+                <div class="author-message">
+                    <div class="profile">
+                        <img class="img-responsive" src="assets/images/profile.png" alt="" />
+                    </div>
+
+                    <div class="speech-bubble">
+                        <h3 class="sub-title">Want to get more freebies in the future?</h3>
+                        <p>I tweet about #UX and #webdev related resources/content at <a href="https://twitter.com/3rdwave_themes" target="_blank">@3rdwave_themes</a>
+                        <p>If you like what I do, you can follow me on twitter and I will keep you informed about my next free template there :)</p>
+                        <p><strong>[Tip for developers]:</strong> If you take on freelance work you can put a tailored message here about your availability to attract potential clients. Be creative and good luck!</p>
+                        <div class="source">
+                            <span class="name"><a href="https://twitter.com/3rdwave_themes" target="_blank">Xiaoying Riley</a></span>
+                            <br />
+                            <span class="title">UX/UI Designer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="info text-center">
+                    <h4 class="sub-title">Get Connected</h4>
+                    <ul class="social-icons list-inline">
+                        <li><a href="https://twitter.com/3rdwave_themes" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.facebook.com/3rdwavethemes" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/xiaoying"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="http://instagram.com/xyriley"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://dribbble.com/Xiaoying"><i class="fa fa-dribbble"></i></a></li>
+                        <li class="last"><a href="mailto:hello@3rdwavemedia.com"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    <!-- ******FOOTER****** -->
+    <footer class="footer">
+        <div class="container text-center">
+            <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can check out other license options via our website: themes.3rdwavemedia.com */-->
+            <small class="copyright">Bootstrap theme designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/prism/prism.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+</body>
+</html>
