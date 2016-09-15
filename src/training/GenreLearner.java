@@ -1,9 +1,14 @@
 package training;
 
 import analysis.ScoreAnalyser;
+import analysis.harmonic.ChordDegree;
+import training.MarkovChain.MarkovDegree;
+
+import java.util.ArrayList;
 
 public class GenreLearner {
     private String categoryName_;
+    private MarkovDegree markovDegree_;
 
     /**
      * Class for Music genre learning. Execute all the learning steps on a specific genre.
@@ -12,6 +17,7 @@ public class GenreLearner {
      */
     public GenreLearner(String categoryName) {
         categoryName_ = categoryName;
+        markovDegree_ = new MarkovDegree();
     }
 
     /**
@@ -21,6 +27,14 @@ public class GenreLearner {
      * @param scoreAnalyser The training example
      */
     public void learnExample(ScoreAnalyser scoreAnalyser) {
-
+        ArrayList<ChordDegree> degreeList = scoreAnalyser.getDegreeList();
+        for(ChordDegree chordDegree : degreeList)
+            markovDegree_.addDegree(chordDegree);
+        System.out.println(markovDegree_.toString());
+        markovDegree_.closeLearning();
+        //System.out.println(markovDegree_.toString());
+        //System.out.println(markovDegree_.getDegree(null, null));
     }
+
+
 }
