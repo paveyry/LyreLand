@@ -1,11 +1,15 @@
 package main;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import main.options.ExecutionParameters;
 import main.options.OptionManager;
+import training.GenreLearner;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +34,7 @@ public class Main {
         }
 
         if (ExecutionParameters.generate) {
+            ArrayList<GenreLearner> trainedData = getTrainedData();
             // Generate a music using the main.options.ExecutionParameters.seed and the trained data located in
             // main.options.ExecutionParameters.trainedDataPath into Execution.Parameters.outputPath + ".mid"|".wav"
         }
@@ -99,15 +104,6 @@ public class Main {
             // Create our threadpool
             ExecutorService threadPool = Executors.newFixedThreadPool(ExecutionParameters.threads);
 
-            // Disable stdout and stderr if verbose mode is disabled
-            PrintStream out = System.out;
-            if (!ExecutionParameters.verbose) {
-                System.setOut(new PrintStream(new OutputStream() {
-                    @Override
-                    public void write(int b) throws IOException {}
-                }));
-            }
-
             // Store starting time to mesure training execution duration
             double startTime = System.currentTimeMillis();
 
@@ -134,12 +130,31 @@ public class Main {
             double endTime = System.currentTimeMillis();
             System.out.println("TRAINING EXECUTION TIME: " + (endTime - startTime));
 
-            // Reenable stdout
-            if (!ExecutionParameters.verbose)
-                System.setOut(out);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<GenreLearner> getTrainedData() {
+        if (ExecutionParameters.verbose)
+            System.out.println("Deserializing trained data...");
+        ArrayList<GenreLearner> genres = new ArrayList<>();
+        XStream xstream = new XStream(new DomDriver());
+
+        // For each category in data set, create the corresponding XML files in the trained data dir
+        File dir = new File(ExecutionParameters.trainedDataPath.toString());
+        File[] subDirs = dir.listFiles();
+        if (subDirs != null) {
+            for (File subDir : subDirs) {
+                if (subDir.isDirectory()) {
+                    Path dataFile = subDir.toPath().resolve("trained_data.xml");
+                    genres.add((GenreLearner) xstream.fromXML(dataFile.toFile()));
+                }
+            }
+        }
+        if (ExecutionParameters.verbose)
+            System.out.println("Trained data successfully deserialized!");
+        return genres;
     }
 }
