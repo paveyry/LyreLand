@@ -23,4 +23,9 @@ public class Misc {
 
         return System.getProperty("os.name").contains("indow") ? dir.substring(1) : dir;
     }
+
+    public static String getProjectPath() {
+        String path = getJarPath();
+        return path.substring(0, path.lastIndexOf("target"));
+    }
 }
