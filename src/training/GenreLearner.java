@@ -30,10 +30,15 @@ public class GenreLearner {
         ArrayList<ChordDegree> degreeList = scoreAnalyser.getDegreeList();
         for(ChordDegree chordDegree : degreeList)
             markovDegree_.addDegree(chordDegree);
-        System.out.println(markovDegree_.toString());
+    }
+
+    /**
+     * This function is called once the markov chains are complete to normalize
+     * each line of each matrix. Hence after every data sequence have been added
+     * into the markov matrix.
+     */
+    public void closeLearning() {
         markovDegree_.closeLearning();
-        //System.out.println(markovDegree_.toString());
-        //System.out.println(markovDegree_.getDegree(null, null));
     }
 
 

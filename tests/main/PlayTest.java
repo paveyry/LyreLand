@@ -2,11 +2,13 @@ package main;
 
 import analysis.ScoreAnalyser;
 
+import analysis.harmonic.ChordDegree;
 import jm.music.data.Score;
 import jm.util.Read;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import training.GenreLearner;
 
 public class PlayTest {
     @BeforeClass
@@ -20,8 +22,6 @@ public class PlayTest {
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        //GenreLearner gl = new GenreLearner("test");
-        //gl.learnExample(sa);
         sa.printScoreInfo();
         //Play.midi(init);
     }
