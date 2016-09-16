@@ -47,6 +47,8 @@ public class Main {
      */
     public static void processAnalysis() {
         try {
+            System.out.println("Analyzing MIDI files to generated training set...");
+
             // Create our threadpool
             ExecutorService threadPool = Executors.newFixedThreadPool(ExecutionParameters.threads);
 
@@ -88,7 +90,7 @@ public class Main {
 
             // Calculate and display the execution time
             double endTime = System.currentTimeMillis();
-            System.out.println("ANALYSIS EXECUTION TIME: " + (endTime - startTime));
+            System.out.println("Analysis successfully processed (" + (endTime - startTime) + " ms)");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +103,7 @@ public class Main {
      */
     public static void processTraining() {
         try {
+            System.out.println("Training from analyzed data...");
             // Create our threadpool
             ExecutorService threadPool = Executors.newFixedThreadPool(ExecutionParameters.threads);
 
@@ -128,7 +131,7 @@ public class Main {
 
             // Calculate and display the execution time
             double endTime = System.currentTimeMillis();
-            System.out.println("TRAINING EXECUTION TIME: " + (endTime - startTime));
+            System.out.println("Training successfully processed (" + (endTime - startTime) + " ms)");
 
         }
         catch (Exception e) {
@@ -137,8 +140,7 @@ public class Main {
     }
 
     public static ArrayList<GenreLearner> getTrainedData() {
-        if (ExecutionParameters.verbose)
-            System.out.println("Deserializing trained data...");
+        System.out.println("Deserializing trained data...");
         ArrayList<GenreLearner> genres = new ArrayList<>();
         XStream xstream = new XStream(new DomDriver());
 
@@ -153,8 +155,7 @@ public class Main {
                 }
             }
         }
-        if (ExecutionParameters.verbose)
-            System.out.println("Trained data successfully deserialized!");
+        System.out.println("Trained data successfully deserialized!");
         return genres;
     }
 }
