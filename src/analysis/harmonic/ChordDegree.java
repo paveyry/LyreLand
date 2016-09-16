@@ -100,66 +100,34 @@ public class ChordDegree {
         str = str.substring(1); // remove the first bracket.
         str = str.substring(0,str.length()-1); // remove last bracket.
         String[] parts = str.split("-");
+        if (parts[0].charAt(parts[0].length() - 1) == '7') {
+            seventhChord_ = true;
+            parts[0] = parts[0].substring(0, parts[0].length() - 1);
+        }
         switch (parts[0]) {
             case "I" :
                 degree_ = 1;
-                seventhChord_ = false;
-                break;
-            case "I7":
-                degree_ = 1;
-                seventhChord_ = true;
                 break;
             case "II" :
                 degree_ = 2;
-                seventhChord_ = false;
-                break;
-            case "II7":
-                degree_ = 2;
-                seventhChord_ = true;
                 break;
             case "III" :
                 degree_ = 3;
-                seventhChord_ = false;
-                break;
-            case "III7":
-                degree_ = 3;
-                seventhChord_ = true;
                 break;
             case "IV" :
                 degree_ = 4;
-                seventhChord_ = false;
-                break;
-            case "IV7":
-                degree_ = 3;
-                seventhChord_ = true;
                 break;
             case "V" :
                 degree_ = 5;
-                seventhChord_ = false;
-                break;
-            case "V7":
-                degree_ = 5;
-                seventhChord_ = true;
                 break;
             case "VI" :
                 degree_ = 6;
-                seventhChord_ = false;
-                break;
-            case "VI7":
-                degree_ = 6;
-                seventhChord_ = true;
                 break;
             case "VII" :
                 degree_ = 7;
-                seventhChord_ = false;
-                break;
-            case "VII7":
-                degree_ = 7;
-                seventhChord_ = true;
                 break;
         }
         barFractionDen_ = Integer.parseInt(parts[1].substring(parts[1].length() - 1));
-        return;
     }
 
 }
