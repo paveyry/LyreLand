@@ -66,22 +66,17 @@ public class MarkovDegree {
     public ChordDegree getDegree(ChordDegree depth2, ChordDegree depth1) {
         Random generator = new Random();
         double getDegree =  generator.nextDouble(); // Generate double between 0 and 1.
-        System.out.println("Random = " + getDegree);
         Pair<ChordDegree, ChordDegree> key = new Pair<>(depth2, depth1);
         HashMap<String, Double> column = transitions_.get(key.toString());
         double sum = 0;
         for (String key2 : column.keySet()) {
-            System.out.println("YOYO");
             if (column.get(key2) + sum > getDegree) {
-                System.out.println("GULAD " + (column.get(key2) + sum));
                 ChordDegree temp = new ChordDegree(1, false, 1);
                 temp.stringToDegree(key2);
                 return temp;
             }
-            else {
-                System.out.println("Molly");
+            else
                 sum += column.get(key2);
-            }
         }
         return null;
     }

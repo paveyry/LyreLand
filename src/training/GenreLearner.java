@@ -41,5 +41,20 @@ public class GenreLearner {
         markovDegree_.closeLearning();
     }
 
+    /**
+     * Getter for the categoryName class attribute.
+     * @return
+     */
+    public String getCategoryName() {
+        return categoryName_;
+    }
+
+    /**
+     * Getter for the markovDegree class attribute.
+     * @return
+     */
+    public MarkovDegree getMarkovDegree() {
+        return markovDegree_;
+    }
 
 }

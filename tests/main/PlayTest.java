@@ -3,6 +3,8 @@ package main;
 import analysis.ScoreAnalyser;
 
 import analysis.harmonic.ChordDegree;
+import analysis.harmonic.Tonality;
+import generation.Generator;
 import jm.music.data.Score;
 import jm.util.Read;
 import main.options.ExecutionParameters;
@@ -18,11 +20,14 @@ public class PlayTest {
 
     @Test
     public void playTest() {
-        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
+        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.printScoreInfo();
+        sa.printScoreInfo();*/
+        Generator gene = new Generator("baroque");
+        Tonality tonality = new Tonality(0, 0); // CMajor
+        gene.readHarmonicBase(tonality, 12); // tonalily, numberofdegree
         //Play.midi(init);
     }
 }
