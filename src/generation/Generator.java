@@ -2,6 +2,7 @@ package generation;
 
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Tonality;
+import com.sun.tools.javac.jvm.Gen;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import jm.music.data.CPhrase;
@@ -19,20 +20,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Generator {
-    private String categoryName_;
     private MarkovDegree markovDegree_;
     private Score score_;
+    private GenreLearner learner_;
 
-    public Generator(String categoryName) {
-        categoryName_ = categoryName;
-        getTrainedData();
+    public Generator(GenreLearner learner) {
+        learner_ = learner;
+        markovDegree_ = learner.getMarkovDegree();
         score_ = new Score();
     }
 
     /**
      * Fixme: This function is temporary and will be removed soon.
      */
-    public void readHarmonicBase(Tonality t, int numberOfDegree) {
+    public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename) {
         Part part = new Part();
         CPhrase chords = new CPhrase();
         Harmonic harmonic = new Harmonic(t, markovDegree_);
@@ -42,27 +43,14 @@ public class Generator {
             chords.addChord(harmonic.getChord(chd, 60), rhythm.getRhythm());
         part.addCPhrase(chords);
         score_.add(part);
-        Play.midi(score_);
+        Write.midi(score_, filename);
     }
 
-    public MarkovDegree getMarkovDegree_() {
+    public MarkovDegree getMarkovDegree() {
         return markovDegree_;
     }
 
-    public GenreLearner getTrainedData() {
-        XStream xstream = new XStream(new DomDriver());
-        // For each category in data set, create the corresponding XML files in the trained data dir
-        File dir = new File(ExecutionParameters.trainedDataPath.toString());
-        File[] subDirs = dir.listFiles();
-        if (subDirs != null) {
-            for (File subDir : subDirs) {
-                if (subDir.isDirectory() && subDir.getName().equals(categoryName_)) {
-                    Path dataFile = subDir.toPath().resolve("trained_data.xml");
-                    GenreLearner genreLearner = (GenreLearner) xstream.fromXML(dataFile.toFile());
-                    markovDegree_ = genreLearner.getMarkovDegree();
-                }
-            }
-        }
-        return null;
+    public GenreLearner getLearner() {
+        return learner_;
     }
 }

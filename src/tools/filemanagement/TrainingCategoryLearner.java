@@ -1,4 +1,4 @@
-package main;
+package tools.filemanagement;
 
 import analysis.ScoreAnalyser;
 import com.thoughtworks.xstream.XStream;

@@ -4,13 +4,14 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import main.options.ExecutionParameters;
 import main.options.OptionManager;
+import tools.filemanagement.TrainingCategoryLearner;
+import tools.filemanagement.TrainingExampleGenerator;
 import training.GenreLearner;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
