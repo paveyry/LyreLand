@@ -194,37 +194,21 @@
             <div class="docs-inner">
             <h2 class="title text-center">Try it now!</h2>
             <div class="block">
-                <form>
+                <form action="/generate" id="generation" method="post">
                   <div class="form-group">
                     <label for="musicstyle">Music Genre</label>
-                    <select class="form-control" id="musicstyle">
-                        <option>Rock</option>
-                        <option>Chill</option>
-                        <option>Jazz</option>
-                        <option>Blues</option>
+                    <select class="form-control" id="musicstyle" form="generation" name="genre">
+                        #foreach($genre in $genres)
+                            <option value="$genre">$genre</option>
+                        #end
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="musicstyle">Speed</label>
-                    <select class="form-control" id="musicstyle">
-                        <option>Slow</option>
-                        <option>Medium</option>
-                        <option>Fast</option>
-                        <option>Very fast</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Duration</label>
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputFile">Seed</label>
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-
-                <div class="text-center"><button type="submit" class="btn btn-info">Generate!</button></div>
-            </form>
-
+                  </div>
+                    <div class="form-group">
+                        <label for="seed">Seed</label>
+                        <input type="text" class="form-control" placeholder="Text input" form="generation" name="seed">
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn btn-info">Generate!</button></div>
+                </form>
             </div>
             </div><!--//docs-inner-->
         </div><!--//container-->
