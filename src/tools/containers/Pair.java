@@ -1,6 +1,4 @@
-package training.tools;
-
-import analysis.harmonic.ChordDegree;
+package tools.containers;
 
 public class Pair<S, T> {
     private S leftValue_;

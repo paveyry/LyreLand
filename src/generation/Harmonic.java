@@ -3,7 +3,7 @@ package generation;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
-import training.MarkovChain.MarkovDegree;
+import training.probability.MarkovDegree;
 
 import java.util.ArrayList;
 

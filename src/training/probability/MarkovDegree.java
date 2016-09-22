@@ -1,7 +1,7 @@
-package training.MarkovChain;
+package training.probability;
 
 import analysis.harmonic.ChordDegree;
-import training.tools.Pair;
+import tools.containers.Pair;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -17,7 +17,8 @@ public class MarkovDegree {
 
     /**
      * Constructor for the MarkovDegree class.
-     * Takes no parameter so transition matrix should be
+     * Takes no parameter so transition matrix should be later filled manually
+     * using a sequence of degree.
      */
     public MarkovDegree() {
         depth1_ = null;

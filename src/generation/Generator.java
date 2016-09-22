@@ -7,18 +7,24 @@ import jm.music.data.Part;
 import jm.music.data.Score;
 import jm.util.Write;
 import training.GenreLearner;
-import training.MarkovChain.MarkovDegree;
+import training.probability.MarkovDegree;
+import training.probability.ProbabilityVector;
+
 import java.util.ArrayList;
 
 public class Generator {
-    private MarkovDegree markovDegree_;
-    private Score score_;
     private GenreLearner learner_;
+    private Score score_;
+
+    private MarkovDegree markovDegree_;
+    private ProbabilityVector<String> tonalityVector_;
 
     public Generator(GenreLearner learner) {
         learner_ = learner;
-        markovDegree_ = learner.getMarkovDegree();
         score_ = new Score();
+
+        markovDegree_ = learner.getMarkovDegree();
+        tonalityVector_ = learner.getTonalityVector();
     }
 
     /**
@@ -43,5 +49,9 @@ public class Generator {
 
     public GenreLearner getLearner() {
         return learner_;
+    }
+
+    public ProbabilityVector<String> getTonalityVector() {
+        return tonalityVector_;
     }
 }

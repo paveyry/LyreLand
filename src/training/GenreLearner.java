@@ -2,13 +2,15 @@ package training;
 
 import analysis.ScoreAnalyser;
 import analysis.harmonic.ChordDegree;
-import training.MarkovChain.MarkovDegree;
+import training.probability.MarkovDegree;
+import training.probability.ProbabilityVector;
 
 import java.util.ArrayList;
 
 public class GenreLearner {
     private String categoryName_;
     private MarkovDegree markovDegree_;
+    private ProbabilityVector<String> tonalityVector_;
 
     /**
      * Class for Music genre learning. Execute all the learning steps on a specific genre.
@@ -18,6 +20,7 @@ public class GenreLearner {
     public GenreLearner(String categoryName) {
         categoryName_ = categoryName;
         markovDegree_ = new MarkovDegree();
+        tonalityVector_ = new ProbabilityVector<String>("Tonality");
     }
 
     /**
@@ -30,6 +33,7 @@ public class GenreLearner {
         ArrayList<ChordDegree> degreeList = scoreAnalyser.getDegreeList();
         for(ChordDegree chordDegree : degreeList)
             markovDegree_.addDegree(chordDegree);
+        tonalityVector_.addEntry(scoreAnalyser.getTonality().toString());
     }
 
     /**
@@ -39,7 +43,10 @@ public class GenreLearner {
      */
     public void closeLearning() {
         markovDegree_.closeLearning();
+        tonalityVector_.closeLearning();
     }
+
+    // GETTERS / SETTERS
 
     /**
      * Getter for the categoryName class attribute.
@@ -55,6 +62,14 @@ public class GenreLearner {
      */
     public MarkovDegree getMarkovDegree() {
         return markovDegree_;
+    }
+
+    /**
+     * Getter for the tonalityVector class attribute.
+     * @return
+     */
+    public ProbabilityVector<String> getTonalityVector() {
+        return tonalityVector_;
     }
 
 }
