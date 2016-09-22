@@ -2,21 +2,12 @@ package generation;
 
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Tonality;
-import com.sun.tools.javac.jvm.Gen;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 import jm.music.data.CPhrase;
-import jm.music.data.Note;
 import jm.music.data.Part;
 import jm.music.data.Score;
-import jm.util.Play;
-import jm.util.View;
 import jm.util.Write;
-import main.options.ExecutionParameters;
 import training.GenreLearner;
 import training.MarkovChain.MarkovDegree;
-import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Generator {
