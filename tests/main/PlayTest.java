@@ -24,7 +24,7 @@ public class PlayTest {
         sa.printScoreInfo();*/
         Generator gene = createGenerators().get("baroque");
         Tonality tonality = new Tonality(0, 0); // CMajor
-        gene.writeHarmonicBase(tonality, 12, getProjectPath() + "yolo.mid"); // tonalily, numberofdegree
+        //gene.writeHarmonicBase(tonality, 12, getProjectPath() + "yolo.mid"); // tonalily, numberofdegree
         //Play.midi(init);
     }
 }
