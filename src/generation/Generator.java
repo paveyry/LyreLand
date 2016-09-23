@@ -10,6 +10,7 @@ import training.GenreLearner;
 import training.probability.MarkovDegree;
 import training.probability.ProbabilityVector;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Generator {
@@ -30,16 +31,19 @@ public class Generator {
     /**
      * Fixme: This function is temporary and will be removed soon.
      */
-    public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename) {
+    public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename, long seed) {
+        score_ = new Score();
         Part part = new Part();
         CPhrase chords = new CPhrase();
         Harmonic harmonic = new Harmonic(t, markovDegree_);
-        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree);
+        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
         Rhythm rhythm = new Rhythm();
         for (ChordDegree chd : base)
             chords.addChord(harmonic.getChord(chd, 60), rhythm.getRhythm());
         part.addCPhrase(chords);
         score_.add(part);
+        File f = new File(filename);
+        f.delete();
         Write.midi(score_, filename);
     }
 

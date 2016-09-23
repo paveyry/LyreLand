@@ -22,12 +22,12 @@ public class Harmonic {
      * @param degreeNumber number of degree we want to generate for the harmonic base.
      * @return an ArrayList of ChordDegree.
      */
-    public ArrayList<ChordDegree> generateHarmonicBase(int degreeNumber) {
+    public ArrayList<ChordDegree> generateHarmonicBase(int degreeNumber, long seed) {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ChordDegree depth1 = null;
         ChordDegree depth2 = null;
         for(int i = 0; i < degreeNumber; ++i) {
-            ChordDegree newChord = markovDegree_.getDegree(depth2, depth1);
+            ChordDegree newChord = markovDegree_.getDegree(depth2, depth1, seed);
             result.add(newChord);
             depth2 = depth1;
             depth1 = newChord;

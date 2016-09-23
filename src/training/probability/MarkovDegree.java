@@ -64,8 +64,8 @@ public class MarkovDegree {
      * @param depth2
      * @return ChordDegree.
      */
-    public ChordDegree getDegree(ChordDegree depth2, ChordDegree depth1) {
-        Random generator = new Random();
+    public ChordDegree getDegree(ChordDegree depth2, ChordDegree depth1, long seed) {
+        Random generator = new Random(seed);
         double getDegree =  generator.nextDouble(); // Generate double between 0 and 1.
         Pair<ChordDegree, ChordDegree> key = new Pair<>(depth2, depth1);
         HashMap<String, Double> column = transitions_.get(key.toString());
