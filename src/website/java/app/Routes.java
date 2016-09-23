@@ -48,7 +48,7 @@ public class Routes {
 
             System.out.println(path.toString());
 
-            generators.get(genre).writeHarmonicBase(getATonality(seed), new Random(seed).nextInt(15) + 15, path.toString(), seed);
+            generators.get(genre).writeHarmonicBase(getATonality(seed), new Random(seed).nextInt(7) + 10, path.toString(), seed);
             System.out.println(path.toString());
 
             byte[] data = null;
