@@ -31,7 +31,7 @@ public class Generator {
     /**
      * Fixme: This function is temporary and will be removed soon.
      */
-    public void writeHarmonicBase(int numberOfDegree, String filename, long seed) {
+    public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename, long seed) {
         score_ = new Score();
         Part part = new Part();
         CPhrase chords = new CPhrase();
