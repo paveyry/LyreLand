@@ -8,6 +8,7 @@ import jm.util.Read;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import training.GenreLearner;
 import training.probability.MarkovDegree;
 import training.probability.ProbabilityVector;
 
@@ -27,13 +28,20 @@ public class PlayTest {
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         sa.printScoreInfo();*/
-        /*Generator gene = createGenerators().get("baroque");
-        ProbabilityVector<Tonality> lol = gene.getTonalityVector();
-        System.out.println(lol.toString());
-        System.out.println(lol.getValue().toString());
 
-        MarkovDegree md = gene.getMarkovDegree();
-        System.out.println(md.toString());*/
+        /*Generator g = createGenerators().get("anime_ost");
+
+        GenreLearner l = g.getLearner();
+
+        System.out.println("Tonalities\n" + l.getTonalityVector());
+        System.out.println("Bar unit vector\n" + l.getBarUnitVector());
+        System.out.println("Beat per bar\n" + l.getBeatPerBarVector());
+        System.out.println("Bar Number\n" + l.getBarNumberVector());
+        System.out.println("Tempo\n" + l.getTempoVector());
+
+        System.out.println("MARKOV DEGREE\n" + l.getMarkovDegree());*/
+
+        //System.out.println(beat);
         //Tonality tonality = new Tonality(0, 0); // CMajor
         //gene.writeHarmonicBase(tonality, 12, getProjectPath() + "yolo.mid"); // tonalily, numberofdegree
         //Play.midi(init);

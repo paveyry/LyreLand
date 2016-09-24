@@ -12,6 +12,10 @@ public class GenreLearner {
     private String categoryName_;
     private MarkovDegree markovDegree_;
     private ProbabilityVector<Tonality> tonalityVector_;
+    private ProbabilityVector<Double> barUnitVector_;
+    private ProbabilityVector<Integer> beatPerBarVector_;
+    private ProbabilityVector<Integer> barNumberVector_;
+    private ProbabilityVector<Double> tempoVector_;
 
     /**
      * Class for Music genre learning. Execute all the learning steps on a specific genre.
@@ -21,7 +25,11 @@ public class GenreLearner {
     public GenreLearner(String categoryName) {
         categoryName_ = categoryName;
         markovDegree_ = new MarkovDegree();
-        tonalityVector_ = new ProbabilityVector<Tonality>("Tonality");
+        tonalityVector_ = new ProbabilityVector<>("tonality");
+        barUnitVector_ = new ProbabilityVector<>("barUnit");
+        beatPerBarVector_ = new ProbabilityVector<>("beatPerBar");
+        barNumberVector_ = new ProbabilityVector<>("barNumber");
+        tempoVector_ = new ProbabilityVector<>("tempo");
     }
 
     /**
@@ -35,6 +43,10 @@ public class GenreLearner {
         for(ChordDegree chordDegree : degreeList)
             markovDegree_.addDegree(chordDegree);
         tonalityVector_.addEntry(scoreAnalyser.getTonality());
+        barUnitVector_.addEntry(scoreAnalyser.getBarUnit());
+        beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
+        barNumberVector_.addEntry(scoreAnalyser.getBarNumber());
+        tempoVector_.addEntry(scoreAnalyser.getTempo());
     }
 
     /**
@@ -45,13 +57,17 @@ public class GenreLearner {
     public void closeLearning() {
         markovDegree_.closeLearning();
         tonalityVector_.closeLearning();
+        barUnitVector_.closeLearning();
+        beatPerBarVector_.closeLearning();
+        barNumberVector_.closeLearning();
+        tempoVector_.closeLearning();
     }
 
     // GETTERS / SETTERS
 
     /**
      * Getter for the categoryName class attribute.
-     * @return
+     * @return categoryName_
      */
     public String getCategoryName() {
         return categoryName_;
@@ -59,7 +75,7 @@ public class GenreLearner {
 
     /**
      * Getter for the markovDegree class attribute.
-     * @return
+     * @return markovDegree_
      */
     public MarkovDegree getMarkovDegree() {
         return markovDegree_;
@@ -67,10 +83,42 @@ public class GenreLearner {
 
     /**
      * Getter for the tonalityVector class attribute.
-     * @return
+     * @return tonalityVector_
      */
     public ProbabilityVector<Tonality> getTonalityVector() {
         return tonalityVector_;
+    }
+
+    /**
+     * Getter for the barUnitVector class attribute.
+     * @return barUnitVector_
+     */
+    public ProbabilityVector<Double> getBarUnitVector() {
+        return barUnitVector_;
+    }
+
+    /**
+     * Getter for the beatPerBar class attribute.
+     * @return beatPerBarVector_
+     */
+    public ProbabilityVector<Integer> getBeatPerBarVector() {
+        return beatPerBarVector_;
+    }
+
+    /**
+     * Getter for the barNumber class attribute.
+     * @return barNumberVector
+     */
+    public ProbabilityVector<Integer> getBarNumberVector() {
+        return barNumberVector_;
+    }
+
+    /**
+     * Getter for the barNumber class attribute.
+     * @return tempoVector_
+     */
+    public ProbabilityVector<Double> getTempoVector() {
+        return tempoVector_;
     }
 
 }

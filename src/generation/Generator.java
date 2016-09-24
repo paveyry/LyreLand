@@ -17,15 +17,9 @@ public class Generator {
     private GenreLearner learner_;
     private Score score_;
 
-    private MarkovDegree markovDegree_;
-    private ProbabilityVector<Tonality> tonalityVector_;
-
     public Generator(GenreLearner learner) {
         learner_ = learner;
         score_ = new Score();
-
-        markovDegree_ = learner.getMarkovDegree();
-        tonalityVector_ = learner.getTonalityVector();
     }
 
     /**
@@ -35,7 +29,7 @@ public class Generator {
         score_ = new Score();
         Part part = new Part();
         CPhrase chords = new CPhrase();
-        Harmonic harmonic = new Harmonic(tonalityVector_.getValue(), markovDegree_);
+        Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(), learner_.getMarkovDegree());
         ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
         Rhythm rhythm = new Rhythm();
         for (ChordDegree chd : base)
@@ -47,15 +41,14 @@ public class Generator {
         Write.midi(score_, filename);
     }
 
-    public MarkovDegree getMarkovDegree() {
-        return markovDegree_;
-    }
+    // GETTERS / SETTERS
 
+    /**
+     * Getter for the Learner class attribute.
+     * @return learner_
+     */
     public GenreLearner getLearner() {
         return learner_;
     }
 
-    public ProbabilityVector<Tonality> getTonalityVector() {
-        return tonalityVector_;
-    }
 }
