@@ -44,6 +44,18 @@ public class ChordDegree {
     }
 
     /**
+     * HashCode of the ChordDegree using all the class attributes.
+     * @return the hashCode value.
+     */
+    @Override
+    public int hashCode() {
+        int result = degree_;
+        result = 31 * result + (seventhChord_ ? 1 : 0);
+        result = 31 * result + barFractionDen_;
+        return result;
+    }
+
+    /**
      * Equality method
      * @param other other ChordDegree
      * @return True if the two ChordDegrees are equal, False elsewhere and if the param is not a ChordDegree
@@ -94,40 +106,6 @@ public class ChordDegree {
         sb.append("-1/").append(barFractionDen_).append(")");
 
         return sb.toString();
-    }
-
-    public void stringToDegree(String str) {
-        str = str.substring(1); // remove the first bracket.
-        str = str.substring(0,str.length()-1); // remove last bracket.
-        String[] parts = str.split("-");
-        if (parts[0].charAt(parts[0].length() - 1) == '7') {
-            seventhChord_ = true;
-            parts[0] = parts[0].substring(0, parts[0].length() - 1);
-        }
-        switch (parts[0]) {
-            case "I" :
-                degree_ = 1;
-                break;
-            case "II" :
-                degree_ = 2;
-                break;
-            case "III" :
-                degree_ = 3;
-                break;
-            case "IV" :
-                degree_ = 4;
-                break;
-            case "V" :
-                degree_ = 5;
-                break;
-            case "VI" :
-                degree_ = 6;
-                break;
-            case "VII" :
-                degree_ = 7;
-                break;
-        }
-        barFractionDen_ = Integer.parseInt(parts[1].substring(parts[1].length() - 1));
     }
 
 }

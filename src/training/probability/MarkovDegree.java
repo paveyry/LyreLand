@@ -13,7 +13,7 @@ public class MarkovDegree {
     // https://docs.oracle.com/javafx/2/api/javafx/util/Pair.html
     private ChordDegree depth2_;
     private ChordDegree depth1_;
-    private HashMap<String, HashMap<String, Double>> transitions_; // The string is Pair.toString();
+    private HashMap<String, HashMap<ChordDegree, Double>> transitions_; // The string is Pair.toString();
 
     /**
      * Constructor for the MarkovDegree class.
@@ -47,11 +47,11 @@ public class MarkovDegree {
      */
     public void closeLearning() {
         for(String key : transitions_.keySet()) {
-            HashMap<String, Double> column = transitions_.get(key);
+            HashMap<ChordDegree, Double> column = transitions_.get(key);
             double sum = 0;
-            for (String key2 : column.keySet())
+            for (ChordDegree key2 : column.keySet())
                 sum += column.get(key2);
-            for (String key2 : column.keySet())
+            for (ChordDegree key2 : column.keySet())
                 column.put(key2, column.get(key2) / sum);
         }
     }
@@ -68,14 +68,11 @@ public class MarkovDegree {
         Random generator = new Random(seed);
         double getDegree =  generator.nextDouble(); // Generate double between 0 and 1.
         Pair<ChordDegree, ChordDegree> key = new Pair<>(depth2, depth1);
-        HashMap<String, Double> column = transitions_.get(key.toString());
+        HashMap<ChordDegree, Double> column = transitions_.get(key.toString());
         double sum = 0;
-        for (String key2 : column.keySet()) {
-            if (column.get(key2) + sum > getDegree) {
-                ChordDegree temp = new ChordDegree(1, false, 1);
-                temp.stringToDegree(key2);
-                return temp;
-            }
+        for (ChordDegree key2 : column.keySet()) {
+            if (column.get(key2) + sum > getDegree)
+                return key2;
             else
                 sum += column.get(key2);
         }
@@ -94,14 +91,14 @@ public class MarkovDegree {
         for (String key1 : transitions_.keySet()) {
             for (int i = 0; i < space; ++i)
                 sb.append(" ");
-            HashMap<String, Double> columns = transitions_.get(key1);
-            for (String key2 : columns.keySet())
+            HashMap<ChordDegree, Double> columns = transitions_.get(key1);
+            for (ChordDegree key2 : columns.keySet())
                 sb.append(key2).append("     ");
             sb.append("Number = " + columns.size()).append("\n");
             sb.append(key1);
             for (int i = 0; i < space - key1.length() + 1; ++i)
                 sb.append(" ");
-            for (String key2 : columns.keySet()) {
+            for (ChordDegree key2 : columns.keySet()) {
                 sb.append(" ").append(columns.get(key2));
                 for (int i = 0; i < 9; ++i)
                     sb.append(" ");
@@ -120,11 +117,11 @@ public class MarkovDegree {
      * @param column
      * @param key
      */
-    private void addColumnEntry(HashMap<String, Double> column, ChordDegree key) {
-        if (column.get(key.toString()) == null)
-            column.put(key.toString(), 1.0);
+    private void addColumnEntry(HashMap<ChordDegree, Double> column, ChordDegree key) {
+        if (column.get(key) == null)
+            column.put(key, 1.0);
         else
-            column.put(key.toString(), column.get(key.toString()) + 1.0);
+            column.put(key, column.get(key) + 1.0);
     }
 
     /**
@@ -134,7 +131,7 @@ public class MarkovDegree {
      * @param columnKey
      */
     private void addLineEntry(Pair<ChordDegree, ChordDegree> lineKey, ChordDegree columnKey) {
-        HashMap<String, Double> column = transitions_.get(lineKey.toString());
+        HashMap<ChordDegree, Double> column = transitions_.get(lineKey.toString());
         if (column == null) {
             column = new HashMap<>();
             addColumnEntry(column, columnKey);

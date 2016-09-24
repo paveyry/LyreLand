@@ -142,6 +142,20 @@ public class Tonality {
     }
 
     /**
+     * HashCode of Tonality depending on all Tonality attributes.
+     * @return the hashValue.
+     */
+    @Override
+    public int hashCode() {
+        int result = tonic_ != null ? tonic_.hashCode() : 0;
+        result = 31 * result + (mode_ != null ? mode_.hashCode() : 0);
+        result = 31 * result + alteration_;
+        result = 31 * result + keySignature_;
+        result = 31 * result + keyQuality_;
+        return result;
+    }
+
+    /**
      * Comparator between two tonalities
      * @param other Another tonality
      * @return True if equal, False otherwise

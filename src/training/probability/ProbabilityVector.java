@@ -1,6 +1,5 @@
 package training.probability;
 
-import javax.naming.StringRefAddr;
 import java.util.HashMap;
 import java.util.Random;
 

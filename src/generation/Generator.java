@@ -18,7 +18,7 @@ public class Generator {
     private Score score_;
 
     private MarkovDegree markovDegree_;
-    private ProbabilityVector<String> tonalityVector_;
+    private ProbabilityVector<Tonality> tonalityVector_;
 
     public Generator(GenreLearner learner) {
         learner_ = learner;
@@ -31,11 +31,11 @@ public class Generator {
     /**
      * Fixme: This function is temporary and will be removed soon.
      */
-    public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename, long seed) {
+    public void writeHarmonicBase(int numberOfDegree, String filename, long seed) {
         score_ = new Score();
         Part part = new Part();
         CPhrase chords = new CPhrase();
-        Harmonic harmonic = new Harmonic(t, markovDegree_);
+        Harmonic harmonic = new Harmonic(tonalityVector_.getValue(), markovDegree_);
         ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
         Rhythm rhythm = new Rhythm();
         for (ChordDegree chd : base)
@@ -55,7 +55,7 @@ public class Generator {
         return learner_;
     }
 
-    public ProbabilityVector<String> getTonalityVector() {
+    public ProbabilityVector<Tonality> getTonalityVector() {
         return tonalityVector_;
     }
 }
