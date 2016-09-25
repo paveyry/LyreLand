@@ -6,9 +6,7 @@ import website.java.app.util.ViewUtil;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static analysis.harmonic.Tonality.Mode.MAJOR;
 import static spark.Spark.*;
-import static jm.constants.Pitches.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
