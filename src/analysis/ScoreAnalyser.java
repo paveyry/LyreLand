@@ -25,7 +25,7 @@ public class ScoreAnalyser {
     private Tonality tonality_;
     private double barUnit_;
     private int beatsPerBar_;
-    private double tempo_;
+    private int tempo_;
     private int partNb_;
     private ArrayList<ChordDegree> degreeList_;
     private transient BarLexer barLexer_;
@@ -48,7 +48,7 @@ public class ScoreAnalyser {
             scale_ = MetadataExtractor.computeScale(tonality_);
             barUnit_ = MetadataExtractor.computeBarUnit(score_.getDenominator());
             beatsPerBar_ = score_.getNumerator();
-            tempo_ = score_.getTempo();
+            tempo_ = (int)score_.getTempo();
             partNb_ = score_.getPartArray().length;
             quantum_ = MetadataExtractor.findQuantum(score_);
             barLexer_ = new BarLexer(score_, quantum_);

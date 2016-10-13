@@ -56,11 +56,6 @@ public class GenreLearner {
      */
     public void closeLearning() {
         markovDegree_.closeLearning();
-        tonalityVector_.closeLearning();
-        barUnitVector_.closeLearning();
-        beatPerBarVector_.closeLearning();
-        barNumberVector_.closeLearning();
-        tempoVector_.closeLearning();
     }
 
     // GETTERS / SETTERS

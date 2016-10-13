@@ -23,11 +23,11 @@ public class PlayTest {
 
     @Test
     public void playTest() {
-        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.printScoreInfo();*/
+        sa.printScoreInfo();
 
         /*Generator g = createGenerators().get("anime_ost");
 
@@ -39,7 +39,7 @@ public class PlayTest {
         System.out.println("Bar Number\n" + l.getBarNumberVector());
         System.out.println("Tempo\n" + l.getTempoVector());
 
-        System.out.println("MARKOV DEGREE\n" + l.getMarkovDegree());*/
+        System.out.println(l.getTonalityVector().getValue());*/
 
         //System.out.println(beat);
         //Tonality tonality = new Tonality(0, 0); // CMajor

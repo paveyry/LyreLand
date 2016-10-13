@@ -5,40 +5,32 @@ import java.util.Random;
 
 public class ProbabilityVector<T> {
     private String type_;
-    private HashMap<T, Double> probabilities_;
+    private HashMap<T, Integer> probabilities_;
+    private int sum_;
 
     /**
      * Constructor of the probabilityVector. The parameter Type is only used
-     * for the user to know what are the probabilities learn by this vector.
+     * for the user to know what are the probabilities learned by this vector.
      * @param type
      */
     public ProbabilityVector(String type) {
         type_ = type;
         probabilities_ = new HashMap<>();
+        sum_ = 0;
     }
 
     /**
      * Add a new entry in the table if it does not exist. Otherwise
      * It increase the value of an existing one by 1.0.
+     * Moreover, increment the sum of the values in the vector when called.
      * @param entry
      */
     public void addEntry(T entry) {
         if (probabilities_.get(entry) == null)
-            probabilities_.put(entry, 1.0);
+            probabilities_.put(entry, 1);
         else
-            probabilities_.put(entry, probabilities_.get(entry) + 1.0);
-    }
-
-    /**
-     * Divide each value of the table per the sum of all values to
-     * Normalize the sum to 1.0.
-     */
-    public void closeLearning() {
-        double sum = 0;
-        for (T key : probabilities_.keySet())
-            sum += probabilities_.get(key);
-        for (T key : probabilities_.keySet())
-            probabilities_.put(key, probabilities_.get(key) / sum);
+            probabilities_.put(entry, probabilities_.get(entry) + 1);
+        ++sum_;
     }
 
     /**
@@ -48,12 +40,13 @@ public class ProbabilityVector<T> {
     public T getValue() {
         Random generator = new Random();
         double random =  generator.nextDouble(); // Generate double between 0 and 1.
-        double sum = 0;
+        double value = 0;
         for (T key : probabilities_.keySet())
-            if (probabilities_.get(key) + sum > random)
+        {
+            value += (double) probabilities_.get(key) / sum_;
+            if (value >= random)
                 return key;
-            else
-                sum += probabilities_.get(key);
+        }
         return null;
     }
 
@@ -75,7 +68,7 @@ public class ProbabilityVector<T> {
         return type_;
     }
 
-    public HashMap<T, Double> getProbabilities() {
+    public HashMap<T, Integer> getProbabilities() {
         return probabilities_;
     }
 }
