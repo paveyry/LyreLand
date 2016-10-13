@@ -48,7 +48,7 @@ public class Main {
      */
     public static void processAnalysis() {
         try {
-            System.out.println("Analyzing MIDI files to generated training set...");
+            System.out.println("Analyzing MIDI files to generate training set...");
 
             // Create our threadpool
             ExecutorService threadPool = Executors.newFixedThreadPool(ExecutionParameters.threads);
