@@ -1,4 +1,4 @@
-src/website/resources/assets/** linguist-vendored
+src/website/resources/assets/* linguist-vendored
 *.mid filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text
