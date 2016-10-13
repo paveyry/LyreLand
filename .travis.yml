@@ -35,7 +35,7 @@ after_success:
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e scp -o stricthostkeychecking=no package.tar.bz2 $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST $DEPLOY_PATH/deploy.sh && echo yes || echo no
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no root@$DEPLOY_HOST "service lyreland start" && echo yes || echo no
-    - test $TRAVIS_PULL_REQUEST == "false" && test -n $TRAVIS_TAG && target/appassemble/bin/app -a -t -v  &&  sshpass -e scp -o stricthostkeychecking=no -r assets/training/trained_data $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/assets/training/trained_data
+    - test $TRAVIS_PULL_REQUEST == "false" && test -n $TRAVIS_TAG && ls && target/appassemble/bin/app -a -t -v  &&  sshpass -e scp -o stricthostkeychecking=no -r assets/training/trained_data $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/assets/training/trained_data
 
 
 notifications:
