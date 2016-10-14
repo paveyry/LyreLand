@@ -3,14 +3,14 @@ package training;
 import analysis.ScoreAnalyser;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Tonality;
-import training.probability.MarkovDegree;
+import training.probability.MarkovMatrix;
 import training.probability.ProbabilityVector;
 
 import java.util.ArrayList;
 
 public class GenreLearner {
     private String categoryName_;
-    private MarkovDegree markovDegree_;
+    private MarkovMatrix<ChordDegree> markovDegree_;
     private ProbabilityVector<Tonality> tonalityVector_;
     private ProbabilityVector<Double> barUnitVector_;
     private ProbabilityVector<Integer> beatPerBarVector_;
@@ -24,7 +24,7 @@ public class GenreLearner {
      */
     public GenreLearner(String categoryName) {
         categoryName_ = categoryName;
-        markovDegree_ = new MarkovDegree();
+        markovDegree_ = new MarkovMatrix<>(2);
         tonalityVector_ = new ProbabilityVector<>("tonality");
         barUnitVector_ = new ProbabilityVector<>("barUnit");
         beatPerBarVector_ = new ProbabilityVector<>("beatPerBar");
@@ -41,21 +41,12 @@ public class GenreLearner {
     public void learnExample(ScoreAnalyser scoreAnalyser) {
         ArrayList<ChordDegree> degreeList = scoreAnalyser.getDegreeList();
         for(ChordDegree chordDegree : degreeList)
-            markovDegree_.addDegree(chordDegree);
+            markovDegree_.addEntry(chordDegree);
         tonalityVector_.addEntry(scoreAnalyser.getTonality());
         barUnitVector_.addEntry(scoreAnalyser.getBarUnit());
         beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
         barNumberVector_.addEntry(scoreAnalyser.getBarNumber());
         tempoVector_.addEntry(scoreAnalyser.getTempo());
-    }
-
-    /**
-     * This function is called once the markov chains are complete to normalize
-     * each line of each matrix. Hence after every data sequence have been added
-     * into the markov matrix.
-     */
-    public void closeLearning() {
-        markovDegree_.closeLearning();
     }
 
     // GETTERS / SETTERS
@@ -72,7 +63,7 @@ public class GenreLearner {
      * Getter for the markovDegree class attribute.
      * @return markovDegree_
      */
-    public MarkovDegree getMarkovDegree() {
+    public MarkovMatrix<ChordDegree> getMarkovDegree() {
         return markovDegree_;
     }
 

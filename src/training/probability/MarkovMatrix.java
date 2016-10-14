@@ -1,46 +1,73 @@
 package training.probability;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 /**
- * FIXME
+ * Markov transition matrix generic class
  * T must be hashable.
- * Must store the sum of a line somewhere -> hashmap(null) ?
- * @param <T>
+ * @param <T> Type of the elements
  */
 public class MarkovMatrix<T> {
-    private String type_;
     private int depth_;
-    private ArrayList<T> context_;
-    private HashMap<ArrayList<T>, HashMap<T, Integer>> transitions_;
+    private Queue<T> context_;
+    private HashMap<ArrayList<T>, HashMap<T, Integer>> transitionMatrix_;
 
-    public MarkovMatrix(String type, int depth) {
-        type_ = type;
+    /**
+     * Constructor
+     * @param depth Number of elements of the context
+     */
+    public MarkovMatrix(int depth) {
         depth_ = depth;
-        context_ = new ArrayList<>(Collections.nCopies(depth_, null));
-        transitions_ = new HashMap<>();
-    }
-
-    public void updateContext(T t) {
-        for (int i = context_.size() - 1; i > 0; --i)
-            context_.set(i, context_.get(i - 1));
-        context_.set(0, t);
-    }
-
-    public void addEntry(T entry) {
-        updateContext(entry);
+        context_ = new LinkedList<>(Collections.nCopies(depth_, null));
+        transitionMatrix_ = new HashMap<>();
     }
 
     /**
-     * Get a random double and a inputs ArrayList<T> in parameters and returns a T element
-     * in function of the probability.
+     * Insert a new element in the Markov chain. The context is preserved.
+     * @param entry Element to insert
      */
-    public void getValue() {
-        return;
+    public void addEntry(T entry) {
+        ArrayList<T> key = new ArrayList<T>(context_);
+        HashMap<T, Integer> line = transitionMatrix_.get(key);
+        if (line == null) {
+            line = new HashMap<>();
+            line.put(entry, 1);
+            line.put(null, 1); // Store the number of elements in the line
+            transitionMatrix_.put(key, line);
+        }
+        else {
+            Integer nb = line.get(entry);
+            line.put(entry, (nb != null) ? nb + 1 : 1);
+            nb = line.get(null);
+            line.put(null, (nb != null) ? nb + 1 : 1);
+        }
+        updateContext(entry);
     }
 
+    private void updateContext(T t) {
+        context_.remove();
+        context_.add(t);
+    }
 
-
+    /**
+     * Get a new random element in the Markov chain.
+     * @param context The last n elements (n = depth_)
+     * @param seed Seed for the random
+     * @return
+     */
+    public T getRandomValue(List<T> context, long seed) {
+        Random generator = new Random(seed + 125);
+        double ran =  generator.nextDouble(); // Generate double between 0 and 1.
+        HashMap<T, Integer> line = transitionMatrix_.get(context);
+        double count = line.get(null);
+        double sum = 0;
+        for (T key : line.keySet()) {
+            if (key == null)
+                continue;
+            sum += (double) line.get(key) / count;
+            if (sum >= ran)
+                return key;
+        }
+        return null;
+    }
 }

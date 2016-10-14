@@ -1,19 +1,11 @@
 package main;
 
 import analysis.ScoreAnalyser;
-import analysis.harmonic.Tonality;
-import generation.Generator;
 import jm.music.data.Score;
 import jm.util.Read;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import training.GenreLearner;
-import training.probability.MarkovDegree;
-import training.probability.ProbabilityVector;
-
-import static tools.Misc.getProjectPath;
-import static tools.filemanagement.TrainedDataDeserializer.createGenerators;
 
 public class PlayTest {
     @BeforeClass

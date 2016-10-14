@@ -3,21 +3,22 @@ package generation;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
-import training.probability.MarkovDegree;
+import training.probability.MarkovMatrix;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Harmonic {
     private Tonality tonality_;
-    private MarkovDegree markovDegree_;
+    private MarkovMatrix<ChordDegree> markovDegree_;
 
-    public Harmonic(Tonality tonality, MarkovDegree markovDegree) {
+    public Harmonic(Tonality tonality, MarkovMatrix<ChordDegree> markovDegree) {
         tonality_ = tonality;
         markovDegree_ = markovDegree;
     }
 
     /**
-     * This function generate an harmonic base using the MarkovDegree transition
+     * This function generate an harmonic base using the MarkovMatrix<ChordDegree> transition
      * matrix.
      * @param degreeNumber number of degree we want to generate for the harmonic base.
      * @return an ArrayList of ChordDegree.
@@ -27,12 +28,11 @@ public class Harmonic {
         ChordDegree depth1 = null;
         ChordDegree depth2 = null;
         for(int i = 0; i < degreeNumber; ++i) {
-            ChordDegree newChord = markovDegree_.getDegree(depth2, depth1, seed);
+            ChordDegree newChord = markovDegree_.getRandomValue(Arrays.asList(depth1, depth2), seed);
             result.add(newChord);
-            depth2 = depth1;
-            depth1 = newChord;
+            depth1 = depth2;
+            depth2 = newChord;
         }
-        System.out.println(result);
         return result;
     }
 

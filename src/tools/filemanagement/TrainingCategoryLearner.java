@@ -44,7 +44,6 @@ public class TrainingCategoryLearner implements Runnable {
                     learner.learnExample(sa);
                 }
             }
-            learner.closeLearning();
         }
 
         // Process path to trained data file

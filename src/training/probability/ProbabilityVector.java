@@ -41,8 +41,7 @@ public class ProbabilityVector<T> {
         Random generator = new Random();
         double random =  generator.nextDouble(); // Generate double between 0 and 1.
         double value = 0;
-        for (T key : probabilities_.keySet())
-        {
+        for (T key : probabilities_.keySet()) {
             value += (double) probabilities_.get(key) / sum_;
             if (value >= random)
                 return key;

@@ -7,8 +7,6 @@ import jm.music.data.Part;
 import jm.music.data.Score;
 import jm.util.Write;
 import training.GenreLearner;
-import training.probability.MarkovDegree;
-import training.probability.ProbabilityVector;
 
 import java.io.File;
 import java.util.ArrayList;
