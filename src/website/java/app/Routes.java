@@ -42,7 +42,7 @@ public class Routes {
             String seedString = request.queryParams("seed");
             long seed = (seedString != null && seedString.length() > 0) ? Long.parseLong(seedString) : 437489379;
 
-            Path path = Paths.get("/tmp/generated-" + seed + ".mid");
+            Path path = Paths.get(System.getProperty("java.io.tmpdir") + "/generated-" + seed + ".mid");
 
             System.out.println(path.toString());
 
