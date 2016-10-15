@@ -64,7 +64,9 @@ public class ChordDegree {
     public boolean equals(Object other) {
         if (other == null || !(other instanceof ChordDegree))
             return false;
-        return degree_ == ((ChordDegree) other).degree_ && seventhChord_== ((ChordDegree) other).seventhChord_;
+        return degree_ == ((ChordDegree) other).degree_
+               && seventhChord_== ((ChordDegree) other).seventhChord_
+               && barFractionDen_ == ((ChordDegree) other).barFractionDen_;
     }
 
     /**
