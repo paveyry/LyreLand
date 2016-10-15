@@ -56,7 +56,8 @@ public class ScoreAnalyser {
             barNumber_ = barLexer_.getBarNumber();
         }
         catch (Exception e) {
-            System.err.println("Error: ScoreAnalyser midi file can't be found");
+            e.printStackTrace();
+            System.err.println("ScoreAnalyser: An error occurred while processing " + midiFile);
         }
     }
 
