@@ -1,5 +1,7 @@
 package training.probability;
 
+import analysis.harmonic.ChordDegree;
+
 import java.util.*;
 
 /**
@@ -20,6 +22,10 @@ public class MarkovMatrix<T> {
         depth_ = depth;
         context_ = new LinkedList<>(Collections.nCopies(depth_, null));
         transitionMatrix_ = new HashMap<>();
+    }
+
+    public void resetContext() {
+        context_ = new LinkedList<>(Collections.nCopies(depth_, null));
     }
 
     /**
@@ -52,19 +58,20 @@ public class MarkovMatrix<T> {
     /**
      * Get a new random element in the Markov chain.
      * @param context The last n elements (n = depth_)
-     * @param seed Seed for the random
+     * @param generator Pseudo-random generator
      * @return
      */
-    public T getRandomValue(List<T> context, long seed) {
-        Random generator = new Random(seed + 125);
-        double ran =  generator.nextDouble(); // Generate double between 0 and 1.
+    public T getRandomValue(List<T> context, Random generator) {
         HashMap<T, Integer> line = transitionMatrix_.get(context);
         double count = line.get(null);
+        double ran =  generator.nextDouble() * count; // Generate double between 0 and 1.
+        System.out.println(context);
+        System.out.println(line);
         double sum = 0;
         for (T key : line.keySet()) {
             if (key == null)
                 continue;
-            sum += (double) line.get(key) / count;
+            sum += (double) line.get(key);
             if (sum >= ran)
                 return key;
         }

@@ -7,10 +7,13 @@ import training.probability.MarkovMatrix;
 import training.probability.ProbabilityVector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GenreLearner {
     private String categoryName_;
     private MarkovMatrix<ChordDegree> markovDegree_;
+    private ProbabilityVector<List<ChordDegree>> endingsVector_;
     private ProbabilityVector<Tonality> tonalityVector_;
     private ProbabilityVector<Double> barUnitVector_;
     private ProbabilityVector<Integer> beatPerBarVector_;
@@ -25,6 +28,7 @@ public class GenreLearner {
     public GenreLearner(String categoryName) {
         categoryName_ = categoryName;
         markovDegree_ = new MarkovMatrix<>(2);
+        endingsVector_ = new ProbabilityVector<>("ending_degrees");
         tonalityVector_ = new ProbabilityVector<>("tonality");
         barUnitVector_ = new ProbabilityVector<>("barUnit");
         beatPerBarVector_ = new ProbabilityVector<>("beatPerBar");
@@ -41,7 +45,10 @@ public class GenreLearner {
     public void learnExample(ScoreAnalyser scoreAnalyser) {
         ArrayList<ChordDegree> degreeList = scoreAnalyser.getDegreeList();
         for(ChordDegree chordDegree : degreeList)
-            markovDegree_.addEntry(chordDegree);
+            if (chordDegree.getDegree() != 0)
+                markovDegree_.addEntry(chordDegree);
+        markovDegree_.resetContext();
+        endingsVector_.addEntry(Arrays.asList(degreeList.get(degreeList.size() - 2), degreeList.get(degreeList.size() - 1)));
         tonalityVector_.addEntry(scoreAnalyser.getTonality());
         barUnitVector_.addEntry(scoreAnalyser.getBarUnit());
         beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
@@ -107,4 +114,11 @@ public class GenreLearner {
         return tempoVector_;
     }
 
+    /**
+     * Getter for the endingsVector class attribute
+     * @return endingsVector_
+     */
+    public ProbabilityVector<List<ChordDegree>> getEndingsVector() {
+        return endingsVector_;
+    }
 }

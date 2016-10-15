@@ -10,6 +10,7 @@ import training.GenreLearner;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Generator {
     private GenreLearner learner_;
@@ -27,7 +28,10 @@ public class Generator {
         score_ = new Score();
         Part part = new Part();
         CPhrase chords = new CPhrase();
-        Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(), learner_.getMarkovDegree());
+        Random generator = new Random(seed);
+        Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator),
+                                         learner_.getMarkovDegree(),
+                                         learner_.getEndingsVector());
         ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
         Rhythm rhythm = new Rhythm();
         for (ChordDegree chd : base)

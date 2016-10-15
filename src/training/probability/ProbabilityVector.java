@@ -37,8 +37,7 @@ public class ProbabilityVector<T> {
      * This function returns randomly according to the leaned probabilities.
      * @return A <T> value.
      */
-    public T getValue() {
-        Random generator = new Random();
+    public T getValue(Random generator) {
         double random =  generator.nextDouble(); // Generate double between 0 and 1.
         double value = 0;
         for (T key : probabilities_.keySet()) {
