@@ -9,6 +9,7 @@ import training.GenreLearner;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -33,17 +34,23 @@ public class TrainingCategoryLearner implements Runnable {
         // Instantiate the learner for the whole category
         GenreLearner learner = new GenreLearner(categoryDir_.getName());
 
+        final int[] nbFiles = {0};
+
         // Iterate over training examples
-        File[] trainingExamples = categoryDir_.listFiles();
-        if (trainingExamples != null) {
-            for (File trainingExample : trainingExamples) {
-                if (trainingExample.toString().endsWith(".xml")) {
-                    // Deserialize ScoreAnalyzers
-                    XStream xstream = new XStream(new DomDriver());
-                    ScoreAnalyser sa = (ScoreAnalyser) xstream.fromXML(trainingExample);
-                    learner.learnExample(sa);
-                }
-            }
+        try {
+            Files.walk(categoryDir_.toPath())
+                    .filter(Files::isRegularFile)
+                    .forEach(s -> {
+                            if (s.toString().endsWith(".xml")) {
+                                // Deserialize ScoreAnalyzers
+                                XStream xstream = new XStream(new DomDriver());
+                                ScoreAnalyser sa = (ScoreAnalyser) xstream.fromXML(s.toFile());
+                                learner.learnExample(sa);
+                                ++nbFiles[0];
+                            }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // Process path to trained data file
@@ -64,5 +71,7 @@ public class TrainingCategoryLearner implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("Learned " + categoryDir_.getName() + " from " + nbFiles[0] + " files.");
     }
 }
