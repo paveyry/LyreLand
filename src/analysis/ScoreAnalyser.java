@@ -28,7 +28,7 @@ public class ScoreAnalyser {
     private int tempo_;
     private int partNb_;
     private ArrayList<ChordDegree> degreeList_;
-    private transient BarLexer barLexer_;
+    private BarLexer barLexer_;
     private double quantum_;
     private transient ChordDegreeSequenceExtractor chordDegreeExtrator_;
     private transient Scale scale_;
