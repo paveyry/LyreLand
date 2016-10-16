@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Bar {
     private ArrayList<BarNote> notes_;
-    private ArrayList<ArrayList<Integer>> notesByBeat_;
+    private transient ArrayList<ArrayList<Integer>> notesByBeat_;
     private Tonality tonality_;
 
     /**

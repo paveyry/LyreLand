@@ -22,7 +22,7 @@ public class HarmonicProcessor {
     public HarmonicProcessor(Tonality tonality, BarLexer barLexer) {
         tonality_ = tonality;
         barLexer_ = barLexer;
-        Bar bar = barLexer_.getBars().get(11);
+        //Bar bar = barLexer_.getBars().get(11);
         //Tonality t = new Tonality(-1, 1);
         //System.out.println(t); fixme: Use for debug purpose, suppress afterwards.
         //System.out.println(computeBarTonality(bar, t.getKeySignature(), t.getKeyQuality()));
