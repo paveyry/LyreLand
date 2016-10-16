@@ -1,7 +1,5 @@
 package training.probability;
 
-import analysis.harmonic.ChordDegree;
-
 import java.util.*;
 
 /**
@@ -20,10 +18,13 @@ public class MarkovMatrix<T> {
      */
     public MarkovMatrix(int depth) {
         depth_ = depth;
-        context_ = new LinkedList<>(Collections.nCopies(depth_, null));
+        resetContext();
         transitionMatrix_ = new HashMap<>();
     }
 
+    /**
+     * Reset the context to the starting context
+     */
     public void resetContext() {
         context_ = new LinkedList<>(Collections.nCopies(depth_, null));
     }
@@ -74,5 +75,14 @@ public class MarkovMatrix<T> {
                 return key;
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (ArrayList<T> context : transitionMatrix_.keySet()) {
+            sb.append(context).append("\t\t:\t").append(transitionMatrix_.get(context)).append('\n');
+        }
+        return sb.toString();
     }
 }
