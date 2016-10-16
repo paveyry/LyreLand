@@ -39,7 +39,7 @@ public class ChordDegree {
      * Getter for the barFractionDen attribute
      * @return Denominator of the fraction of bar corresponding to this degree
      */
-    public int getBarFractionDen_() {
+    public int getBarFractionDen() {
         return barFractionDen_;
     }
 

@@ -5,9 +5,11 @@ import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Tonality;
 import training.probability.MarkovMatrix;
 import training.probability.ProbabilityVector;
+import training.rhythmic.RhythmicLearner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class GenreLearner {
@@ -19,6 +21,7 @@ public class GenreLearner {
     private ProbabilityVector<Integer> beatPerBarVector_;
     private ProbabilityVector<Integer> barNumberVector_;
     private ProbabilityVector<Double> tempoVector_;
+    private HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices_;
 
     /**
      * Class for Music genre learning. Execute all the learning steps on a specific genre.
@@ -34,6 +37,7 @@ public class GenreLearner {
         beatPerBarVector_ = new ProbabilityVector<>("beatPerBar");
         barNumberVector_ = new ProbabilityVector<>("barNumber");
         tempoVector_ = new ProbabilityVector<>("tempo");
+        rhythmMatrices_ = new HashMap<>();
     }
 
     /**
@@ -54,6 +58,7 @@ public class GenreLearner {
         beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
         barNumberVector_.addEntry(scoreAnalyser.getBarNumber());
         tempoVector_.addEntry(scoreAnalyser.getTempo());
+        RhythmicLearner.rhythmlearning(scoreAnalyser, rhythmMatrices_);
     }
 
     // GETTERS / SETTERS

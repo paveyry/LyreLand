@@ -47,7 +47,7 @@ public class CadenceExtractor {
             ChordDegree firstChord = degreeList_.get(i - 1);
             ChordDegree secondChord = degreeList_.get(i);
 
-            fractionCounter += (1/firstChord.getBarFractionDen_());
+            fractionCounter += (1/firstChord.getBarFractionDen());
             if (fractionCounter == 1.0) {
                 ++endBar;
                 fractionCounter = 0;
