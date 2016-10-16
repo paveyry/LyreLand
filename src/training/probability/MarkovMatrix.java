@@ -65,8 +65,6 @@ public class MarkovMatrix<T> {
         HashMap<T, Integer> line = transitionMatrix_.get(context);
         double count = line.get(null);
         double ran =  generator.nextDouble() * count; // Generate double between 0 and 1.
-        System.out.println(context);
-        System.out.println(line);
         double sum = 0;
         for (T key : line.keySet()) {
             if (key == null)
