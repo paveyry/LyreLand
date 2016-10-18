@@ -43,4 +43,9 @@ public class BarNote {
     public void setPitch(int pitch_) {
         this.pitch_ = pitch_;
     }
+
+    @Override
+    public BarNote clone() {
+        return new BarNote(startTime_, rhythm_, pitch_);
+    }
 }

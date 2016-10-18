@@ -108,4 +108,13 @@ public class Bar {
     public void setTonality(Tonality tonality) {
         tonality_ = tonality;
     }
+
+    @Override
+    public Bar clone() {
+        Bar newbar = new Bar();
+        for (BarNote bn : notes_)
+            newbar.notes_.add(bn.clone());
+        newbar.tonality_ = tonality_;
+        return newbar;
+    }
 }

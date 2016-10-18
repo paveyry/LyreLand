@@ -1,5 +1,6 @@
 package analysis.bars;
 
+import analysis.harmonic.Tonality;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Note;
 import jm.music.data.Part;
@@ -32,6 +33,18 @@ public class BarLexer {
         barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
         quantum_ = quantum;
         lexBarsFromScore(score);
+    }
+
+    /**
+     * Constructor that sets all parameters to null.
+     */
+    public BarLexer() {
+        barUnit_ = 0.0;
+        beatsPerBar_ = 0;
+        barDuration_ = 0.0;
+        bars_ = null;
+        barNumber_ = 0;
+        quantum_ = 0.0;
     }
 
     /**
@@ -104,4 +117,18 @@ public class BarLexer {
         return  barUnit_;
     }
 
+    @Override
+    public BarLexer clone() {
+        BarLexer newbl = new BarLexer();
+        newbl.barDuration_ = barDuration_;
+        newbl.quantum_ = quantum_;
+        newbl.r_ = r_;
+        newbl.barNumber_ = barNumber_;
+        newbl.barUnit_ = barUnit_;
+        newbl.beatsPerBar_ = beatsPerBar_;
+        newbl.bars_ = new ArrayList<>();
+        for (Bar b : bars_)
+            newbl.bars_.add(b.clone());
+        return newbl;
+    }
 }

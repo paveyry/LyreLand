@@ -21,7 +21,7 @@ public class ChordDegreeSequenceExtractor {
      */
     public ChordDegreeSequenceExtractor(BarLexer barLexer, Tonality tonality) {
         // FIXME: Handle modulations using the HarmonicProcessor
-        barLexer_ = barLexer;
+        barLexer_ = barLexer.clone();
         tonality_ = tonality;
     }
 
