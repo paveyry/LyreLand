@@ -22,6 +22,19 @@ public class Generator {
     }
 
     /**
+     * This function compute the Harmonic Base of the generated music.
+     * @param barNumber
+     * @param seed
+     * @return ArrayList<ChordDegree>
+     */
+    public ArrayList<ChordDegree> computeHarmonicBase(int barNumber, long seed) {
+        Random generator = new Random(seed);
+        Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator), learner_.getMarkovDegree(),
+                                                                                           learner_.getEndingsVector());
+        return harmonic.generateHarmonicBase(barNumber, seed);
+    }
+
+    /**
      * Fixme: This function is temporary and will be removed soon.
      */
     public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename, long seed) {

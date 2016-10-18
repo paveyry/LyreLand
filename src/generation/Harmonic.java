@@ -26,19 +26,36 @@ public class Harmonic {
     /**
      * This function generate an harmonic base using the MarkovMatrix<ChordDegree> transition
      * matrix.
-     * @param degreeNumber number of degree we want to generate for the harmonic base.
+     * @param barNumber number of bar we want to generate for the harmonic base.
      * @return an ArrayList of ChordDegree.
      */
-    public ArrayList<ChordDegree> generateHarmonicBase(int degreeNumber, long seed) {
+    public ArrayList<ChordDegree> generateHarmonicBase(int barNumber, long seed) {
         ArrayList<ChordDegree> result = new ArrayList<>();
+        ArrayList<ChordDegree> temp = new ArrayList<>();
         ChordDegree depth1 = null;
         ChordDegree depth2 = null;
+        double sumDen = 0.0;
         Random generator = new Random(seed + 125);
-        for(int i = 0; i < degreeNumber - 2; ++i) {
-            ChordDegree newChord = markovDegree_.getRandomValue(Arrays.asList(depth1, depth2), generator);
-            result.add(newChord);
-            depth1 = depth2;
-            depth2 = newChord;
+        for(int i = 0; i < barNumber - 2; ++i) {
+            ChordDegree tempDepth1 = depth1;
+            ChordDegree tempDepth2 = depth2;
+            while (sumDen < 1.0) {
+                ChordDegree newChord = markovDegree_.getRandomValue(Arrays.asList(tempDepth1, tempDepth2), generator);
+                temp.add(newChord);
+                sumDen += 1.0 / (double)newChord.getBarFractionDen();
+                tempDepth1 = tempDepth2;
+                tempDepth2 = newChord;
+            }
+            if (sumDen == 1.0) {
+                result.addAll(temp);
+                depth1 = tempDepth1;
+                depth2 = tempDepth2;
+            }
+            else
+                --i;
+            sumDen = 0.0;
+            temp.clear();
+
         }
         List<ChordDegree> ending = endings_.getValue(generator);
         result.addAll(ending);
