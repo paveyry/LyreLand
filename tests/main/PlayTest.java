@@ -1,9 +1,14 @@
 package main;
 
 import analysis.ScoreAnalyser;
+<<<<<<< HEAD
 import analysis.harmonic.ModulationDetector;
 import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
+=======
+import analysis.harmonic.Tonality;
+import generation.Generator;
+>>>>>>> generator: rhythm: add generator, it will work once the bar and degrees are correct
 import jm.music.data.Score;
 import jm.util.Play;
 import jm.util.Read;
@@ -15,6 +20,8 @@ import tools.MidiUpdate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static tools.filemanagement.TrainedDataDeserializer.createGenerators;
+
 public class PlayTest {
     @BeforeClass
     public static void initClass() {
@@ -23,19 +30,17 @@ public class PlayTest {
 
     @Test
     public void playTest() {
-        //MidiUpdate.UpdateMidiTonality("../assets/midi/baroque/bach/bwv774.mid", 2, 0);
-        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/bwv772.mid";
+        /*
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         sa.printScoreInfo();
 
-
-        ModulationDetector m = new ModulationDetector(sa.getTonality(), sa.getBarLexer());
-        ArrayList<Tonality> results = m.computeTonalities();
-        System.out.println(results);*/
-
-        /*Generator g = createGenerators().get("anime_ost");
+        Tonality t = new Tonality(0,0);
+        long lol = 123456789;
+        Generator g = createGenerators().get("anime_ost");
+        g.writeHarmonicBase(t, 12, "toto", lol);
 
         GenreLearner l = g.getLearner();
 

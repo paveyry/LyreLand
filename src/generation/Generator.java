@@ -27,12 +27,24 @@ public class Generator {
     public void writeHarmonicBase(Tonality t, int numberOfDegree, String filename, long seed) {
         score_ = new Score();
         Part part = new Part();
-        CPhrase chords = new CPhrase();
         Random generator = new Random(seed);
+        int beatperbar = learner_.getBeatPerBarVector().getValue(generator);
+        double barUnit = learner_.getBarUnitVector().getValue(generator);
+        //CPhrase chords = new CPhrase();
         Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator),
                                          learner_.getMarkovDegree(),
                                          learner_.getEndingsVector());
         ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
+
+        Rhythm rhythm = new Rhythm(base, learner_.getRhythmMatrices_(), beatperbar * barUnit, generator);
+        ArrayList<GeneratedNote> generatedNotes = rhythm.generateRhythms();
+
+        System.out.println("BarUnit: " + beatperbar * barUnit);
+        for (GeneratedNote gn : generatedNotes) {
+            System.out.println(gn.getDegree() + " : " + gn.getRhythm());
+        }
+
+        /*
         Rhythm rhythm = new Rhythm();
         for (ChordDegree chd : base)
             chords.addChord(harmonic.getChord(chd, 60), rhythm.getRhythm());
@@ -41,6 +53,7 @@ public class Generator {
         File f = new File(filename);
         f.delete();
         Write.midi(score_, filename);
+        */
     }
 
     // GETTERS / SETTERS

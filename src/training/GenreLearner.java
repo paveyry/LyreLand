@@ -126,4 +126,12 @@ public class GenreLearner {
     public ProbabilityVector<List<ChordDegree>> getEndingsVector() {
         return endingsVector_;
     }
+
+    /**
+     * Getter for the rhythmMatrices class attribute
+     * @return rhythmMatrices_
+     */
+    public HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> getRhythmMatrices_() {
+        return rhythmMatrices_;
+    }
 }

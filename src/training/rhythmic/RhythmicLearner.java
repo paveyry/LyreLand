@@ -5,15 +5,10 @@ import analysis.bars.Bar;
 import analysis.bars.BarNote;
 import analysis.harmonic.ChordDegree;
 import training.probability.MarkovMatrix;
-
 import java.util.*;
+import static jm.constants.Pitches.REST;
 
-import static java.lang.System.exit;
 
-
-/**
- * Created by light on 14/10/16.
- */
 public class RhythmicLearner {
 
     public static void rhythmlearning(ScoreAnalyser score, HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices) {
@@ -51,7 +46,7 @@ public class RhythmicLearner {
         for (BarNote note : notes) {
             double startTime = note.getStartTime();
             if (low_bound < startTime && startTime < high_bound) {
-                if (note.getDuration() > 0)
+                if (note.getDuration() > 0 && note.getPitch() != REST)
                     result.add(note.getDuration());
             }
         }
