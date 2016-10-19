@@ -62,4 +62,27 @@ public class ModulationTest {
         //System.out.println(value);
         Assert.assertTrue(result);
     }
+
+    @Test
+    public void modulationDetection2() {
+        // initialisation
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/bwv772.mid";
+        Score init = new Score();
+        Read.midi(init, midifile);
+        ScoreAnalyser sa = new ScoreAnalyser(midifile);
+        Tonality CMajor = new Tonality(0, 0);
+        Tonality GMajor = new Tonality(1, 0);
+        Tonality DMinor = new Tonality(-1, 1);
+        DMinor.setMode_(Tonality.Mode.HARMONICMINOR);
+        Tonality AMinor = new Tonality(0, 1);
+        ArrayList<Tonality> wantedResult = new ArrayList<>();
+        for (int i = 0; i < 5; ++i)
+            wantedResult.add(CMajor);
+        for (int i = 0; i < 9; ++i)
+            wantedResult.add(GMajor);
+        for (int i = 0; i < 3; ++i)
+            wantedResult.add(CMajor);
+        for (int i = 0; i < 2; ++i)
+            wantedResult.add(DMinor);
+    }
 }

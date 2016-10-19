@@ -2,6 +2,7 @@ package main;
 
 import analysis.ScoreAnalyser;
 import analysis.harmonic.ChordDegree;
+import analysis.harmonic.ModulationDetector;
 import analysis.harmonic.Tonality;
 import generation.GeneratedNote;
 import generation.Generator;
@@ -28,16 +29,19 @@ public class PlayTest {
 
     @Test
     public void playTest() {
-        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/Bach-Prelude1.mid";
+        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/bwv772.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.printScoreInfo();*/
+        sa.printScoreInfo();
+
+        ModulationDetector m = new ModulationDetector(sa.getTonality(), sa.getBarLexer());
+        System.out.println(m.computeTonalities());*/
 
         // 14235
         /*long seed = 14235;
         Random generator = new Random(seed);
-        Generator g = createGenerators().get("baroque");
+        Generator g = createGenerators().get("anime_ost");
         ArrayList<ChordDegree> base = g.computeHarmonicBase(10, seed);
         System.out.println(base);
         int beatperbar = g.getLearner().getBeatPerBarVector().getValue(generator);

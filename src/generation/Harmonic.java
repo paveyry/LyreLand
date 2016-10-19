@@ -36,7 +36,7 @@ public class Harmonic {
         ChordDegree depth2 = null;
         double sumDen = 0.0;
         Random generator = new Random(seed + 125);
-        for(int i = 0; i < barNumber - 2; ++i) {
+        for(int i = 0; i < barNumber - 3; ++i) {
             ChordDegree tempDepth1 = depth1;
             ChordDegree tempDepth2 = depth2;
             while (sumDen < 1.0) {

@@ -52,7 +52,12 @@ public class GenreLearner {
             if (chordDegree.getDegree() != 0)
                 markovDegree_.addEntry(chordDegree);
         markovDegree_.resetContext();
-        endingsVector_.addEntry(Arrays.asList(degreeList.get(degreeList.size() - 2), degreeList.get(degreeList.size() - 1)));
+        if (degreeList.get(degreeList.size() - 3 ).getDegree()!=0 &&
+                degreeList.get(degreeList.size() - 2).getDegree() != 0
+                && degreeList.get(degreeList.size() - 1).getDegree() != 0)
+            endingsVector_.addEntry(Arrays.asList(degreeList.get(degreeList.size() - 3),
+                                                                 degreeList.get(degreeList.size() - 2),
+                                                                 degreeList.get(degreeList.size() - 1)));
         tonalityVector_.addEntry(scoreAnalyser.getTonality());
         barUnitVector_.addEntry(scoreAnalyser.getBarUnit());
         beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
