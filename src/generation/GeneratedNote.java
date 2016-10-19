@@ -26,11 +26,11 @@ public class GeneratedNote {
         rhythm_ = rhythm;
         chordSize_ = chordSize;
         degree_ = degree;
-        chordPitches_ = new ArrayList<>();
+        chordPitches_ = null;
     }
 
-    public void setRhythm_(double rhythm_) {
-        this.rhythm_ = rhythm_;
+    public void setChordPitches(ArrayList<Integer> chordPitches_) {
+        this.chordPitches_ = chordPitches_;
     }
 
     public double getRhythm() {
