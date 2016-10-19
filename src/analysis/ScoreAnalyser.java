@@ -1,12 +1,18 @@
 package analysis;
 
+import analysis.bars.Bar;
 import analysis.bars.BarLexer;
-import analysis.harmonic.*;
+import analysis.bars.BarNote;
+import analysis.harmonic.ChordDegree;
+import analysis.harmonic.ChordDegreeSequenceExtractor;
+import analysis.harmonic.HarmonicProcessor;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ListIterator;
 
 /**
  * Class for Score analysis. Execute all the steps of the analysis on a specific score.
@@ -53,6 +59,7 @@ public class ScoreAnalyser {
             ChordDegreeSequenceExtractor chordDegreeExtrator_ = new ChordDegreeSequenceExtractor(barLexer_);
             degreeList_ = chordDegreeExtrator_.getDegreeSequence();
             barNumber_ = barLexer_.getBarNumber();
+            cleanDegreeList();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -77,6 +84,34 @@ public class ScoreAnalyser {
         sb.append("------------------------ DegreeList ------------------------\n");
         sb.append(degreeList_).append("\n\n");
         System.out.println(sb);
+    }
+
+    public void cleanDegreeList() {
+        ArrayList<Integer> removeBars = new ArrayList<>();
+        ArrayList<Integer> removeDegrees = new ArrayList<>();
+        ArrayList<Integer> barDegrees = new ArrayList<>();
+
+        int bar_frac = 0;
+        int barIndex = 0;
+        for (int i = 0; i <= degreeList_.size(); i++) {
+            if (bar_frac == beatsPerBar_) {
+                if (barDegrees.stream().anyMatch(degree_index -> degreeList_.get(degree_index).getDegree() == 0)) {
+                    removeDegrees.addAll(barDegrees);
+                    removeBars.add(barIndex);
+                }
+                barDegrees.clear();
+                barIndex++;
+                bar_frac = 0;
+            }
+            if (i < degreeList_.size()) {
+                barDegrees.add(i);
+                bar_frac += (double)beatsPerBar_ / degreeList_.get(i).getBarFractionDen();
+            }
+        }
+        Collections.reverse(removeBars);
+        Collections.reverse(removeDegrees);
+        removeBars.stream().forEach(a -> barLexer_.getBars().remove((int)a));
+        removeDegrees.stream().forEach(a -> degreeList_.remove((int)a));
     }
 
     // GETTERS / SETTERS
