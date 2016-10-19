@@ -50,7 +50,7 @@ public class ModulationTest {
         for (int i = 0; i < 2; ++i)
             wantedResult.add(CMajor);
         ModulationDetector m = new ModulationDetector(sa.getTonality(), sa.getBarLexer());
-        ArrayList<Tonality> approximation = m.computeTonalities();
+        ArrayList<Tonality> approximation = m.computeTonalitiesTest();
         //System.out.println(wantedResult);
         //System.out.println(approximation);
         double counter = 0.0;
@@ -104,7 +104,7 @@ public class ModulationTest {
         for (int i = 0; i < 3; ++i)
             wantedResult.add(CMajor);
         ModulationDetector m = new ModulationDetector(sa.getTonality(), sa.getBarLexer());
-        ArrayList<Tonality> approximation = m.computeTonalities();
+        ArrayList<Tonality> approximation = m.computeTonalitiesTest();
         System.out.println(wantedResult);
         System.out.println(approximation);
         double counter = 0.0;

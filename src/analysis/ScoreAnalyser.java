@@ -1,14 +1,10 @@
 package analysis;
 
 import analysis.bars.BarLexer;
-import analysis.harmonic.ChordDegree;
-import analysis.harmonic.ChordDegreeSequenceExtractor;
-import analysis.harmonic.HarmonicProcessor;
+import analysis.harmonic.*;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
-import analysis.harmonic.Scale;
-import analysis.harmonic.Tonality;
 
 import java.util.ArrayList;
 
@@ -52,7 +48,10 @@ public class ScoreAnalyser {
             partNb_ = score_.getPartArray().length;
             quantum_ = MetadataExtractor.findQuantum(score_);
             barLexer_ = new BarLexer(score_, quantum_);
-            degreeList_ = new HarmonicProcessor(tonality_, barLexer_).getDegreeList();
+            ModulationDetector modulationDetector = new ModulationDetector(tonality_, barLexer_);
+            modulationDetector.computeTonalities(); // Fill the Bars of barLexer_ with good Tonalities.
+            ChordDegreeSequenceExtractor chordDegreeExtrator_ = new ChordDegreeSequenceExtractor(barLexer_);
+            degreeList_ = chordDegreeExtrator_.getDegreeSequence();
             barNumber_ = barLexer_.getBarNumber();
         }
         catch (Exception e) {

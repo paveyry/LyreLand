@@ -24,7 +24,24 @@ public class ModulationDetector {
         barLexer_ = barlexer;
     }
 
-    public ArrayList<Tonality> computeTonalities() {
+    public void computeTonalities() {
+        for (Bar bar : barLexer_.getBars()) {
+            Set<Tonality> tonalities = new HashSet<>();
+            for (int i = 0; i < 15; ++i) {
+                if (previous_.getKeySignature() + i < 7)
+                    tonalities.addAll(computeBarTonality(bar, previous_.getKeySignature() + i,
+                            previous_.getKeyQuality()));
+                if (previous_.getKeySignature() - i > -7)
+                    tonalities.addAll(computeBarTonality(bar, previous_.getKeySignature() - i,
+                            previous_.getKeyQuality()));
+            }
+            ArrayList<Tonality> tonalities1 = new ArrayList<>();
+            tonalities1.addAll(tonalities); // Set to ArrayList (easier to iterate on values)
+            bar.setTonality((findTonalityModulation(tonalities1, bar.getBarPitches())));
+        }
+    }
+
+    public ArrayList<Tonality> computeTonalitiesTest() {
         ArrayList<Tonality> barModulations = new ArrayList<>();
         for (Bar bar : barLexer_.getBars()) {
             Set<Tonality> tonalities = new HashSet<>();

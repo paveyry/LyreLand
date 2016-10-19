@@ -1,6 +1,7 @@
 package main;
 
 import analysis.ScoreAnalyser;
+import analysis.bars.Bar;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ModulationDetector;
 import analysis.harmonic.Tonality;
@@ -29,14 +30,11 @@ public class PlayTest {
 
     @Test
     public void playTest() {
-        /*String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/bwv772.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/Bach-Prelude1.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         sa.printScoreInfo();
-
-        ModulationDetector m = new ModulationDetector(sa.getTonality(), sa.getBarLexer());
-        System.out.println(m.computeTonalities());*/
 
         // 14235
         /*long seed = 14235;

@@ -73,7 +73,7 @@ public class Bar {
     }
 
     /**
-     * This function gather all pitches of a bar in a single array. (used by HarmonicProcessor)
+     * This function gather all pitches of a bar in a single array.
      * @return ArrayList containing all the pitches of the bar.
      */
     public ArrayList<Integer> getBarPitches() {

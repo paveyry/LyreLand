@@ -17,12 +17,9 @@ public class ChordDegreeSequenceExtractor {
     /**
      * ChordDegreeSequenceExtractor constructor
      * @param barLexer Sequence of bars of the score
-     * @param tonality Main tonality of the score
      */
-    public ChordDegreeSequenceExtractor(BarLexer barLexer, Tonality tonality) {
-        // FIXME: Handle modulations using the HarmonicProcessor
+    public ChordDegreeSequenceExtractor(BarLexer barLexer) {
         barLexer_ = barLexer.clone();
-        tonality_ = tonality;
     }
 
     /**
@@ -33,10 +30,11 @@ public class ChordDegreeSequenceExtractor {
         preprocessDegreeExtraction();
 
         ArrayList<ChordDegree> degrees = new ArrayList<>();
-        ChordDegreeComputer cdp = new ChordDegreeComputer(tonality_);
 
-        for (Bar bar : barLexer_.getBars())
+        for (Bar bar : barLexer_.getBars()) {
+            ChordDegreeComputer cdp = new ChordDegreeComputer(bar.getTonality());
             degrees.addAll(getDegreesInSubBar(bar, barLexer_.getBeatsPerBar(), 1, 0, barLexer_.getBeatsPerBar(), cdp));
+        }
 
         return degrees;
     }
