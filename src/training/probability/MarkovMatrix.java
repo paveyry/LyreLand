@@ -65,7 +65,7 @@ public class MarkovMatrix<T> {
     public T getRandomValue(List<T> context, Random generator) {
         HashMap<T, Integer> line = transitionMatrix_.get(context);
         double count = line.get(null);
-        double ran =  generator.nextDouble() * count; // Generate double between 0 and 1.
+        double ran =  generator.nextDouble() * count;
         double sum = 0;
         for (T key : line.keySet()) {
             if (key == null)

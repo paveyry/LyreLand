@@ -63,7 +63,7 @@ public class GenreLearner {
         beatPerBarVector_.addEntry(scoreAnalyser.getBeatsPerBar());
         barNumberVector_.addEntry(scoreAnalyser.getBarNumber());
         tempoVector_.addEntry(scoreAnalyser.getTempo());
-        RhythmicLearner.rhythmlearning(scoreAnalyser, rhythmMatrices_);
+        RhythmicLearner.learn(scoreAnalyser, rhythmMatrices_);
     }
 
     // GETTERS / SETTERS

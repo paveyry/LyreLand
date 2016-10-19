@@ -8,10 +8,9 @@ import training.probability.MarkovMatrix;
 import java.util.*;
 import static jm.constants.Pitches.REST;
 
-
 public class RhythmicLearner {
 
-    public static void rhythmlearning(ScoreAnalyser score, HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices) {
+    public static void learn(ScoreAnalyser score, HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices) {
         Queue<ChordDegree> context = new LinkedList<>(Collections.nCopies(2, null));
         ArrayList<ChordDegree> degrees = score.getDegreeList();
         ArrayList<Bar> bars = score.getBarLexer().getBars();
@@ -21,7 +20,7 @@ public class RhythmicLearner {
         context.add(degree);
         int degree_index = 1;
         for (Bar bar : bars) {
-            double bar_frac = 0;
+            double bar_frac = 0.0;
             while (bar_frac < beatsPerBar) {
                 ArrayList<Double> rhythms = getRhythmsDegree(degree, bar, bar_frac, beatsPerBar);
                 bar_frac += (double)beatsPerBar / degree.getBarFractionDen();
@@ -31,7 +30,7 @@ public class RhythmicLearner {
                     degree = null;
                 context.remove();
                 context.add(degree);
-                add_entry(context, rhythms, rhythmMatrices);
+                addEntry(context, rhythms, rhythmMatrices);
                 degree_index++;
             }
         }
@@ -53,19 +52,19 @@ public class RhythmicLearner {
         return result;
     }
 
-    private static void add_entry(Queue<ChordDegree> context, ArrayList<Double> rhythmes,
-                           HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices) {
+    private static void addEntry(Queue<ChordDegree> context, ArrayList<Double> rhythms,
+                                 HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices) {
         ArrayList<ChordDegree> key = new ArrayList<>(context);
         MarkovMatrix<Double> mat = rhythmMatrices.get(key);
         if (mat == null) {
             mat = new MarkovMatrix<>(1);
-            for (Double entry : rhythmes)
+            for (Double entry : rhythms)
                 mat.addEntry(entry);
             mat.resetContext();
             rhythmMatrices.put(key, mat);
         }
         else {
-            for (Double entry : rhythmes)
+            for (Double entry : rhythms)
                 mat.addEntry(entry);
             mat.resetContext();
         }
