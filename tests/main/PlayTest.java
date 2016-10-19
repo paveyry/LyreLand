@@ -30,14 +30,14 @@ public class PlayTest {
 
     @Test
     public void playTest() {
+        /*
         String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/Bach-Prelude1.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
         sa.printScoreInfo();
 
-        // 14235
-        /*long seed = 14235;
+        long seed = 14235;
         Random generator = new Random(seed);
         Generator g = createGenerators().get("anime_ost");
         ArrayList<ChordDegree> base = g.computeHarmonicBase(10, seed);
@@ -50,7 +50,8 @@ public class PlayTest {
         System.out.println("BarUnit: " + beatperbar * barUnit);
         for (GeneratedNote gn : generatedNotes) {
             System.out.println(gn.getDegree() + " : " + gn.getRhythm());
-        }*/
+        }
+        */
 
         /*GenreLearner l = g.getLearner();
 

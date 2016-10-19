@@ -1,18 +1,13 @@
 package analysis;
 
-import analysis.bars.Bar;
 import analysis.bars.BarLexer;
-import analysis.bars.BarNote;
-import analysis.harmonic.ChordDegree;
-import analysis.harmonic.ChordDegreeSequenceExtractor;
-import analysis.harmonic.HarmonicProcessor;
+import analysis.harmonic.*;
 import analysis.metadata.MetadataExtractor;
 import jm.music.data.Score;
 import jm.util.Read;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 
 /**
  * Class for Score analysis. Execute all the steps of the analysis on a specific score.
@@ -66,7 +61,6 @@ public class ScoreAnalyser {
             System.err.println("ScoreAnalyser: An error occurred while processing " + midiFile);
         }
     }
-
     /**
      * Display the important extracted data after analysis.
      */
