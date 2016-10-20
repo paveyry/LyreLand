@@ -9,6 +9,8 @@ import jm.music.data.Score;
 
 import java.util.ArrayList;
 
+import static java.lang.System.exit;
+
 /**
  * Class that splits a score in an ArrayList of Bars
  */
@@ -17,6 +19,7 @@ public class BarLexer {
     private ArrayList<Bar> bars_;
     private double quantum_;
     private double r_;
+    private double s_;
     private int barNumber_;
     private double barUnit_;
     private int beatsPerBar_;
@@ -32,6 +35,8 @@ public class BarLexer {
         bars_ = new ArrayList<>();
         barNumber_ = (int)((score.getEndTime() + barDuration_) / barDuration_);
         quantum_ = quantum;
+        r_ = 0;
+        s_ = 0;
         lexBarsFromScore(score);
     }
 
@@ -57,23 +62,38 @@ public class BarLexer {
 
         for (Part p : score.getPartArray()) {
             for (Phrase phrase : p.getPhraseArray()) {
-                r_ = 0.0;
                 for (int i = 0; i < phrase.length(); ++i) {
                     Note note = phrase.getNote(i);
-                    double time = normalizeRhythm(phrase.getNoteStartTime(i));
+                    double time = normalizeStartTime(phrase.getNoteStartTime(i));
                     if (note.getRhythmValue() < 0)
                         continue;
                     double duration = normalizeRhythm(note.getRhythmValue());
                     if (time % barDuration_ + duration > barDuration_) {
                         BarNote newHalfNote = new BarNote(0.0, (time + duration) % barDuration_, note.getPitch());
                         bars_.get((int)(time / barDuration_) + 1).addNote(newHalfNote);
-                        duration = barDuration_ - time;
+                        duration = barDuration_ - (time % barDuration_);
+                        //System.err.println("HLILOKJIK: " + duration);
                     }
                     BarNote newNote = new BarNote(time % barDuration_, duration, note.getPitch());
                     bars_.get((int)(time / barDuration_)).addNote(newNote);
                 }
             }
         }
+    }
+
+    private double normalizeStartTime(double startTime) {
+        // truncate three decimals and convert to int.
+        s_ += startTime;
+        int result = ((int)(r_ * 10000.0));
+        // Rounded to the superior quantum_ multiple.
+        int mod = ((int)(quantum_ * 10000.0));
+        int rest = result % mod;
+        if (rest != 0.0) {
+            rest = rest > mod / 2 ? mod - rest : - rest;
+            result = result + rest;
+        }
+        s_ =  (double) - rest / 10000.0;
+        return (double) result / 10000.0;
     }
 
     /**
@@ -83,9 +103,8 @@ public class BarLexer {
      */
     public double normalizeRhythm(double rhythm) {
         // truncate three decimals and convert to int.
-        //r_ += rhythm;
-        // FIXME: Hanle r_ again but take starttime normalisation into account
-        int result = ((int)(rhythm * 10000.0));
+        r_ += rhythm;
+        int result = ((int)(r_ * 10000.0));
         // Rounded to the superior quantum_ multiple.
         int mod = ((int)(quantum_ * 10000.0));
         int rest = result % mod;
@@ -93,7 +112,7 @@ public class BarLexer {
             rest = rest > mod / 2 ? mod - rest : - rest;
             result = result + rest;
         }
-        //r_ =  (double) - rest / 10000.0;
+        r_ =  (double) - rest / 10000.0;
         return (double) result / 10000.0;
     }
 
