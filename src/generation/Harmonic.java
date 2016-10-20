@@ -36,7 +36,7 @@ public class Harmonic {
         ChordDegree depth2 = null;
         double sumDen = 0.0;
         Random generator = new Random(seed + 125);
-        for(int i = 0; i < barNumber; ++i) {
+        for(int i = 0; i < barNumber - 1; ++i) {
             ChordDegree tempDepth1 = depth1;
             ChordDegree tempDepth2 = depth2;
             while (sumDen < 1.0) {
@@ -59,6 +59,16 @@ public class Harmonic {
         }
         //List<ChordDegree> ending = endings_.getValue(generator);
         //result.addAll(ending);
+        ChordDegree last = result.get(result.size() - 1);
+        ChordDegree previousToLast = result.get(result.size() - 2);
+        List<ChordDegree> ending;
+        int i = 0;
+        do {
+            ending = endings_.getValue(generator);
+        } while (i++ < 100 && (ending.get(0) != previousToLast || ending.get(1) != last));
+        if (i >= 101)
+            return generateHarmonicBase(barNumber, generator.nextLong());
+        result.add(ending.get(2));
         return result;
     }
 
