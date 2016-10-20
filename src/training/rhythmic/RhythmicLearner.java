@@ -44,7 +44,7 @@ public class RhythmicLearner {
         ArrayList<BarNote> notes = bar.getNotes();
         for (BarNote note : notes) {
             double startTime = note.getStartTime();
-            if (low_bound < startTime && startTime < high_bound) {
+            if (low_bound <= startTime && startTime < high_bound) {
                 if (note.getDuration() > 0 && note.getPitch() != REST)
                     result.add(note.getDuration());
             }
