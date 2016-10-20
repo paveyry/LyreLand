@@ -142,4 +142,8 @@ public class GenreLearner {
     public HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> getRhythmMatrices_() {
         return rhythmMatrices_;
     }
+
+    public MelodicLearner getMelodicLearner() {
+        return melodicLearner_;
+    }
 }

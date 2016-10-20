@@ -2,6 +2,7 @@ package main;
 
 import analysis.ScoreAnalyser;
 import analysis.bars.Bar;
+import analysis.bars.BarNote;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.ModulationDetector;
 import analysis.harmonic.Tonality;
@@ -52,9 +53,9 @@ public class PlayTest {
             System.out.println(gn.getDegree() + " : " + gn.getRhythm());
         }*/
 
-        long seed = 14239;
-        Generator g = createGenerators().get("baroque");
-        g.generate("bite", 15, seed);
+        long seed = 14230;
+        Generator g = createGenerators().get("hard_rock");
+        g.generate("bite.mid", 15, seed);
 
         /*GenreLearner l = g.getLearner();
 

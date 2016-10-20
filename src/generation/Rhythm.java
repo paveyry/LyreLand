@@ -32,7 +32,7 @@ public class Rhythm {
     }
 
     public ArrayList<GeneratedNote> generateRhythms() {
-        rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
+        /*rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
         ArrayList<ChordDegree> context = new ArrayList<>(Collections.nCopies(2, null));
         ChordDegree degree = degrees_.get(0);
         context.add(degree);
@@ -50,6 +50,10 @@ public class Rhythm {
             ArrayList<Double> rhythms = getRhythms(rhythmMatrices_.get(context), rhythmslength);
             fillGeneratedNotes(generatedNotes_, context.get(1), rhythms);
         }
+        return generatedNotes_;*/
+        for (ChordDegree degree : degrees_)
+            for (int i = 0; i < (barRhythmValue_ / (double)degree.getBarFractionDen()) * 2; ++i)
+                generatedNotes_.add(new GeneratedNote(degree, 1, 0.5));
         return generatedNotes_;
     }
 

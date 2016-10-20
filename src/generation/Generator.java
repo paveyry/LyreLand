@@ -24,12 +24,21 @@ public class Generator {
     }
 
     public void generate(String fileName, int barNumber, long seed) {
-        ArrayList<ChordDegree> harmonicBase = computeHarmonicBase(barNumber, seed);
-        ArrayList<GeneratedNote> melody = computeRhythm(harmonicBase, seed);
+        Random generator = new Random(seed);
+        Tonality tonality = learner_.getTonalityVector().getValue(generator);
 
-        /* -------------------------------------------------
-          |  Call function to add pitches to the melody HERE |
-           ------------------------------------------------- */
+        Harmonic harmonic = new Harmonic(tonality, learner_.getMarkovDegree(), learner_.getEndingsVector());
+        ArrayList<ChordDegree> harmonicBase = harmonic.generateHarmonicBase(barNumber, generator);
+        System.out.println(harmonicBase);
+
+        int beatperbar = learner_.getBeatPerBarVector().getValue(generator);
+        double barUnit = learner_.getBarUnitVector().getValue(generator);
+        Rhythm rhythm = new Rhythm(harmonicBase, learner_.getRhythmMatrices_(), beatperbar * barUnit, generator);
+        ArrayList<GeneratedNote> melody = rhythm.generateRhythms();
+
+
+        MelodicGenerator melodicGenerator = new MelodicGenerator(new Random(seed), tonality, learner_.getMelodicLearner());
+        melodicGenerator.fillWithPitches(melody);
 
         score_ = new Score();
         Part part = new Part();
@@ -38,43 +47,26 @@ public class Generator {
         for (GeneratedNote gn : melody) {
             // Only in Java 8
             int[] pitches = gn.getChordPitches().stream().mapToInt(i -> i).toArray();
+            for (int i = 0; i < pitches.length; ++i)
+                if (pitches[i] > 125)
+                    pitches[i] = pitches[i] % 12 + 12 * 4;
             chords.addChord(pitches, gn.getRhythm());
+        }
+        CPhrase degrees = new CPhrase();
+        for (ChordDegree degree : harmonicBase) {
+            System.out.println(degree);
+            degrees.addChord(harmonic.getChord(degree,12),
+                    (double) (beatperbar * barUnit) / (double)degree.getBarFractionDen());
         }
         part.addCPhrase(chords);
         score_.add(part);
+        Part acc = new Part();
+        acc.addCPhrase(degrees);
+        score_.add(acc);
         // Code to play the file
-        Play.midi(score_);
+        //Play.midi(score_);
         // Code to write the file
-        /*Write.midi(score_, fileName);
-        Read.midi(score_);*/
-    }
-
-    /**
-     * This function compute the Harmonic Base of the generated music.
-     * @param barNumber
-     * @param seed
-     * @return ArrayList<ChordDegree>
-     */
-    public ArrayList<ChordDegree> computeHarmonicBase(int barNumber, long seed) {
-        Random generator = new Random(seed);
-        Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator), learner_.getMarkovDegree(),
-                                                                                           learner_.getEndingsVector());
-        return harmonic.generateHarmonicBase(barNumber, generator);
-    }
-
-    /**
-     * This function generate an ArrayList<GeneratedNote> and fill the rythm of these
-     * GeneratedNote based on the Harmonic Base of the future score.
-     * @param base
-     * @param seed
-     * @return
-     */
-    private ArrayList<GeneratedNote> computeRhythm(ArrayList<ChordDegree> base, long seed) {
-        Random generator = new Random(seed);
-        int beatperbar = learner_.getBeatPerBarVector().getValue(generator);
-        double barUnit = learner_.getBarUnitVector().getValue(generator);
-        Rhythm rhythm = new Rhythm(base, learner_.getRhythmMatrices_(), beatperbar * barUnit, generator);
-        return rhythm.generateRhythms();
+        Write.midi(score_, fileName);
     }
 
     /**

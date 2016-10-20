@@ -66,8 +66,12 @@ public class MelodicLearner {
         for (BarNote note : notes) {
             double startTime = note.getStartTime();
             if (low_bound <= startTime && startTime < high_bound) {
-                if (note.getDuration() > 0)
-                    result.add(getScaleIndex(note.getPitch(), bar.getTonality()));
+                if (note.getDuration() > 0) {
+                    int scaleindex = getScaleIndex(note.getPitch(), bar.getTonality());
+                    if (scaleindex >= 0)
+                        result.add(scaleindex);
+
+                }
             }
         }
         return result;
@@ -120,7 +124,7 @@ public class MelodicLearner {
             else
                 return mid;
         }
-        return mid; // return the closest value in case of error
+        return -1; // return the closest value in case of error
     }
 
     public HashMap<ChordDegree, MarkovMatrix<Integer>> getMarkovMatrices() {

@@ -65,14 +65,11 @@ public class BarLexer {
                 for (int i = 0; i < phrase.length(); ++i) {
                     Note note = phrase.getNote(i);
                     double time = normalizeStartTime(phrase.getNoteStartTime(i));
-                    if (note.getRhythmValue() < 0)
-                        continue;
                     double duration = normalizeRhythm(note.getRhythmValue());
                     if (time % barDuration_ + duration > barDuration_) {
                         BarNote newHalfNote = new BarNote(0.0, (time + duration) % barDuration_, note.getPitch());
                         bars_.get((int)(time / barDuration_) + 1).addNote(newHalfNote);
                         duration = barDuration_ - (time % barDuration_);
-                        //System.err.println("HLILOKJIK: " + duration);
                     }
                     BarNote newNote = new BarNote(time % barDuration_, duration, note.getPitch());
                     bars_.get((int)(time / barDuration_)).addNote(newNote);
@@ -84,6 +81,7 @@ public class BarLexer {
     private double normalizeStartTime(double startTime) {
         // truncate three decimals and convert to int.
         s_ += startTime;
+        int numberofbarsbefore = (int) (startTime / barDuration_);
         int result = ((int)(r_ * 10000.0));
         // Rounded to the superior quantum_ multiple.
         int mod = ((int)(quantum_ * 10000.0));
@@ -93,7 +91,7 @@ public class BarLexer {
             result = result + rest;
         }
         s_ =  (double) - rest / 10000.0;
-        return (double) result / 10000.0;
+        return (double) result / 10000.0 + numberofbarsbefore * barDuration_;
     }
 
     /**

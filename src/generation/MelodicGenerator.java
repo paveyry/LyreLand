@@ -27,7 +27,9 @@ public class MelodicGenerator {
             Integer note = null;
             for (int i = 0; i < gn.getChordSize(); ++i) {
                 MarkovMatrix<Integer> markovChain = melodicLearner_.getMarkovMatrices().get(gn.getDegree());
-                Integer noteIndex = markovChain.getRandomValue(Arrays.asList(context), generator_);
+                Integer noteIndex = 2000;
+                while (noteIndex >= 129)
+                    noteIndex = markovChain.getRandomValue(Arrays.asList(context), generator_);
                 note = scale_.getScale().get(noteIndex);
                 chord.add(note);
             }
