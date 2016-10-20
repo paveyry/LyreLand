@@ -65,7 +65,7 @@ public class MelodicLearner {
         ArrayList<BarNote> notes = bar.getNotes();
         for (BarNote note : notes) {
             double startTime = note.getStartTime();
-            if (low_bound < startTime && startTime < high_bound) {
+            if (low_bound <= startTime && startTime < high_bound) {
                 if (note.getDuration() > 0)
                     result.add(getScaleIndex(note.getPitch(), bar.getTonality()));
             }

@@ -101,8 +101,8 @@ public class Scale {
      */
     private ArrayList<Integer> createScale(int tonic, Tonality.Mode mode, int octaveNumber) {
         // We have to check what we ask don't exceed G9 = 127 (highest pitch)
-        if (tonic + (octaveNumber * 12) > 127)
-            return null;
+        //if (tonic + (octaveNumber * 12) > 127)
+          //p  return null;
 
         ArrayList<Integer> notes = new ArrayList<>();
         for (int i = 0; i < octaveNumber; i++) {

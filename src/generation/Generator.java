@@ -43,7 +43,7 @@ public class Generator {
         part.addCPhrase(chords);
         score_.add(part);
         // Code to play the file
-        //Play.midi(score_);
+        Play.midi(score_);
         // Code to write the file
         /*Write.midi(score_, fileName);
         Read.midi(score_);*/
@@ -55,11 +55,11 @@ public class Generator {
      * @param seed
      * @return ArrayList<ChordDegree>
      */
-    private ArrayList<ChordDegree> computeHarmonicBase(int barNumber, long seed) {
+    public ArrayList<ChordDegree> computeHarmonicBase(int barNumber, long seed) {
         Random generator = new Random(seed);
         Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator), learner_.getMarkovDegree(),
                                                                                            learner_.getEndingsVector());
-        return harmonic.generateHarmonicBase(barNumber, seed);
+        return harmonic.generateHarmonicBase(barNumber, generator);
     }
 
     /**
@@ -90,7 +90,7 @@ public class Generator {
         Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator),
                                          learner_.getMarkovDegree(),
                                          learner_.getEndingsVector());
-        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, seed);
+        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, generator);
 
         Rhythm rhythm = new Rhythm(base, learner_.getRhythmMatrices_(), beatperbar * barUnit, generator);
         ArrayList<GeneratedNote> generatedNotes = rhythm.generateRhythms();

@@ -22,6 +22,7 @@ public class GenreLearner {
     private ProbabilityVector<Integer> barNumberVector_;
     private ProbabilityVector<Double> tempoVector_;
     private HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices_;
+    private MelodicLearner melodicLearner_;
 
     /**
      * Class for Music genre learning. Execute all the learning steps on a specific genre.
@@ -38,6 +39,7 @@ public class GenreLearner {
         barNumberVector_ = new ProbabilityVector<>("barNumber");
         tempoVector_ = new ProbabilityVector<>("tempo");
         rhythmMatrices_ = new HashMap<>();
+        melodicLearner_ = new MelodicLearner();
     }
 
     /**
@@ -64,6 +66,7 @@ public class GenreLearner {
         barNumberVector_.addEntry(scoreAnalyser.getBarNumber());
         tempoVector_.addEntry(scoreAnalyser.getTempo());
         RhythmicLearner.learn(scoreAnalyser, rhythmMatrices_);
+        melodicLearner_.learnExample(scoreAnalyser);
     }
 
     // GETTERS / SETTERS

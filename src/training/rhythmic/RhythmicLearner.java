@@ -5,6 +5,8 @@ import analysis.bars.Bar;
 import analysis.bars.BarNote;
 import analysis.harmonic.ChordDegree;
 import training.probability.MarkovMatrix;
+
+import java.lang.reflect.Array;
 import java.util.*;
 import static jm.constants.Pitches.REST;
 
@@ -49,6 +51,9 @@ public class RhythmicLearner {
                     result.add(note.getDuration());
             }
         }
+        //  FIXME: This is a horrible hack. Remove as soon as we can
+        if (result.size() == 0)
+            result.addAll(Arrays.asList(0.5, 0.5, 0.5));
         return result;
     }
 

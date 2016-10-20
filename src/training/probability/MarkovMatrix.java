@@ -85,4 +85,8 @@ public class MarkovMatrix<T> {
         }
         return sb.toString();
     }
+
+    public HashMap<ArrayList<T>, HashMap<T, Integer>> getTransitionMatrix() {
+        return transitionMatrix_;
+    }
 }

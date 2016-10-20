@@ -30,13 +30,12 @@ public class Harmonic {
      * @param barNumber number of bar we want to generate for the harmonic base.
      * @return an ArrayList of ChordDegree.
      */
-    public ArrayList<ChordDegree> generateHarmonicBase(int barNumber, long seed) {
+    public ArrayList<ChordDegree> generateHarmonicBase(int barNumber, Random generator) {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ArrayList<ChordDegree> temp = new ArrayList<>();
         ChordDegree depth1 = null;
         ChordDegree depth2 = null;
         double sumDen = 0.0;
-        Random generator = new Random(seed + 125);
         for(int i = 0; i < barNumber - 1; ++i) {
             ChordDegree tempDepth1 = depth1;
             ChordDegree tempDepth2 = depth2;
@@ -68,7 +67,7 @@ public class Harmonic {
             ending = endings_.getValue(generator);
         } while (i++ < 100 && (ending.get(0) != previousToLast || ending.get(1) != last));
         if (i >= 101)
-            return generateHarmonicBase(barNumber, generator.nextLong());
+            return generateHarmonicBase(barNumber, generator);
         result.add(ending.get(2));
         return result;
     }

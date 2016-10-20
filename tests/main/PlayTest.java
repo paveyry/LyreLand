@@ -52,6 +52,10 @@ public class PlayTest {
             System.out.println(gn.getDegree() + " : " + gn.getRhythm());
         }*/
 
+        long seed = 14239;
+        Generator g = createGenerators().get("baroque");
+        g.generate("bite", 15, seed);
+
         /*GenreLearner l = g.getLearner();
 
         System.out.println("Tonalities\n" + l.getTonalityVector());
