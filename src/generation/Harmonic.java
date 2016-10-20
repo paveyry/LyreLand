@@ -3,6 +3,7 @@ package generation;
 import analysis.harmonic.ChordDegree;
 import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
+import jm.music.data.CPhrase;
 import training.probability.MarkovMatrix;
 import training.probability.ProbabilityVector;
 
@@ -89,5 +90,12 @@ public class Harmonic {
         else
             return new int[]{scale.get(value) + offset, scale.get(value + 2) + offset,
                              scale.get(value + 4) + offset, scale.get(value + 6) + offset};
+    }
+
+    public CPhrase generateAccompaniement(ArrayList<ChordDegree> harmonicBase, double barUnit, int beatPerBar) {
+        CPhrase chords = new CPhrase();
+        for (ChordDegree c : harmonicBase)
+            chords.addChord(getChord(c, 60), barUnit * beatPerBar / c.getBarFractionDen());
+        return chords;
     }
 }
