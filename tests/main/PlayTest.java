@@ -35,9 +35,9 @@ public class PlayTest {
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.printScoreInfo();
+        sa.printScoreInfo();*/
 
-        long seed = 14235;
+        /*long seed = 14235;
         Random generator = new Random(seed);
         Generator g = createGenerators().get("anime_ost");
         ArrayList<ChordDegree> base = g.computeHarmonicBase(10, seed);
@@ -50,8 +50,7 @@ public class PlayTest {
         System.out.println("BarUnit: " + beatperbar * barUnit);
         for (GeneratedNote gn : generatedNotes) {
             System.out.println(gn.getDegree() + " : " + gn.getRhythm());
-        }
-        */
+        }*/
 
         /*GenreLearner l = g.getLearner();
 
