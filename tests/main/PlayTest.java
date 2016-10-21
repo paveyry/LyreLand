@@ -16,9 +16,12 @@ import main.options.ExecutionParameters;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import tools.MidiUpdate;
+import training.probability.MarkovMatrix;
+import training.rhythmic.RhythmicLearner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 import static tools.filemanagement.TrainedDataDeserializer.createGenerators;
@@ -31,12 +34,21 @@ public class PlayTest {
 
     @Test
     public void playTest() {
+
         /*
-        String midifile = tools.Misc.getJarPath() + "../assets/midi/baroque/bach/Bach-Prelude1.mid";
+        String midifile = tools.Misc.getJarPath() + "../assets/midi/anime_ost/Naruto-BlueBird.mid";
         Score init = new Score();
         Read.midi(init, midifile);
         ScoreAnalyser sa = new ScoreAnalyser(midifile);
-        sa.printScoreInfo();*/
+        sa.printScoreInfo();
+        System.out.println(sa.getQuantum());
+        sa.getBarLexer().getBars().forEach(a -> a.getNotes().forEach(b -> System.out.print(b.getDuration() + ", ")));
+        HashMap<ArrayList<ChordDegree>, MarkovMatrix<Double>> rhythmMatrices = new HashMap<>();
+        RhythmicLearner.learn(sa, rhythmMatrices);
+        rhythmMatrices.forEach((a, b) -> System.out.println(a + " : " + b));
+        */
+
+
 
         /*long seed = 14235;
         Random generator = new Random(seed);
@@ -53,8 +65,9 @@ public class PlayTest {
             System.out.println(gn.getDegree() + " : " + gn.getRhythm());
         }*/
 
+
         long seed = 14230;
-        Generator g = createGenerators().get("hard_rock");
+        Generator g = createGenerators().get("anime_ost");
         g.generate("bite.mid", 15, seed);
 
         /*GenreLearner l = g.getLearner();

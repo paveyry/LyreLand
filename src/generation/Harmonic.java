@@ -41,6 +41,8 @@ public class Harmonic {
             ChordDegree tempDepth2 = depth2;
             while (sumDen < 1.0) {
                 ChordDegree newChord = markovDegree_.getRandomValue(Arrays.asList(tempDepth1, tempDepth2), generator);
+                if (newChord == null)
+                    return generateHarmonicBase(barNumber, new Random());
                 temp.add(newChord);
                 sumDen += 1.0 / (double)newChord.getBarFractionDen();
                 tempDepth1 = tempDepth2;
@@ -67,7 +69,7 @@ public class Harmonic {
             ending = endings_.getValue(generator);
         } while (i++ < 100 && (ending.get(0) != previousToLast || ending.get(1) != last));
         if (i >= 101)
-            return generateHarmonicBase(barNumber, generator);
+            return generateHarmonicBase(barNumber, new Random());
         result.add(ending.get(2));
         return result;
     }
