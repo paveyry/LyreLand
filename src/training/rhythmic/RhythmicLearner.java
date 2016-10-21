@@ -24,7 +24,7 @@ public class RhythmicLearner {
         for (Bar bar : bars) {
             double bar_frac = 0.0;
             while (bar_frac < beatsPerBar) {
-                ArrayList<Double> rhythms = getRhythmsDegree(degree, bar, bar_frac, beatsPerBar);
+                ArrayList<Double> rhythms = getRhythmsDegree(degree, bar, bar_frac, beatsPerBar, score.getQuantum());
                 bar_frac += (double)beatsPerBar / degree.getBarFractionDen();
                 if (degree_index < degrees.size())
                     degree = degrees.get(degree_index);
@@ -40,14 +40,14 @@ public class RhythmicLearner {
         //rhythmMatrices.forEach((a, b) -> System.out.println(a.get(0) + ", " + a.get(1) + ", " + a.get(2) + " : " + b.toString()));
     }
 
-    private static ArrayList<Double> getRhythmsDegree(ChordDegree degree, Bar bar, double low_bound, int beatsPerBar) {
+    private static ArrayList<Double> getRhythmsDegree(ChordDegree degree, Bar bar, double low_bound, int beatsPerBar, double quantum) {
         ArrayList<Double> result = new ArrayList<>();
         double high_bound = low_bound + (double)beatsPerBar / degree.getBarFractionDen();
         ArrayList<BarNote> notes = bar.getNotes();
         for (BarNote note : notes) {
             double startTime = note.getStartTime();
             if (low_bound <= startTime && startTime < high_bound) {
-                if (note.getDuration() > 0 && note.getPitch() != REST)
+                if (note.getDuration() > 0 && note.getPitch() != REST && note.getDuration() % quantum == 0)
                     result.add(note.getDuration());
             }
         }
