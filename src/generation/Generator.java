@@ -28,7 +28,7 @@ public class Generator {
         Tonality tonality = learner_.getTonalityVector().getValue(generator);
 
         Harmonic harmonic = new Harmonic(tonality, learner_.getMarkovDegree(), learner_.getEndingsVector());
-        ArrayList<ChordDegree> harmonicBase = harmonic.generateHarmonicBase(barNumber, generator);
+        ArrayList<ChordDegree> harmonicBase = harmonic.generateHarmonicBase(barNumber, generator, 1000);
         System.out.println(harmonicBase);
 
         int beatperbar = learner_.getBeatPerBarVector().getValue(generator);
@@ -82,7 +82,7 @@ public class Generator {
         Harmonic harmonic = new Harmonic(learner_.getTonalityVector().getValue(generator),
                                          learner_.getMarkovDegree(),
                                          learner_.getEndingsVector());
-        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, generator);
+        ArrayList<ChordDegree> base = harmonic.generateHarmonicBase(numberOfDegree, generator, 100);
 
         Rhythm rhythm = new Rhythm(base, learner_.getRhythmMatrices_(), beatperbar * barUnit, generator);
         ArrayList<GeneratedNote> generatedNotes = rhythm.generateRhythms();

@@ -25,12 +25,29 @@ public class Harmonic {
     }
 
     /**
+     * This function is a header function for generateHarmonicBase_intern, it avoids stackoverflow
+     * @param nb_iter Number max of call to generateHarmonicBase_intern
+     * @return an ArrayList of ChordDegree.
+     */
+    public ArrayList<ChordDegree> generateHarmonicBase(int barNumber, Random generator, int nb_iter) {
+        int i = 0;
+        ArrayList<ChordDegree> result = null;
+        do {
+            result = generateHarmonicBase_intern(barNumber, generator);
+            i++;
+            if (i % 100 == 0)
+                System.out.println(i);
+        } while (result == null && i < nb_iter);
+        return result;
+    }
+
+    /**
      * This function generate an harmonic base using the MarkovMatrix<ChordDegree> transition
      * matrix.
      * @param barNumber number of bar we want to generate for the harmonic base.
      * @return an ArrayList of ChordDegree.
      */
-    public ArrayList<ChordDegree> generateHarmonicBase(int barNumber, Random generator) {
+    private ArrayList<ChordDegree> generateHarmonicBase_intern(int barNumber, Random generator) {
         ArrayList<ChordDegree> result = new ArrayList<>();
         ArrayList<ChordDegree> temp = new ArrayList<>();
         ChordDegree depth1 = null;
@@ -42,7 +59,7 @@ public class Harmonic {
             while (sumDen < 1.0) {
                 ChordDegree newChord = markovDegree_.getRandomValue(Arrays.asList(tempDepth1, tempDepth2), generator);
                 if (newChord == null)
-                    return generateHarmonicBase(barNumber, new Random());
+                    return null;
                 temp.add(newChord);
                 sumDen += 1.0 / (double)newChord.getBarFractionDen();
                 tempDepth1 = tempDepth2;
@@ -69,7 +86,7 @@ public class Harmonic {
             ending = endings_.getValue(generator);
         } while (i++ < 100 && (ending.get(0) != previousToLast || ending.get(1) != last));
         if (i >= 101)
-            return generateHarmonicBase(barNumber, new Random());
+            return null;
         result.add(ending.get(2));
         return result;
     }
