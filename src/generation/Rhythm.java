@@ -28,7 +28,6 @@ public class Rhythm {
 
 
     public ArrayList<GeneratedNote> generateRhythms() {
-        generatedNotes_.clear();
         rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
         ArrayList<ChordDegree> context = new ArrayList<>(Collections.nCopies(2, null));
         ChordDegree degree = degrees_.get(0);
@@ -42,11 +41,9 @@ public class Rhythm {
                 degree = null;
             context.remove(0);
             context.add(degree);
-            System.out.println("Matrices:");
-            System.out.println(context.get(0) + ", " + context.get(1) + ", " + context.get(2) + " : " + rhythmMatrices_.get(context));
+            //System.out.println("Matrices:");
+            //System.out.println(context.get(0) + ", " + context.get(1) + ", " + context.get(2) + " : " + rhythmMatrices_.get(context));
             ArrayList<Double> rhythms = getRhythms(rhythmMatrices_.get(context), rhythmslength);
-            if (rhythms == null)
-                return generateRhythms();
             fillGeneratedNotes(generatedNotes_, context.get(1), rhythms);
         }
         return generatedNotes_;
@@ -60,8 +57,10 @@ public class Rhythm {
         while (currentRhythmlength != rhythmslength) {
             Double newRhythm = 0.0;
             newRhythm = rhythmMatrix.getRandomValue(context, generator_);
-            if (newRhythm == null)
-                return null;
+            if (newRhythm == null) {
+                rhythms.add(rhythmslength - currentRhythmlength);
+                break;
+            }
             context.remove(0);
             context.add(newRhythm);
             rhythms.add(newRhythm);
