@@ -64,6 +64,8 @@ public class MarkovMatrix<T> {
      */
     public T getRandomValue(List<T> context, Random generator) {
         HashMap<T, Integer> line = transitionMatrix_.get(context);
+        if (line == null)
+            return null;
         double count = line.get(null);
         double ran =  generator.nextDouble() * count;
         double sum = 0;

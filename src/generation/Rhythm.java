@@ -26,13 +26,10 @@ public class Rhythm {
         this.generator_ = generator;
     }
 
-    // Fixme : For now we want to generate only this rhythm value.
-    public double getRhythm() {
-        return 2.0;
-    }
 
     public ArrayList<GeneratedNote> generateRhythms() {
-        /*rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
+        generatedNotes_.clear();
+        rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
         ArrayList<ChordDegree> context = new ArrayList<>(Collections.nCopies(2, null));
         ChordDegree degree = degrees_.get(0);
         context.add(degree);
@@ -48,12 +45,10 @@ public class Rhythm {
             System.out.println("Matrices:");
             System.out.println(context.get(0) + ", " + context.get(1) + ", " + context.get(2) + " : " + rhythmMatrices_.get(context));
             ArrayList<Double> rhythms = getRhythms(rhythmMatrices_.get(context), rhythmslength);
+            if (rhythms == null)
+                return generateRhythms();
             fillGeneratedNotes(generatedNotes_, context.get(1), rhythms);
         }
-        return generatedNotes_;*/
-        for (ChordDegree degree : degrees_)
-            for (int i = 0; i < (barRhythmValue_ / (double)degree.getBarFractionDen()) * 2; ++i)
-                generatedNotes_.add(new GeneratedNote(degree, 1, 0.5));
         return generatedNotes_;
     }
 
@@ -63,8 +58,10 @@ public class Rhythm {
         ArrayList<Double> context = new ArrayList<>();
         context.add(null);
         while (currentRhythmlength != rhythmslength) {
-            double newRhythm = 0;
+            Double newRhythm = 0.0;
             newRhythm = rhythmMatrix.getRandomValue(context, generator_);
+            if (newRhythm == null)
+                return null;
             context.remove(0);
             context.add(newRhythm);
             rhythms.add(newRhythm);
