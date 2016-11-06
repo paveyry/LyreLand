@@ -15,11 +15,10 @@ import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Random;
+import java.io.*;
 
 /**
  * Class for ABC training using LSTMs
@@ -119,5 +118,27 @@ public class LSTMTrainer implements Serializable {
             trainingSetIterator_.reset(); // Reset for next epoch
         }
         System.out.println("LSTM training complete");
+    }
+
+    /**
+     * Serialize current object
+     * @param filename File to store serialized data
+     * @throws IOException
+     */
+    public void serialize(String filename) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+        oos.writeObject(this);
+    }
+
+    /**
+     * Deserialize an object
+     * @param filename File where the serialized data is stored
+     * @return Deserialized object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static LSTMTrainer deserialize(String filename) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        return (LSTMTrainer) ois.readObject();
     }
 }
