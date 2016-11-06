@@ -8,11 +8,12 @@ import org.nd4j.linalg.factory.Nd4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.*;
 
-public class ABCIterator implements DataSetIterator {
+public class ABCIterator implements DataSetIterator, Serializable {
     private int batchSize_; // Number of lines of the files taken at once by the next() function.
     private int exampleLength_; // Size of one line of the file.
     private int numberOfExample_; // Number of line in the file. (1 example = 1 line)
