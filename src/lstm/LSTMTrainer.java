@@ -14,6 +14,8 @@ import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -43,6 +45,10 @@ public class LSTMTrainer implements Serializable {
     // LSTM neural network
     private MultiLayerNetwork lstmNet_;
 
+    // Two convertion HashMap
+    private HashMap<Character, Integer> charToInt_;
+    private HashMap<Integer, Character> intToChar_;
+
     /**
      * Constructor
      * @param trainingSet Text file containing several ABC music files
@@ -60,11 +66,11 @@ public class LSTMTrainer implements Serializable {
         random_ = new Random(seed);
 
         // Create the two convertion hashMap ... FIXME
-        HashMap<Character, Integer> charToInt = new HashMap<>();
-        HashMap<Integer, Character> intToChar = new HashMap<>();
+        HashMap<Character, Integer> charToInt_ = new HashMap<>();
+        HashMap<Integer, Character> intToChar_ = new HashMap<>();
 
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("UTF-8"), batchSize_,
-                                               exampleLength_, charToInt, random_);
+                                               exampleLength_, charToInt_, random_);
         int nOut = trainingSetIterator_.totalOutcomes();
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -140,5 +146,69 @@ public class LSTMTrainer implements Serializable {
     public static LSTMTrainer deserialize(String filename) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
         return (LSTMTrainer) ois.readObject();
+    }
+
+    /** Generate a sample from the network, given an (optional, possibly null) initialization. Initialization
+     * can be used to 'prime' the RNN with a sequence you want to extend/continue.<br>
+     * Note that the initalization is used for all samples
+     * @param initialization String, may be null. If null, select a random character as initialization for all samples
+     * @param charactersToSample Number of characters to sample from network (excluding initialization)
+     * @param net MultiLayerNetwork with one or more GravesLSTM/RNN layers and a softmax output layer
+     * @param iter CharacterIterator. Used for going from indexes back to characters
+     */
+    private String[] sampleCharactersFromNetwork(String initialization, MultiLayerNetwork net,
+                                                        ABCIterator iter, int charactersToSample, int numSamples ){
+        //Create input for initialization
+        INDArray initializationInput = Nd4j.zeros(numSamples, iter.inputColumns(), initialization.length());
+        char[] init = initialization.toCharArray();
+        for(int i=0; i < init.length; i++){
+            int idx = charToInt_.get(init[i]);
+            for(int j=0; j < numSamples; j++)
+                initializationInput.putScalar(new int[] {j, idx, i}, 1.0f);
+        }
+
+        StringBuilder[] sb = new StringBuilder[numSamples];
+        for(int i=0; i < numSamples; i++) sb[i] = new StringBuilder(initialization);
+
+        //Sample from network (and feed samples back into input) one character at a time (for all samples)
+        //Sampling is done in parallel here
+        net.rnnClearPreviousState();
+        INDArray output = net.rnnTimeStep(initializationInput);
+        output = output.tensorAlongDimension(output.size(2) - 1, 1, 0);	//Gets the last time step output
+
+        for(int i=0; i < charactersToSample; i++){
+            //Set up next input (single time step) by sampling from previous output
+            INDArray nextInput = Nd4j.zeros(numSamples, iter.inputColumns());
+            //Output is a probability distribution. Sample from this for each example we want to generate, and add it to the new input
+            for(int s = 0; s < numSamples; s++){
+                double[] outputProbDistribution = new double[iter.totalOutcomes()];
+                for(int j=0; j < outputProbDistribution.length; j++ )
+                    outputProbDistribution[j] = output.getDouble(s,j);
+                int sampledCharacterIdx = sampleFromDistribution(outputProbDistribution);
+
+                nextInput.putScalar(new int[]{s,sampledCharacterIdx}, 1.0f); //Prepare next time step input
+                sb[s].append(intToChar_.get(sampledCharacterIdx));	//Add sampled character to StringBuilder (human readable output)
+            }
+
+            output = net.rnnTimeStep(nextInput);	//Do one time step of forward pass
+        }
+        String[] out = new String[numSamples];
+        for( int i=0; i<numSamples; i++ ) out[i] = sb[i].toString();
+        return out;
+    }
+
+    /** Given a probability distribution over discrete classes, sample from the distribution
+     * and return the generated class index.
+     * @param distribution Probability distribution over classes. Must sum to 1.0
+     */
+    public int sampleFromDistribution( double[] distribution){
+        double d = random_.nextDouble();
+        double sum = 0.0;
+        for(int i=0; i < distribution.length; i++){
+            sum += distribution[i];
+            if(d <= sum)
+                return i;
+        }
+        throw new IllegalArgumentException("Distribution is invalid ? d = " + d + ", sum = " + sum);
     }
 }
