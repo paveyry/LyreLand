@@ -50,7 +50,25 @@
             <artifactId>spark-template-velocity</artifactId>
             <version>2.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+        <!-- THIS IS FOR CPU-->
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native-platform</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+        <!-- THIS IS FOR CUDA -->
+        <!--
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-cuda-7.5-platform</artifactId>
+            <version>${nd4j.version}</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
