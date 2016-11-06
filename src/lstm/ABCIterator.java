@@ -102,7 +102,7 @@ public class ABCIterator implements DataSetIterator {
         INDArray input = Nd4j.create(new int[]{currBatchSize, charToInt_.size(), exampleLength_}, 'f');
         INDArray labels = Nd4j.create(new int[]{currBatchSize, charToInt_.size(), exampleLength_}, 'f');
 
-        for(int i = 0; i<currBatchSize; i++){
+        for(int i = 0; i < currBatchSize; i++){
             int startIndex = exampleStartOffsets_.removeFirst();
             int endIndex = startIndex + exampleLength_;
             int currCharIndex = charToInt_.get(fileChars_[startIndex]);	//Current input

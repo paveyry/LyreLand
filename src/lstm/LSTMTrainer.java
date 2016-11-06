@@ -17,6 +17,9 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Class for ABC training using LSTMs
@@ -26,11 +29,13 @@ public class LSTMTrainer implements Serializable {
 
     // Parameters for training
     private int lstmLayerSize_;
-    private int miniBatchSize_;
+    private int batchSize_;
     private int exampleLength_;
     private int truncatedBackPropThroughTimeLength_;
     private int nbEpochs_;
     private int generateSamplesEveryNMinibatches_;
+    private int seed_;
+    private Random random_;
     private String generationInitialization_;
 
     // DataSet Iterator
@@ -44,23 +49,30 @@ public class LSTMTrainer implements Serializable {
      * @param trainingSet Text file containing several ABC music files
      * @throws IOException
      */
-    public LSTMTrainer(String trainingSet) throws IOException {
+    public LSTMTrainer(String trainingSet, int seed) throws IOException {
         lstmLayerSize_ = 200;
-        miniBatchSize_ = 32;
+        batchSize_ = 32;
         exampleLength_ = 1000;
         truncatedBackPropThroughTimeLength_ = 50;
         nbEpochs_ = 1;
         generateSamplesEveryNMinibatches_ = 10;
         generationInitialization_ = "X";
+        seed_ = seed;
+        random_ = new Random(seed);
 
-        trainingSetIterator_ = new ABCIterator(trainingSet, miniBatchSize_, exampleLength_);
+        // Create the two convertion hashMap ... FIXME
+        HashMap<Character, Integer> charToInt = new HashMap<>();
+        HashMap<Integer, Character> intToChar = new HashMap<>();
+
+        trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("UTF-8"), batchSize_,
+                                               exampleLength_, charToInt, random_);
         int nOut = trainingSetIterator_.totalOutcomes();
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
                 .learningRate(0.1)
                 .rmsDecay(0.95)
-                .seed(12345)
+                .seed(seed_)
                 .regularization(true)
                 .l2(0.001)
                 .weightInit(WeightInit.XAVIER)
