@@ -70,7 +70,7 @@ public class LSTMTrainer implements Serializable {
         HashMap<Integer, Character> intToChar_ = new HashMap<>();
 
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("UTF-8"), batchSize_,
-                                               exampleLength_, charToInt_, random_);
+                                               exampleLength_, random_);
         int nOut = trainingSetIterator_.totalOutcomes();
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -126,28 +126,6 @@ public class LSTMTrainer implements Serializable {
         System.out.println("LSTM training complete");
     }
 
-    /**
-     * Serialize current object
-     * @param filename File to store serialized data
-     * @throws IOException
-     */
-    public void serialize(String filename) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-        oos.writeObject(this);
-    }
-
-    /**
-     * Deserialize an object
-     * @param filename File where the serialized data is stored
-     * @return Deserialized object
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public static LSTMTrainer deserialize(String filename) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-        return (LSTMTrainer) ois.readObject();
-    }
-
     /** Generate a sample from the network, given an (optional, possibly null) initialization. Initialization
      * can be used to 'prime' the RNN with a sequence you want to extend/continue.<br>
      * Note that the initalization is used for all samples
@@ -201,7 +179,7 @@ public class LSTMTrainer implements Serializable {
      * and return the generated class index.
      * @param distribution Probability distribution over classes. Must sum to 1.0
      */
-    public int sampleFromDistribution( double[] distribution){
+    public int sampleFromDistribution(double[] distribution){
         double d = random_.nextDouble();
         double sum = 0.0;
         for(int i=0; i < distribution.length; i++){
@@ -210,5 +188,27 @@ public class LSTMTrainer implements Serializable {
                 return i;
         }
         throw new IllegalArgumentException("Distribution is invalid ? d = " + d + ", sum = " + sum);
+    }
+
+    /**
+     * Serialize current object
+     * @param filename File to store serialized data
+     * @throws IOException
+     */
+    public void serialize(String filename) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+        oos.writeObject(this);
+    }
+
+    /**
+     * Deserialize an object
+     * @param filename File where the serialized data is stored
+     * @return Deserialized object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static LSTMTrainer deserialize(String filename) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        return (LSTMTrainer) ois.readObject();
     }
 }

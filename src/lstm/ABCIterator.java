@@ -19,6 +19,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
     private int numberOfExample_; // Number of line in the file. (1 example = 1 line)
     private char[] fileChars_; // All the characters from the file.
     private HashMap<Character, Integer> charToInt_; // HashMap used to convert a Character to an Integer for INDArrays.
+    private HashMap<Integer, Character> intToChar_; // HashMap used to convert an Integer to a Character for INDArrays.
     private Random random_; // Randomize inputs given in a batch.
     private LinkedList<Integer> exampleStartOffsets_; // All the offsets where a line start in the fileChars_ array.
 
@@ -29,8 +30,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
      * @param exampleLength Size of an example (length of a row)
      * @throws IOException
      */
-    public ABCIterator(String filePath, Charset fileEncoding, int batchSize, int exampleLength,
-                       HashMap<Character, Integer> charToInt, Random random) throws IOException {
+    public ABCIterator(String filePath, Charset fileEncoding, int batchSize, int exampleLength, Random random) throws IOException {
         // Check if given dataFile exist.
         if( !new File(filePath).exists())
             throw new IOException("Could not access file (does not exist): " + filePath);
@@ -40,7 +40,8 @@ public class ABCIterator implements DataSetIterator, Serializable {
 
         batchSize_ = batchSize;
         exampleLength_ = exampleLength;
-        charToInt_ = charToInt;
+        charToInt_ = new HashMap<>();
+        intToChar_ = new HashMap<>();
         random_ = random;
         exampleStartOffsets_ = new LinkedList<>();
 
@@ -48,10 +49,17 @@ public class ABCIterator implements DataSetIterator, Serializable {
         numberOfExample_ = lines.size();
         char[] characters = new char[(numberOfExample_ * exampleLength_) + numberOfExample_]; // To add missing '\n'
         int index = 0;
+        charToInt_.put('\n', 0);
+        intToChar_.put(0, '\n');
         for(String line : lines ){
             char[] currLine = line.toCharArray();
-            for (char c : currLine)
+            for (char c : currLine) {
                 characters[index++] = c;
+                if (!charToInt_.containsKey(c))
+                    charToInt_.put(c, index);
+                if (!intToChar_.containsValue(c))
+                    intToChar_.put(index, c);
+            }
             characters[index++] = '\n';
         }
         fileChars_ = characters;
@@ -180,6 +188,15 @@ public class ABCIterator implements DataSetIterator, Serializable {
     @Override
     public List<String> getLabels() {
         throw new UnsupportedOperationException("Method getLabels not Implemented");
+    }
+
+    // GETTERS
+    public HashMap<Character, Integer> getCharToInt() {
+        return charToInt_;
+    }
+
+    public HashMap<Integer, Character> getIntToChar() {
+        return intToChar_;
     }
 
 }
