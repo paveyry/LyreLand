@@ -64,11 +64,11 @@ public class LSTMTrainer implements Serializable {
         generationInitialization_ = "X";
         seed_ = seed;
         random_ = new Random(seed);
-        charToInt_ = new HashMap<>();
-        intToChar_ = new HashMap<>();
 
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_,
                                                exampleLength_, random_);
+        charToInt_ = trainingSetIterator_.getCharToInt();
+        intToChar_ = trainingSetIterator_.getIntToChar();
         int nOut = trainingSetIterator_.totalOutcomes();
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -113,11 +113,20 @@ public class LSTMTrainer implements Serializable {
      * Method to run the LSTM training
      */
     public void train() {
-        int miniBatchNumber = 0;
+        int counter = 0;
         for (int i = 0; i < nbEpochs_; ++i) {
             while (trainingSetIterator_.hasNext()) {
                 DataSet ds = trainingSetIterator_.next();
                 lstmNet_.fit(ds);
+                if (counter % 100 == 0) {
+                    String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
+                                                                   trainingSetIterator_, 500, 1);
+                    for(int j = 0; j < samples.length; j++){
+                        System.out.print(samples[j]);
+                        System.out.println();
+                    }
+                }
+                ++counter;
             }
             trainingSetIterator_.reset(); // Reset for next epoch
         }
