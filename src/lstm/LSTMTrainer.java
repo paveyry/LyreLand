@@ -64,10 +64,8 @@ public class LSTMTrainer implements Serializable {
         generationInitialization_ = "X";
         seed_ = seed;
         random_ = new Random(seed);
-
-        // Create the two convertion hashMap ... FIXME
-        HashMap<Character, Integer> charToInt_ = new HashMap<>();
-        HashMap<Integer, Character> intToChar_ = new HashMap<>();
+        charToInt_ = new HashMap<>();
+        intToChar_ = new HashMap<>();
 
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("UTF-8"), batchSize_,
                                                exampleLength_, random_);
