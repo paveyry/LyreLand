@@ -19,7 +19,7 @@ public class LSTMTest {
     public void lstmTest() throws IOException {
         LSTMTrainer trainer = new LSTMTrainer(Misc.getProjectPath() + "assets/abc/data.abc", 3657263);
         trainer.train();
-        trainer.serialize(Misc.getProjectPath() + "serialized_lstm");
+        trainer.serialize(Misc.getProjectPath() + "serialized_lstm.bin");
     }
 
 }

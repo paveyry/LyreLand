@@ -57,7 +57,7 @@ public class LSTMTrainer implements Serializable {
     public LSTMTrainer(String trainingSet, int seed) throws IOException {
         lstmLayerSize_ = 200;
         batchSize_ = 32;
-        exampleLength_ = 1000;
+        exampleLength_ = 129;
         truncatedBackPropThroughTimeLength_ = 50;
         nbEpochs_ = 1;
         generateSamplesEveryNMinibatches_ = 10;
@@ -67,7 +67,7 @@ public class LSTMTrainer implements Serializable {
         charToInt_ = new HashMap<>();
         intToChar_ = new HashMap<>();
 
-        trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("UTF-8"), batchSize_,
+        trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_,
                                                exampleLength_, random_);
         int nOut = trainingSetIterator_.totalOutcomes();
 

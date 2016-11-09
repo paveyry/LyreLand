@@ -51,14 +51,15 @@ public class ABCIterator implements DataSetIterator, Serializable {
         int index = 0;
         charToInt_.put('\n', 0);
         intToChar_.put(0, '\n');
+        int mapindex = 0;
         for(String line : lines ){
             char[] currLine = line.toCharArray();
             for (char c : currLine) {
                 characters[index++] = c;
                 if (!charToInt_.containsKey(c))
-                    charToInt_.put(c, index);
+                    charToInt_.put(c, mapindex);
                 if (!intToChar_.containsValue(c))
-                    intToChar_.put(index, c);
+                    intToChar_.put(mapindex++, c);
             }
             characters[index++] = '\n';
         }
