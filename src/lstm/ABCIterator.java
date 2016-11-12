@@ -6,11 +6,10 @@ import org.nd4j.linalg.dataset.api.DataSetPreProcessor;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.factory.Nd4j;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+
 import java.util.*;
 
 public class ABCIterator implements DataSetIterator, Serializable {
@@ -51,7 +50,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
         int index = 0;
         charToInt_.put('\n', 0);
         intToChar_.put(0, '\n');
-        int mapindex = 0;
+        int mapindex = 1;
         for(String line : lines ){
             char[] currLine = line.toCharArray();
             for (char c : currLine) {
@@ -116,7 +115,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
             int endIndex = startIndex + exampleLength_;
             int currCharIndex = charToInt_.get(fileChars_[startIndex]);	//Current input
             int c = 0;
-            for(int j = startIndex+1; j < endIndex; j++, c++){
+            for(int j = startIndex + 1; j < endIndex; j++, c++){
                 int nextCharIndex = charToInt_.get(fileChars_[j]); //Next character to predict
                 input.putScalar(new int[]{i, currCharIndex, c}, 1.0);
                 labels.putScalar(new int[]{i, nextCharIndex, c}, 1.0);

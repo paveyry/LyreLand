@@ -75,7 +75,7 @@ public class LSTMTrainer implements Serializable {
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
-                .learningRate(0.05) // 0.1 original
+                .learningRate(0.1) // 0.1 original
                 .rmsDecay(0.95) // 0.95 original
                 .seed(seed_)
                 .regularization(true) // true original
@@ -115,7 +115,7 @@ public class LSTMTrainer implements Serializable {
     /**
      * Method to run the LSTM training
      */
-    public void train() {
+    public void train() throws IOException {
         int counter = 0;
         for (int i = 0; i < nbEpochs_; ++i) {
             while (trainingSetIterator_.hasNext()) {
@@ -123,10 +123,16 @@ public class LSTMTrainer implements Serializable {
                 lstmNet_.fit(ds);
                 if (counter % generateSamplesEveryNMinibatches_ == 0) {
                     String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
-                                                                   trainingSetIterator_, 500, 1);
-                    for(int j = 0; j < samples.length; j++){
-                        System.out.print(samples[j]);
-                        System.out.println();
+                                                                   trainingSetIterator_, 645, 5);
+                    StringBuilder sb = new StringBuilder();
+                    for(int j = 0; j < samples.length; j++) {
+                        sb.append("Sample : ").append(j).append("-----------------\n\n");
+                        sb.append(samples[j]);
+                        sb.append("\n\n");
+                    }
+                    try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                            new FileOutputStream("lstm-sample.txt"), "utf-8"))) {
+                        writer.write(sb.toString());
                     }
                 }
                 ++counter;
@@ -146,7 +152,7 @@ public class LSTMTrainer implements Serializable {
      * @param iter CharacterIterator. Used for going from indexes back to characters
      */
     private String[] sampleCharactersFromNetwork(String initialization, MultiLayerNetwork net,
-                                                        ABCIterator iter, int charactersToSample, int numSamples ){
+                                                        ABCIterator iter, int charactersToSample, int numSamples){
         //Create input for initialization
         INDArray initializationInput = Nd4j.zeros(numSamples, iter.inputColumns(), initialization.length());
         char[] init = initialization.toCharArray();
@@ -157,7 +163,8 @@ public class LSTMTrainer implements Serializable {
         }
 
         StringBuilder[] sb = new StringBuilder[numSamples];
-        for(int i=0; i < numSamples; i++) sb[i] = new StringBuilder(initialization);
+        for(int i=0; i < numSamples; i++)
+            sb[i] = new StringBuilder(initialization);
 
         //Sample from network (and feed samples back into input) one character at a time (for all samples)
         //Sampling is done in parallel here
@@ -182,7 +189,8 @@ public class LSTMTrainer implements Serializable {
             output = net.rnnTimeStep(nextInput);	//Do one time step of forward pass
         }
         String[] out = new String[numSamples];
-        for( int i=0; i<numSamples; i++ ) out[i] = sb[i].toString();
+        for( int i=0; i<numSamples; i++ )
+            out[i] = sb[i].toString();
         return out;
     }
 
