@@ -12,6 +12,8 @@ import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.ui.weights.HistogramIterationListener;
+import org.deeplearning4j.ui.UiConnectionInfo.Builder.*;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -55,8 +57,8 @@ public class LSTMTrainer implements Serializable {
      * @throws IOException
      */
     public LSTMTrainer(String trainingSet, int seed) throws IOException {
-        lstmLayerSize_ = 200;
-        batchSize_ = 32;
+        lstmLayerSize_ = 200; // original 200
+        batchSize_ = 50; // original 32
         exampleLength_ = 129;
         truncatedBackPropThroughTimeLength_ = 50;
         nbEpochs_ = 1;
@@ -73,10 +75,10 @@ public class LSTMTrainer implements Serializable {
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
-                .learningRate(0.1)
-                .rmsDecay(0.95)
+                .learningRate(0.05) // 0.1 original
+                .rmsDecay(0.95) // 0.95 original
                 .seed(seed_)
-                .regularization(true)
+                .regularization(true) // true original
                 .l2(0.001)
                 .weightInit(WeightInit.XAVIER)
                 .updater(Updater.RMSPROP)
@@ -96,6 +98,7 @@ public class LSTMTrainer implements Serializable {
         lstmNet_ = new MultiLayerNetwork(conf);
         lstmNet_.init();
         lstmNet_.setListeners(new ScoreIterationListener(1));
+        //lstmNet_.setListeners(new HistogramIterationListener(1));
 
         if (ExecutionParameters.verbose) {
             Layer[] layers = lstmNet_.getLayers();
@@ -118,7 +121,7 @@ public class LSTMTrainer implements Serializable {
             while (trainingSetIterator_.hasNext()) {
                 DataSet ds = trainingSetIterator_.next();
                 lstmNet_.fit(ds);
-                if (counter % 100 == 0) {
+                if (counter % generateSamplesEveryNMinibatches_ == 0) {
                     String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
                                                                    trainingSetIterator_, 500, 1);
                     for(int j = 0; j < samples.length; j++){
@@ -129,6 +132,7 @@ public class LSTMTrainer implements Serializable {
                 ++counter;
             }
             trainingSetIterator_.reset(); // Reset for next epoch
+            counter = 0;
         }
         System.out.println("LSTM training complete");
     }

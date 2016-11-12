@@ -75,10 +75,9 @@ public class ABCIterator implements DataSetIterator, Serializable {
      */
     private void initializeOffsets() {
         // Initialize all offset and shuffle them according to random_.
-        for (int i = 0; i < numberOfExample_; i++) {
+        for (int i = 0; i < numberOfExample_; i++)
             exampleStartOffsets_.add(i * exampleLength_);
-        }
-        Collections.shuffle(exampleStartOffsets_, random_);
+        //Collections.shuffle(exampleStartOffsets_, random_);
     }
 
     // PUBLIC METHODS
