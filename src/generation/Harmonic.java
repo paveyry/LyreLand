@@ -71,7 +71,7 @@ public class Harmonic {
                 depth2 = tempDepth2;
             }
             else
-                --i;
+                return null;
             sumDen = 0.0;
             temp.clear();
 
