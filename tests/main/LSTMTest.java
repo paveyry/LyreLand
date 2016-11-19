@@ -1,5 +1,6 @@
 package main;
 
+import lstm.ABCIterator;
 import lstm.LSTMTrainer;
 import main.options.ExecutionParameters;
 import org.junit.BeforeClass;

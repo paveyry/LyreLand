@@ -59,16 +59,14 @@ public class LSTMTrainer implements Serializable {
     public LSTMTrainer(String trainingSet, int seed) throws IOException {
         lstmLayerSize_ = 200; // original 200
         batchSize_ = 32; // original 32
-        exampleLength_ = 129;
         truncatedBackPropThroughTimeLength_ = 50;
-        nbEpochs_ = 20;
+        nbEpochs_ = 1;
         generateSamplesEveryNMinibatches_ = 200;
         generationInitialization_ = "X";
         seed_ = seed;
         random_ = new Random(seed);
 
-        trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_,
-                                               exampleLength_, random_);
+        trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_, random_);
         charToInt_ = trainingSetIterator_.getCharToInt();
         intToChar_ = trainingSetIterator_.getIntToChar();
         int nOut = trainingSetIterator_.totalOutcomes();
@@ -123,18 +121,7 @@ public class LSTMTrainer implements Serializable {
                 DataSet ds = trainingSetIterator_.next();
                 lstmNet_.fit(ds);
                 if (counter % generateSamplesEveryNMinibatches_ == 0) {
-                    String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
-                                                                   trainingSetIterator_, 645, 10);
-                    StringBuilder sb = new StringBuilder();
-                    for(int j = 0; j < samples.length; j++) {
-                        sb.append("Sample : ").append(j).append(" -----------------\n\n");
-                        sb.append(samples[j]);
-                        sb.append("\n\n");
-                    }
-                    try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                            new FileOutputStream("samples/lstm-sample_E" + i + "It" + counter + ".txt"), "utf-8"))) {
-                        writer.write(sb.toString());
-                    }
+                    generateSample(i, counter);
                 }
                 ++counter;
             }
@@ -142,6 +129,21 @@ public class LSTMTrainer implements Serializable {
             counter = 0;
         }
         System.out.println("LSTM training complete");
+    }
+
+    public void generateSample(int i, int counter) throws IOException {
+        String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
+                trainingSetIterator_, 1317, 10);
+        StringBuilder sb = new StringBuilder();
+        for(int j = 0; j < samples.length; j++) {
+            sb.append("Sample : ").append(j).append(" -----------------\n\n");
+            sb.append(samples[j]);
+            sb.append("\n\n");
+        }
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("samples/lstm-sample_E" + i + "It" + counter + ".txt"), "utf-8"))) {
+            writer.write(sb.toString());
+        }
     }
 
     /** Generate a sample from the network, given an (optional, possibly null) initialization. Initialization

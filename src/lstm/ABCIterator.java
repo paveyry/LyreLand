@@ -29,7 +29,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
      * @param exampleLength Size of an example (length of a row)
      * @throws IOException
      */
-    public ABCIterator(String filePath, Charset fileEncoding, int batchSize, int exampleLength, Random random) throws IOException {
+    public ABCIterator(String filePath, Charset fileEncoding, int batchSize, Random random) throws IOException {
         // Check if given dataFile exist.
         if( !new File(filePath).exists())
             throw new IOException("Could not access file (does not exist): " + filePath);
@@ -38,21 +38,19 @@ public class ABCIterator implements DataSetIterator, Serializable {
             throw new IllegalArgumentException("Invalid miniBatchSize strictly positive");
 
         batchSize_ = batchSize;
-        exampleLength_ = exampleLength;
         charToInt_ = new HashMap<>();
         intToChar_ = new HashMap<>();
         random_ = random;
         exampleStartOffsets_ = new LinkedList<>();
 
-        List<String> lines = Files.readAllLines(new File(filePath).toPath(), fileEncoding); // Remove '\n' ...
-        numberOfExample_ = lines.size();
-        char[] characters = new char[(numberOfExample_ * exampleLength_) + numberOfExample_]; // To add missing '\n'
+        ArrayList<String> examples = normalizeExamples(parseExamples(filePath, fileEncoding));
+        numberOfExample_ = examples.size();
+
+        char[] characters = new char[(numberOfExample_ * exampleLength_)]; // To add missing '\n'
         int index = 0;
-        charToInt_.put('\n', 0);
-        intToChar_.put(0, '\n');
-        int mapindex = 1;
-        for(String line : lines ){
-            char[] currLine = line.toCharArray();
+        int mapindex = 0;
+        for(String example : examples){
+            char[] currLine = example.toCharArray();
             for (char c : currLine) {
                 characters[index++] = c;
                 if (!charToInt_.containsKey(c))
@@ -60,13 +58,44 @@ public class ABCIterator implements DataSetIterator, Serializable {
                 if (!intToChar_.containsValue(c))
                     intToChar_.put(mapindex++, c);
             }
-            characters[index++] = '\n';
         }
         fileChars_ = characters;
         initializeOffsets();
     }
 
     // PRIVATE METHODS
+    private ArrayList<String> parseExamples(String filePath, Charset fileEncoding) throws IOException {
+        List<String> lines = Files.readAllLines(new File(filePath).toPath(), fileEncoding); // Remove '\n' ...
+        ArrayList<String> examples = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lines.size(); ++i) {
+            if (!lines.get(i).equals(""))
+                sb.append(lines.get(i)).append("\n");
+            else {
+                sb.append("\n\n");
+                ++i;
+                examples.add(sb.toString());
+                sb.setLength(0);
+            }
+        }
+        return examples;
+    }
+
+    private ArrayList<String> normalizeExamples(ArrayList<String> examples) {
+        int max = 0;
+        for (int i = 0; i < examples.size(); ++i)
+            if (examples.get(i).length() > max)
+                max = examples.get(i).length();
+        exampleLength_ = max;
+        for (int i = 0; i < examples.size(); ++i) {
+            String temp = examples.get(i).substring(0, examples.get(i).length() - 2);
+            while (temp.length() < max - 2)
+                temp += "%";
+            temp += "\n\n";
+            examples.set(i, temp);
+        }
+        return examples;
+    }
 
     /**
      * This function fill the exampleStartOffsets_ linkedList with the start values of each line
@@ -76,7 +105,7 @@ public class ABCIterator implements DataSetIterator, Serializable {
         // Initialize all offset and shuffle them according to random_.
         for (int i = 0; i < numberOfExample_; i++)
             exampleStartOffsets_.add(i * exampleLength_);
-        //Collections.shuffle(exampleStartOffsets_, random_);
+        Collections.shuffle(exampleStartOffsets_, random_);
     }
 
     // PUBLIC METHODS
