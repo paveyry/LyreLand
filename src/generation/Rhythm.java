@@ -54,6 +54,7 @@ public class Rhythm {
         ArrayList<Double> rhythms = new ArrayList<>();
         ArrayList<Double> context = new ArrayList<>();
         context.add(null);
+        int iter = 0;
         while (currentRhythmlength != rhythmslength) {
             Double newRhythm = 0.0;
             newRhythm = rhythmMatrix.getRandomValue(context, generator_);
@@ -66,10 +67,21 @@ public class Rhythm {
             rhythms.add(newRhythm);
             currentRhythmlength += newRhythm;
             if (currentRhythmlength > rhythmslength) {
-                currentRhythmlength = 0;
-                rhythms.clear();
-                context.clear();
-                context.add(null);
+                if (iter > 1000) {
+                    System.out.println("Bad fix");
+                    newRhythm = rhythms.get(rhythms.size() - 1);
+                    rhythms.remove(rhythms.size() - 1);
+                    newRhythm = newRhythm - (currentRhythmlength - rhythmslength);
+                    rhythms.add(newRhythm);
+                    break;
+                }
+                else {
+                    currentRhythmlength = 0;
+                    rhythms.clear();
+                    context.clear();
+                    context.add(null);
+                    iter++;
+                }
             }
         }
         return rhythms;
