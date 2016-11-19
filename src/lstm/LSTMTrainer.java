@@ -58,11 +58,11 @@ public class LSTMTrainer implements Serializable {
      */
     public LSTMTrainer(String trainingSet, int seed) throws IOException {
         lstmLayerSize_ = 200; // original 200
-        batchSize_ = 50; // original 32
+        batchSize_ = 32; // original 32
         exampleLength_ = 129;
         truncatedBackPropThroughTimeLength_ = 50;
-        nbEpochs_ = 1;
-        generateSamplesEveryNMinibatches_ = 10;
+        nbEpochs_ = 20;
+        generateSamplesEveryNMinibatches_ = 200;
         generationInitialization_ = "X";
         seed_ = seed;
         random_ = new Random(seed);
@@ -117,21 +117,22 @@ public class LSTMTrainer implements Serializable {
      */
     public void train() throws IOException {
         int counter = 0;
+        int sampleIndex = 1;
         for (int i = 0; i < nbEpochs_; ++i) {
             while (trainingSetIterator_.hasNext()) {
                 DataSet ds = trainingSetIterator_.next();
                 lstmNet_.fit(ds);
                 if (counter % generateSamplesEveryNMinibatches_ == 0) {
                     String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
-                                                                   trainingSetIterator_, 645, 5);
+                                                                   trainingSetIterator_, 645, 10);
                     StringBuilder sb = new StringBuilder();
                     for(int j = 0; j < samples.length; j++) {
-                        sb.append("Sample : ").append(j).append("-----------------\n\n");
+                        sb.append("Sample : ").append(j).append(" -----------------\n\n");
                         sb.append(samples[j]);
                         sb.append("\n\n");
                     }
                     try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                            new FileOutputStream("lstm-sample.txt"), "utf-8"))) {
+                            new FileOutputStream("samples/lstm-sample_E" + i + "It" + counter + ".txt"), "utf-8"))) {
                         writer.write(sb.toString());
                     }
                 }
