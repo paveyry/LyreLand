@@ -28,7 +28,7 @@ public class Generator {
         Tonality tonality = learner_.getTonalityVector().getValue(generator);
 
         Harmonic harmonic = new Harmonic(tonality, learner_.getMarkovDegree(), learner_.getEndingsVector());
-        ArrayList<ChordDegree> harmonicBase = harmonic.generateHarmonicBase(barNumber, generator, 1000);
+        ArrayList<ChordDegree> harmonicBase = harmonic.generateHarmonicBase(barNumber, generator, 10000);
         System.out.println(harmonicBase);
 
         int beatperbar = learner_.getBeatPerBarVector().getValue(generator);
@@ -52,20 +52,23 @@ public class Generator {
                     pitches[i] = pitches[i] % 12 + 12 * 4;
             chords.addChord(pitches, gn.getRhythm());
         }
+        /*
         CPhrase degrees = new CPhrase();
         for (ChordDegree degree : harmonicBase) {
             System.out.println(degree);
             degrees.addChord(harmonic.getChord(degree,12),
                     (double) (beatperbar * barUnit) / (double)degree.getBarFractionDen());
         }
+        */
         part.addCPhrase(chords);
         score_.add(part);
         Part acc = new Part();
-        acc.addCPhrase(degrees);
+        //acc.addCPhrase(degrees);
         score_.add(acc);
         // Code to play the file
-        //Play.midi(score_);
+        Play.midi(score_);
         // Code to write the file
+        System.out.println("TOTO: " + fileName);
         Write.midi(score_, fileName);
     }
 

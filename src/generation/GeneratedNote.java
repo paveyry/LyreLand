@@ -12,6 +12,7 @@ public class GeneratedNote {
     private double rhythm_;
     private ArrayList<Integer> chordPitches_;
     private int chordSize_;
+    private int degree_nb_;
     private ChordDegree degree_;
     private Tonality tonality_;
 
@@ -21,12 +22,13 @@ public class GeneratedNote {
      * @param chordSize Number of notes (different pitches) to generate in the Note
      * @param rhythm Duration of the Note
      */
-    public GeneratedNote(ChordDegree degree, int chordSize, double rhythm)
+    public GeneratedNote(ChordDegree degree, int chordSize, double rhythm, int degree_nb)
     {
         rhythm_ = rhythm;
         chordSize_ = chordSize;
         degree_ = degree;
         chordPitches_ = null;
+        degree_nb_ = degree_nb;
     }
 
     public void setChordPitches(ArrayList<Integer> chordPitches_) {
@@ -47,5 +49,9 @@ public class GeneratedNote {
 
     public ChordDegree getDegree() {
         return degree_;
+    }
+
+    public int getDegree_nb_() {
+        return degree_nb_;
     }
 }

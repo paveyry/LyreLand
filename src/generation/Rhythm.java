@@ -28,7 +28,7 @@ public class Rhythm {
 
 
     public ArrayList<GeneratedNote> generateRhythms() {
-        rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
+        //rhythmMatrices_.forEach((a, b) -> {if (b.getTransitionMatrix().size() == 0) System.out.println("BITE: " + a);});
         ArrayList<ChordDegree> context = new ArrayList<>(Collections.nCopies(2, null));
         ChordDegree degree = degrees_.get(0);
         context.add(degree);
@@ -44,7 +44,7 @@ public class Rhythm {
             //System.out.println("Matrices:");
             //System.out.println(context.get(0) + ", " + context.get(1) + ", " + context.get(2) + " : " + rhythmMatrices_.get(context));
             ArrayList<Double> rhythms = getRhythms(rhythmMatrices_.get(context), rhythmslength);
-            fillGeneratedNotes(generatedNotes_, context.get(1), rhythms);
+            fillGeneratedNotes(generatedNotes_, context.get(1), rhythms, i - 1);
         }
         return generatedNotes_;
     }
@@ -84,11 +84,12 @@ public class Rhythm {
                 }
             }
         }
+        // FIXME: Reset the rhythmMatrix ?
         return rhythms;
     }
 
     private static void fillGeneratedNotes(ArrayList<GeneratedNote> generatedNotes, ChordDegree degree,
-                                           ArrayList<Double> rhythms) {
-        rhythms.forEach(d -> generatedNotes.add(new GeneratedNote(degree, 1, d)));
+                                           ArrayList<Double> rhythms, int degree_nb) {
+        rhythms.forEach(d -> generatedNotes.add(new GeneratedNote(degree, 1, d, degree_nb)));
     }
 }
