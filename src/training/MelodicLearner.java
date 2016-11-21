@@ -8,14 +8,13 @@ import analysis.harmonic.Scale;
 import analysis.harmonic.Tonality;
 import training.probability.MarkovMatrix;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Class for Melodic sequences learning
  */
 public class MelodicLearner {
-    private HashMap<ChordDegree, MarkovMatrix<Integer>> trainingData_;
+    private HashMap<ArrayList<ChordDegree>, MarkovMatrix<Integer>> trainingData_;
     private HashMap<Tonality, Scale> scales_;
 
     /**
@@ -31,11 +30,13 @@ public class MelodicLearner {
      * @param score Extracted features of the score
      */
     public void learnExample(ScoreAnalyser score) {
+        Queue<ChordDegree> context = new LinkedList<>(Collections.nCopies(2, null));
         ArrayList<ChordDegree> degrees = score.getDegreeList();
         ArrayList<Bar> bars = score.getBarLexer().getBars();
         int beatsPerBar = score.getBeatsPerBar();
 
         ChordDegree degree = degrees.get(0);
+        context.add(degree);
         int deg_ind = 1;
         for (Bar bar : bars) {
             double bar_frac = 0.0;
@@ -46,7 +47,9 @@ public class MelodicLearner {
                     degree = degrees.get(deg_ind);
                 else
                     degree = null;
-                addEntry(degree, notes);
+                context.remove();
+                context.add(degree);
+                addEntry(context, notes);
             }
         }
     }
@@ -70,7 +73,6 @@ public class MelodicLearner {
                     int scaleindex = getScaleIndex(note.getPitch(), bar.getTonality());
                     if (scaleindex >= 0)
                         result.add(scaleindex);
-
                 }
             }
         }
@@ -82,14 +84,15 @@ public class MelodicLearner {
      * @param context
      * @param pitches
      */
-    private void addEntry(ChordDegree context, ArrayList<Integer> pitches) {
-        MarkovMatrix<Integer> mat = trainingData_.get(context);
+    private void addEntry(Queue<ChordDegree> context, ArrayList<Integer> pitches) {
+        ArrayList<ChordDegree> key = new ArrayList<>(context);
+        MarkovMatrix<Integer> mat = trainingData_.get(key);
         if (mat == null) {
             mat = new MarkovMatrix<>(1);
             for (Integer entry : pitches)
                 mat.addEntry(entry);
             mat.resetContext();
-            trainingData_.put(context, mat);
+            trainingData_.put(key, mat);
         }
         else {
             for (Integer entry : pitches)
@@ -127,7 +130,7 @@ public class MelodicLearner {
         return -1; // return the closest value in case of error
     }
 
-    public HashMap<ChordDegree, MarkovMatrix<Integer>> getMarkovMatrices() {
+    public HashMap<ArrayList<ChordDegree>, MarkovMatrix<Integer>> getMarkovMatrices() {
         return trainingData_;
     }
 }
