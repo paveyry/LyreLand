@@ -18,6 +18,7 @@ import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+import tools.Misc;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class LSTMTrainer implements Serializable {
     private int nbEpochs_;
     private int generateSamplesEveryNMinibatches_;
     private int seed_;
+    private double learningRate_;
     private Random random_;
     private String generationInitialization_;
 
@@ -60,7 +62,8 @@ public class LSTMTrainer implements Serializable {
         lstmLayerSize_ = 200; // original 200
         batchSize_ = 32; // original 32
         truncatedBackPropThroughTimeLength_ = 50;
-        nbEpochs_ = 1;
+        nbEpochs_ = 100;
+        learningRate_ = 0.04; // 0.1 original // best 0.05 3epochs
         generateSamplesEveryNMinibatches_ = 200;
         generationInitialization_ = "X";
         seed_ = seed;
@@ -73,7 +76,7 @@ public class LSTMTrainer implements Serializable {
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
-                .learningRate(0.1) // 0.1 original
+                .learningRate(learningRate_)
                 .rmsDecay(0.95) // 0.95 original
                 .seed(seed_)
                 .regularization(true) // true original
@@ -85,7 +88,9 @@ public class LSTMTrainer implements Serializable {
                         .activation("tanh").build())
                 .layer(1, new GravesLSTM.Builder().nIn(lstmLayerSize_).nOut(lstmLayerSize_)
                         .activation("tanh").build())
-                .layer(2, new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax")
+                .layer(2, new GravesLSTM.Builder().nIn(lstmLayerSize_).nOut(lstmLayerSize_)
+                        .activation("tanh").build())
+                .layer(3, new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT).activation("softmax")
                         .nIn(lstmLayerSize_).nOut(nOut).build())
                 .backpropType(BackpropType.TruncatedBPTT)
                     .tBPTTForwardLength(truncatedBackPropThroughTimeLength_)
@@ -120,12 +125,14 @@ public class LSTMTrainer implements Serializable {
             while (trainingSetIterator_.hasNext()) {
                 DataSet ds = trainingSetIterator_.next();
                 lstmNet_.fit(ds);
-                if (counter % generateSamplesEveryNMinibatches_ == 0) {
-                    generateSample(i, counter);
-                }
+                //if (counter % generateSamplesEveryNMinibatches_ == 0) {
+                //    generateSample(i, counter);
+                //}
                 ++counter;
             }
             trainingSetIterator_.reset(); // Reset for next epoch
+            this.serialize(Misc.getProjectPath() + "lstm-epoch-" + i + "-lr" + learningRate_ + ".bin");
+            generateSample(i, 0);
             counter = 0;
         }
         System.out.println("LSTM training complete");
@@ -133,7 +140,7 @@ public class LSTMTrainer implements Serializable {
 
     public void generateSample(int i, int counter) throws IOException {
         String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
-                trainingSetIterator_, 1317, 10);
+                trainingSetIterator_, 1317, 25);
         StringBuilder sb = new StringBuilder();
         for(int j = 0; j < samples.length; j++) {
             sb.append("Sample : ").append(j).append(" -----------------\n\n");
