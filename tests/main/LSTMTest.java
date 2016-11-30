@@ -19,12 +19,8 @@ public class LSTMTest {
     @Test
     public void lstmTest() throws IOException {
         LSTMTrainer trainer = null;
-        try {
-            trainer = LSTMTrainer.deserialize(Misc.getProjectPath() + "lstm-epoch-98-lr0.04.bin");
-            trainer.generateSample(1, 1);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        trainer = LSTMTrainer.deserialize(Misc.getProjectPath() + "lstm-epoch-98-lr0.04");
+        trainer.generateSample(1, 1);
     }
 
 }
