@@ -1,5 +1,8 @@
 package lstm;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import main.options.ExecutionParameters;
 import org.deeplearning4j.nn.api.Layer;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
@@ -12,8 +15,7 @@ import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
-import org.deeplearning4j.ui.weights.HistogramIterationListener;
-import org.deeplearning4j.ui.UiConnectionInfo.Builder.*;
+import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -47,7 +49,7 @@ public class LSTMTrainer implements Serializable {
     private ABCIterator trainingSetIterator_;
 
     // LSTM neural network
-    private MultiLayerNetwork lstmNet_;
+    private transient MultiLayerNetwork lstmNet_;
 
     // Two convertion HashMap
     private HashMap<Character, Integer> charToInt_;
@@ -222,22 +224,35 @@ public class LSTMTrainer implements Serializable {
     /**
      * Serialize current object
      * @param filename File to store serialized data
-     * @throws IOException
+     * @throws
      */
-    public void serialize(String filename) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-        oos.writeObject(this);
+    public void serialize(String filename) {
+        XStream xStream = new XStream(new DomDriver());
+        try {
+            FileOutputStream fos = new FileOutputStream(new File(filename + ".xml"));
+            fos.write(xStream.toXML(this).getBytes());
+            File locationToSave = new File(filename + ".bin");
+            ModelSerializer.writeModel(lstmNet_, locationToSave, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Deserialize an object
      * @param filename File where the serialized data is stored
      * @return Deserialized object
-     * @throws IOException
-     * @throws ClassNotFoundException
      */
-    public static LSTMTrainer deserialize(String filename) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-        return (LSTMTrainer) ois.readObject();
+    public static LSTMTrainer deserialize(String filename) {
+        XStream xStream = new XStream(new DomDriver());
+        try {
+            //LSTMTrainer trainer = (LSTMTrainer) xStream.fromXML(new File(filename + ".xml"));
+            LSTMTrainer trainer = new LSTMTrainer(Misc.getProjectPath() + "/assets/abc/database.abc", 329878);
+            trainer.lstmNet_ = ModelSerializer.restoreMultiLayerNetwork(new File(filename + ".bin"));
+            return trainer;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
