@@ -227,4 +227,8 @@ public class ABCIterator implements DataSetIterator, Serializable {
         return intToChar_;
     }
 
+    public int getExampleLength() {
+        return exampleLength_;
+    }
+
 }

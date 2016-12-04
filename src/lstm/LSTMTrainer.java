@@ -74,6 +74,8 @@ public class LSTMTrainer implements Serializable {
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_, random_);
         charToInt_ = trainingSetIterator_.getCharToInt();
         intToChar_ = trainingSetIterator_.getIntToChar();
+        exampleLength_ = trainingSetIterator_.getExampleLength();
+
         int nOut = trainingSetIterator_.totalOutcomes();
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -134,15 +136,25 @@ public class LSTMTrainer implements Serializable {
             }
             trainingSetIterator_.reset(); // Reset for next epoch
             this.serialize(Misc.getProjectPath() + "lstm-epoch-" + i + "-lr" + learningRate_ + ".bin");
-            generateSample(i, 0);
+            generateSamples(i, 0, 25);
             counter = 0;
         }
         System.out.println("LSTM training complete");
     }
 
-    public void generateSample(int i, int counter) throws IOException {
+    public void generate() throws IOException {
+        String[] score = sampleCharactersFromNetwork(generationInitialization_, lstmNet_,
+                                                      trainingSetIterator_, exampleLength_, 1);
+        StringBuilder sb = new StringBuilder(score[0]);
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("samples/Lyreland_" + random_.nextInt() + ".abc"), "utf-8"))) {
+            writer.write(sb.toString());
+        }
+    }
+
+    public void generateSamples(int i, int counter, int nbSamples) throws IOException {
         String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
-                trainingSetIterator_, 1317, 25);
+                                                       trainingSetIterator_, exampleLength_, nbSamples);
         StringBuilder sb = new StringBuilder();
         for(int j = 0; j < samples.length; j++) {
             sb.append("Sample : ").append(j).append(" -----------------\n\n");
@@ -159,18 +171,18 @@ public class LSTMTrainer implements Serializable {
      * can be used to 'prime' the RNN with a sequence you want to extend/continue.<br>
      * Note that the initalization is used for all samples
      * @param initialization String, may be null. If null, select a random character as initialization for all samples
-     * @param charactersToSample Number of characters to sample from network (excluding initialization)
+     * @param nbcharactersToSample Number of characters to sample from network (excluding initialization)
      * @param net MultiLayerNetwork with one or more GravesLSTM/RNN layers and a softmax output layer
      * @param iter CharacterIterator. Used for going from indexes back to characters
      */
     private String[] sampleCharactersFromNetwork(String initialization, MultiLayerNetwork net,
-                                                        ABCIterator iter, int charactersToSample, int numSamples){
+                                                        ABCIterator iter, int nbcharactersToSample, int numSamples){
         //Create input for initialization
         INDArray initializationInput = Nd4j.zeros(numSamples, iter.inputColumns(), initialization.length());
         char[] init = initialization.toCharArray();
-        for(int i=0; i < init.length; i++){
+        for(int i = 0; i < init.length; i++){
             int idx = charToInt_.get(init[i]);
-            for(int j=0; j < numSamples; j++)
+            for(int j = 0; j < numSamples; j++)
                 initializationInput.putScalar(new int[] {j, idx, i}, 1.0f);
         }
 
@@ -179,12 +191,12 @@ public class LSTMTrainer implements Serializable {
             sb[i] = new StringBuilder(initialization);
 
         //Sample from network (and feed samples back into input) one character at a time (for all samples)
-        //Sampling is done in parallel here
+        //Sampling is done in parallel here.
         net.rnnClearPreviousState();
         INDArray output = net.rnnTimeStep(initializationInput);
         output = output.tensorAlongDimension(output.size(2) - 1, 1, 0);	//Gets the last time step output
 
-        for(int i=0; i < charactersToSample; i++){
+        for(int i=0; i < nbcharactersToSample; i++){
             //Set up next input (single time step) by sampling from previous output
             INDArray nextInput = Nd4j.zeros(numSamples, iter.inputColumns());
             //Output is a probability distribution. Sample from this for each example we want to generate, and add it to the new input
@@ -245,6 +257,7 @@ public class LSTMTrainer implements Serializable {
      */
     public static LSTMTrainer deserialize(String filename) {
         XStream xStream = new XStream(new DomDriver());
+        // 329878
         try {
             //LSTMTrainer trainer = (LSTMTrainer) xStream.fromXML(new File(filename + ".xml"));
             LSTMTrainer trainer = new LSTMTrainer(Misc.getProjectPath() + "/assets/abc/database.abc", 329878);
