@@ -259,8 +259,7 @@ public class LSTMTrainer implements Serializable {
         XStream xStream = new XStream(new DomDriver());
         // 329878
         try {
-            //LSTMTrainer trainer = (LSTMTrainer) xStream.fromXML(new File(filename + ".xml"));
-            LSTMTrainer trainer = new LSTMTrainer(Misc.getProjectPath() + "/assets/abc/database.abc", 329878);
+            LSTMTrainer trainer = (LSTMTrainer) xStream.fromXML(new File(filename + ".xml"));
             trainer.lstmNet_ = ModelSerializer.restoreMultiLayerNetwork(new File(filename + ".bin"));
             return trainer;
         } catch (IOException e) {
