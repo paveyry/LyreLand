@@ -44,6 +44,7 @@ public class LSTMTrainer implements Serializable {
     private double learningRate_;
     private Random random_;
     private String generationInitialization_;
+    private INDArray output_;
 
     // DataSet Iterator
     private ABCIterator trainingSetIterator_;
@@ -70,6 +71,7 @@ public class LSTMTrainer implements Serializable {
         generationInitialization_ = "X";
         seed_ = seed;
         random_ = new Random(seed);
+        output_ = null;
 
         trainingSetIterator_ = new ABCIterator(trainingSet, Charset.forName("ASCII"), batchSize_, random_);
         charToInt_ = trainingSetIterator_.getCharToInt();
@@ -142,17 +144,13 @@ public class LSTMTrainer implements Serializable {
         System.out.println("LSTM training complete");
     }
 
-    public void generate() throws IOException {
+    public String generate() {
         String[] score = sampleCharactersFromNetwork(generationInitialization_, lstmNet_,
-                                                      trainingSetIterator_, exampleLength_, 1);
-        StringBuilder sb = new StringBuilder(score[0]);
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("samples/Lyreland_" + random_.nextInt() + ".abc"), "utf-8"))) {
-            writer.write(sb.toString());
-        }
+                trainingSetIterator_, exampleLength_, 1);
+        return score[0];
     }
 
-    public void generateSamples(int i, int counter, int nbSamples) throws IOException {
+    public String generateSamples(int i, int counter, int nbSamples) throws IOException {
         String[] samples = sampleCharactersFromNetwork(generationInitialization_,lstmNet_,
                                                        trainingSetIterator_, exampleLength_, nbSamples);
         StringBuilder sb = new StringBuilder();
@@ -165,6 +163,7 @@ public class LSTMTrainer implements Serializable {
                 new FileOutputStream("samples/lstm-sample_E" + i + "It" + counter + ".txt"), "utf-8"))) {
             writer.write(sb.toString());
         }
+        return sb.toString();
     }
 
     /** Generate a sample from the network, given an (optional, possibly null) initialization. Initialization
@@ -176,7 +175,7 @@ public class LSTMTrainer implements Serializable {
      * @param iter CharacterIterator. Used for going from indexes back to characters
      */
     private String[] sampleCharactersFromNetwork(String initialization, MultiLayerNetwork net,
-                                                        ABCIterator iter, int nbcharactersToSample, int numSamples){
+                                                 ABCIterator iter, int nbcharactersToSample, int numSamples) {
         //Create input for initialization
         INDArray initializationInput = Nd4j.zeros(numSamples, iter.inputColumns(), initialization.length());
         char[] init = initialization.toCharArray();
@@ -193,8 +192,8 @@ public class LSTMTrainer implements Serializable {
         //Sample from network (and feed samples back into input) one character at a time (for all samples)
         //Sampling is done in parallel here.
         net.rnnClearPreviousState();
-        INDArray output = net.rnnTimeStep(initializationInput);
-        output = output.tensorAlongDimension(output.size(2) - 1, 1, 0);	//Gets the last time step output
+        output_ = net.rnnTimeStep(initializationInput);
+        output_ = output_.tensorAlongDimension(output_.size(2) - 1, 1, 0);    //Gets the last time step output
 
         for(int i=0; i < nbcharactersToSample; i++){
             //Set up next input (single time step) by sampling from previous output
@@ -203,18 +202,19 @@ public class LSTMTrainer implements Serializable {
             for(int s = 0; s < numSamples; s++){
                 double[] outputProbDistribution = new double[iter.totalOutcomes()];
                 for(int j=0; j < outputProbDistribution.length; j++ )
-                    outputProbDistribution[j] = output.getDouble(s,j);
+                    outputProbDistribution[j] = output_.getDouble(s,j);
                 int sampledCharacterIdx = sampleFromDistribution(outputProbDistribution);
 
                 nextInput.putScalar(new int[]{s,sampledCharacterIdx}, 1.0f); //Prepare next time step input
                 sb[s].append(intToChar_.get(sampledCharacterIdx));	//Add sampled character to StringBuilder (human readable output)
             }
 
-            output = net.rnnTimeStep(nextInput);	//Do one time step of forward pass
+            output_ = net.rnnTimeStep(nextInput);	//Do one time step of forward pass
         }
         String[] out = new String[numSamples];
         for( int i=0; i<numSamples; i++ )
             out[i] = sb[i].toString();
+
         return out;
     }
 
@@ -255,12 +255,14 @@ public class LSTMTrainer implements Serializable {
      * @param filename File where the serialized data is stored
      * @return Deserialized object
      */
-    public static LSTMTrainer deserialize(String filename) {
+    public static LSTMTrainer deserialize(String filename, String trainingSet) {
         XStream xStream = new XStream(new DomDriver());
         // 329878
         try {
-            LSTMTrainer trainer = (LSTMTrainer) xStream.fromXML(new File(filename + ".xml"));
+
+            LSTMTrainer trainer = new LSTMTrainer(trainingSet, 329878);
             trainer.lstmNet_ = ModelSerializer.restoreMultiLayerNetwork(new File(filename + ".bin"));
+            trainer.lstmNet_.rnnClearPreviousState();
             return trainer;
         } catch (IOException e) {
             e.printStackTrace();

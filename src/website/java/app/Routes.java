@@ -2,6 +2,7 @@ package website.java.app;
 
 import analysis.harmonic.Tonality;
 import generation.Generator;
+import lstm.LSTMTrainer;
 import website.java.app.util.ViewUtil;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,12 +13,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Random;
 
 public class Routes {
-    public static void setRoutes(Hashtable<String, Generator> generators) {
-        Model model = new Model().addGenres();
+    public static void setRoutes(HashMap<String, LSTMTrainer> generators) {
+        Model model = new Model().addGenres(generators);
         get("/", (req, res) -> ViewUtil.render("/views/index.vm", model.getMap()));
         generationRoute(generators);
     }
@@ -36,29 +38,19 @@ public class Routes {
         return tonalities.get(r.nextInt(tonalities.size()));
     }
 
-    private static void generationRoute(Hashtable<String, Generator> generators) {
+    private static void generationRoute(HashMap<String, LSTMTrainer> generators) {
         post("/generate", (request, response) -> {
             String genre = request.queryParams("genre");
-            String seedString = request.queryParams("seed");
-            long seed = (seedString != null && seedString.length() > 0) ? Long.parseLong(seedString) : 437489379;
+            //String seedString = request.queryParams("seed");
+            //long seed = (seedString != null && seedString.length() > 0) ? Long.parseLong(seedString) : 437489379;
 
-            Path path = Paths.get(System.getProperty("java.io.tmpdir") + "/generated-" + seed + ".mid");
-
-            System.out.println(path.toString());
-
-            generators.get(genre).writeHarmonicBase(getATonality(seed), new Random(seed).nextInt(7) + 10, path.toString(), seed);
-
-            System.out.println(path.toString());
-
-            byte[] data = null;
-            try {
-                data = Files.readAllBytes(path);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            String s = generators.get(genre).generate();
+            System.out.println(s);
+            System.out.println("KJDHJHDJKHDKJHDJHDJHDKJDH");
+            byte[] data = s.getBytes();
 
             HttpServletResponse raw = response.raw();
-            response.header("Content-Disposition", "attachment; filename=generated=" + seed + ".mid");
+            response.header("Content-Disposition", "attachment; filename=generated.abc");
             response.type("application/force-download");
             try {
                 raw.getOutputStream().write(data);

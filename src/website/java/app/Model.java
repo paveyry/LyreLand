@@ -1,11 +1,10 @@
 package website.java.app;
 
-import training.GenreLearner;
+import lstm.LSTMTrainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static tools.filemanagement.TrainedDataDeserializer.getTrainedData;
 
 public class Model {
     HashMap<String, Object> map_;
@@ -18,11 +17,9 @@ public class Model {
         return map_;
     }
 
-    public Model addGenres() {
-        ArrayList<GenreLearner> learners = getTrainedData();
+    public Model addGenres(HashMap<String, LSTMTrainer> generators) {
         ArrayList<String> genres = new ArrayList<>();
-        for (GenreLearner learner : learners)
-            genres.add(learner.getCategoryName());
+        genres.addAll(generators.keySet());
         map_.put("genres", genres);
         return this;
     }

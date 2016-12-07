@@ -20,8 +20,8 @@ public class LSTMTest {
     @Test
     public void lstmTest() throws IOException {
         LSTMTrainer trainer = null;
-        trainer = LSTMTrainer.deserialize(Misc.getProjectPath() + "lstm-epoch-98-lr0.04");
-        trainer.generate();
+        trainer = LSTMTrainer.deserialize(Misc.getProjectPath() + "lstm-epoch-98-lr0.04", "assets/abc/nottingham/database.abc");
+        System.out.println(trainer.generate();
         //trainer.generateSamples(1, 1, 25);
     }
 

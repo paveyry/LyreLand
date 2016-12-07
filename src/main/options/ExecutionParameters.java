@@ -63,9 +63,19 @@ public class ExecutionParameters {
     public static Path trainingSetPath = Paths.get("assets/training/training-set");
 
     /**
+     * Specify the path to the training set (for writing or reading)
+     */
+    public static Path LSTMTrainingSetPath = Paths.get("assets/abc");
+
+    /**
      * Specify the path to the trained data (created after training and used for generation)
      */
     public static Path trainedDataPath = Paths.get("assets/training/trained-data");
+
+    /**
+     * Specify the path to the trained data (created after training and used for generation)
+     */
+    public static Path trainedLSTMPath = Paths.get("assets/training/trained-lstm");
 
     /**
      * Specify the path to the generated files without the extension. Default value is `generated.mid` and `generated.wav`

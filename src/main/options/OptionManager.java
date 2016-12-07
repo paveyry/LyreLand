@@ -65,6 +65,9 @@ public class OptionManager {
             if (cmd.hasOption("trained_data_path"))
                 ExecutionParameters.trainedDataPath = Paths.get(cmd.getOptionValue("trained_data_path"));
 
+            if (cmd.hasOption("trained_lstm_path"))
+                ExecutionParameters.trainedLSTMPath = Paths.get(cmd.getOptionValue("trained_lstm_path"));
+
         } catch (ParseException e) {
             System.err.println("Wrong main.options");
             displayHelp();
@@ -86,6 +89,7 @@ public class OptionManager {
         options_.addOption("midi_input_path", true, "Specify the path to the MIDI input files directory.");
         options_.addOption("training_set_path", true, "Specify the path to the training-set directory.");
         options_.addOption("trained_data_path", true, "Specify the path to the trained data directory.");
+        options_.addOption("trained_lstm_path", true, "Specify the path to the trained LSTMs directory.");
     }
 
     private void displayHelp() {
