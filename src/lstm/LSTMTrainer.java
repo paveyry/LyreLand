@@ -137,7 +137,7 @@ public class LSTMTrainer implements Serializable {
                 ++counter;
             }
             trainingSetIterator_.reset(); // Reset for next epoch
-            this.serialize(Misc.getProjectPath() + "lstm-epoch-" + i + "-lr" + learningRate_ + ".bin");
+            this.serialize(Misc.getProjectPath() + "lstm-epoch-" + i + "-lr" + learningRate_);
             generateSamples(i, 0, 25);
             counter = 0;
         }
@@ -239,11 +239,8 @@ public class LSTMTrainer implements Serializable {
      * @throws
      */
     public void serialize(String filename) {
-        XStream xStream = new XStream(new DomDriver());
         try {
-            FileOutputStream fos = new FileOutputStream(new File(filename + ".xml"));
-            fos.write(xStream.toXML(this).getBytes());
-            File locationToSave = new File(filename + ".bin");
+            File locationToSave = new File(filename);
             ModelSerializer.writeModel(lstmNet_, locationToSave, true);
         } catch (IOException e) {
             e.printStackTrace();
@@ -261,7 +258,7 @@ public class LSTMTrainer implements Serializable {
         try {
 
             LSTMTrainer trainer = new LSTMTrainer(trainingSet, 329878);
-            trainer.lstmNet_ = ModelSerializer.restoreMultiLayerNetwork(new File(filename + ".bin"));
+            trainer.lstmNet_ = ModelSerializer.restoreMultiLayerNetwork(new File(filename));
             trainer.lstmNet_.rnnClearPreviousState();
             return trainer;
         } catch (IOException e) {

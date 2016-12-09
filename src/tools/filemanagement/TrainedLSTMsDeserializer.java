@@ -21,7 +21,7 @@ public class TrainedLSTMsDeserializer {
         if (subDirs != null) {
             for (File subDir : subDirs) {
                 if (subDir.isDirectory()) {
-                    Path dataFile = subDir.toPath().resolve("trained_lstm");
+                    Path dataFile = subDir.toPath().resolve("trained_lstm.bin");
                     LSTMTrainer trainer = LSTMTrainer.deserialize(dataFile.toString(),
                             ExecutionParameters.LSTMTrainingSetPath + "/" + subDir.getName() + "/database.abc");
                     learners.put(subDir.getName(), trainer);
