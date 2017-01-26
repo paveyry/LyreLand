@@ -3,12 +3,17 @@ package website.java.app;
 import analysis.harmonic.Tonality;
 import generation.Generator;
 import lstm.LSTMTrainer;
+import org.apache.commons.compress.utils.IOUtils;
+import sun.nio.ch.IOUtil;
+import tools.AbcToMidi;
+import tools.FluidSynthetizer;
 import website.java.app.util.ViewUtil;
 
 import javax.servlet.http.HttpServletResponse;
 
 import static spark.Spark.*;
 
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,16 +46,28 @@ public class Routes {
     private static void generationRoute(HashMap<String, LSTMTrainer> generators) {
         post("/generate", (request, response) -> {
             String genre = request.queryParams("genre");
-            //String seedString = request.queryParams("seed");
-            //long seed = (seedString != null && seedString.length() > 0) ? Long.parseLong(seedString) : 437489379;
+            String action = request.queryParams("action");
 
             String s = generators.get(genre).generate();
-            System.out.println(s);
-            System.out.println("KJDHJHDJKHDKJHDJHDJHDKJDH");
-            byte[] data = s.getBytes();
+
+            byte[] data = null;
+
+            if (action.equals("abc"))
+                data = s.getBytes();
+            else if (action.equals("mid") || action.equals("wav")) {
+                Random r = new Random();
+                Integer i = Math.abs(r.nextInt());
+                AbcToMidi.abcToMidi(s, i.toString() + ".mid");
+                if (action.equals("mid"))
+                    data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".mid"));
+                else {
+                    FluidSynthetizer.midToWav(i.toString() + ".mid", i.toString() + ".wav");
+                    data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".wav"));
+                }
+            }
 
             HttpServletResponse raw = response.raw();
-            response.header("Content-Disposition", "attachment; filename=generated.abc");
+            response.header("Content-Disposition", "attachment; filename=generated." + action);
             response.type("application/force-download");
             try {
                 raw.getOutputStream().write(data);
@@ -61,8 +78,6 @@ public class Routes {
                 e.printStackTrace();
             }
             return raw;
-
-
         });
     }
 }

@@ -203,11 +203,11 @@
                         #end
                     </select>
                   </div>
-                    <div class="form-group">
-                        <label for="seed">Seed</label>
-                        <input type="text" class="form-control" placeholder="Text input" form="generation" name="seed">
+                    <div class="text-center">
+                        <button type="submit" name="action" value="abc" class="btn btn-info">Generate ABC!</button>
+                        <button type="submit" name="action" value="mid" class="btn btn-info">Generate MIDI!</button>
+                        <button type="submit" name="action" value="wav" class="btn btn-info">Generate WAV!</button>
                     </div>
-                    <div class="text-center"><button type="submit" class="btn btn-info">Generate!</button></div>
                 </form>
             </div>
             </div><!--//docs-inner-->
