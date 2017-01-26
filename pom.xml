@@ -60,20 +60,18 @@
             <artifactId>deeplearning4j-ui</artifactId>
             <version>0.6.0</version>
         </dependency>
-        <!-- THIS IS FOR CPU-->
+        <!-- THIS IS FOR CUDA -->
         <dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>nd4j-native-platform</artifactId>
+            <artifactId>nd4j-cuda-8.0-platform</artifactId>
             <version>0.6.0</version>
         </dependency>
-        <!-- THIS IS FOR CUDA -->
-        <!--
-        <dependency>
+	<dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>nd4j-cuda-7.5-platform</artifactId>
-            <version>${nd4j.version}</version>
+            <artifactId>nd4j-cuda-8.0</artifactId>
+            <version>0.6.0</version>
         </dependency>
-        -->
+
     </dependencies>
 
     <build>
@@ -165,6 +163,7 @@
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.10</version>
                 <configuration>
+		    <extraJvmArguments>-Xmx12000m</extraJvmArguments>
                     <programs>
                         <program>
                             <mainClass>main.Main</mainClass>

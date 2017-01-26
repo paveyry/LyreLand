@@ -2,8 +2,11 @@ package main;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import lstm.LSTMTrainer;
 import main.options.ExecutionParameters;
 import main.options.OptionManager;
+import org.nd4j.jita.conf.CudaEnvironment;
+import tools.Misc;
 import tools.filemanagement.TrainingCategoryLearner;
 import tools.filemanagement.TrainingExampleGenerator;
 import training.GenreLearner;
@@ -23,21 +26,13 @@ public class Main {
      * @param args Program arguments
      */
     public static void main(String[] args) {
-        OptionManager optionManager = new OptionManager(args);
-        optionManager.parse();
-
-        if (ExecutionParameters.analyze) {
-            processAnalysis();
-        }
-
-        if (ExecutionParameters.train) {
-            processTraining();
-        }
-
-        if (ExecutionParameters.generate) {
-            ArrayList<GenreLearner> trainedData = getTrainedData();
-            // Generate a music using the main.options.ExecutionParameters.seed and the trained data located in
-            // main.options.ExecutionParameters.trainedDataPath into Execution.Parameters.outputPath + ".mid"|".wav"
+        CudaEnvironment.getInstance().getConfiguration().allowMultiGPU(true);
+        try {
+        LSTMTrainer trainer = new LSTMTrainer(Misc.getProjectPath() + "assets/abc/database.abc", 3657263);
+        trainer.train();
+        trainer.serialize(Misc.getProjectPath() + "serialized_lstm");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
