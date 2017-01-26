@@ -3,7 +3,6 @@ import lstm.LSTMTrainer;
 import website.java.app.util.ResourceManager;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 
 import static spark.Spark.*;
 import static tools.filemanagement.TrainedLSTMsDeserializer.getTrainedLSTMs;
@@ -20,6 +19,4 @@ public class Main {
 
         setRoutes(generators_);
     }
-
-
 }
