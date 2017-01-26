@@ -16,9 +16,7 @@ public class Main {
         OptionManager optionManager = new OptionManager(args);
         optionManager.parse();
 
-        if (ExecutionParameters.train) {
-            processLSTMTraining();
-        }
+        processLSTMTraining();
     }
 
     private static void processLSTMTraining() {
@@ -29,7 +27,8 @@ public class Main {
             if (subDirs != null) {
                 for (File subDir : subDirs) {
                     if (subDir.isDirectory()) {
-                        LSTMTrainer lstmTrainer = new LSTMTrainer(subDir.getAbsolutePath(), ExecutionParameters.seed);
+                        LSTMTrainer lstmTrainer = new LSTMTrainer(subDir.getAbsolutePath() + "/database.abc",
+                                                                  ExecutionParameters.seed);
                         lstmTrainer.train();
                         lstmTrainer.serialize(ExecutionParameters.trainedLSTMPath + subDir.getName());
                     }
