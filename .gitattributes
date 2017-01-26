@@ -9,3 +9,4 @@ src/website/resources/assets/* linguist-vendored
 *.otf filter=lfs diff=lfs merge=lfs -text
 *.woff filter=lfs diff=lfs merge=lfs -text
 *.woff2 filter=lfs diff=lfs merge=lfs -text
+assets/programs/* filter=lfs diff=lfs merge=lfs -text
