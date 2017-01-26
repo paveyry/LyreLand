@@ -117,7 +117,6 @@ public class LSTMTrainer implements Serializable {
         uiServer.attach(statsStorage);
         lstmNet_.setListeners(new StatsListener(statsStorage));
 
-
         if (ExecutionParameters.verbose) {
             Layer[] layers = lstmNet_.getLayers();
             int totalNumParams = 0;

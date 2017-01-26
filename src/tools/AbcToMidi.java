@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Random;
 
 public class AbcToMidi {
+    private static String os_ = System.getProperty("os.name").toLowerCase();
 
     public static boolean abcToMidi(String abcInput, String midiOutputFile) {
         try {
@@ -15,9 +16,11 @@ public class AbcToMidi {
                 writer.write(abcInput);
             }
 
+            String binaryname = os_.contains("mac") ? "abc2midi.mac " : "abc2midi.nux ";
+
             // Run fluidsynth to generate the wave file using the mid and the soundfont collection
-            Process abc2mid = Runtime.getRuntime().exec(Misc.getProjectPath() + "/abc2midi " + rand.toString()
-                    + ".abc -o " + midiOutputFile);
+            Process abc2mid = Runtime.getRuntime().exec(Misc.getProjectPath() + "/assets/programs/" + binaryname
+                    + rand.toString() + ".abc -o " + midiOutputFile);
 
             // Get the error stream
             BufferedReader bre = new BufferedReader(new InputStreamReader(abc2mid.getInputStream()));
