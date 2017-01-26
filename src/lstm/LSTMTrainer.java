@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import main.options.ExecutionParameters;
+import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.nn.api.Layer;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.BackpropType;
@@ -15,6 +16,9 @@ import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.ui.api.UIServer;
+import org.deeplearning4j.ui.stats.StatsListener;
+import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.dataset.api.DataSet;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
@@ -106,8 +110,13 @@ public class LSTMTrainer implements Serializable {
 
         lstmNet_ = new MultiLayerNetwork(conf);
         lstmNet_.init();
-        lstmNet_.setListeners(new ScoreIterationListener(1));
+        //lstmNet_.setListeners(new ScoreIterationListener(1));
         //lstmNet_.setListeners(new HistogramIterationListener(1));
+        UIServer uiServer = UIServer.getInstance();
+        StatsStorage statsStorage = new InMemoryStatsStorage();
+        uiServer.attach(statsStorage);
+        lstmNet_.setListeners(new StatsListener(statsStorage));
+
 
         if (ExecutionParameters.verbose) {
             Layer[] layers = lstmNet_.getLayers();
