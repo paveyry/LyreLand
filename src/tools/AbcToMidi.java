@@ -9,7 +9,7 @@ public class AbcToMidi {
     public static boolean abcToMidi(String abcInput, String midiOutputFile) {
         try {
             Random r = new Random();
-            Integer rand = r.nextInt();
+            Integer rand = Math.abs(r.nextInt());
 
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(rand.toString() + ".abc"), "utf-8"))) {
