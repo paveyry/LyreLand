@@ -1,10 +1,7 @@
 package website.java.app;
 
-import analysis.harmonic.Tonality;
-import generation.Generator;
 import lstm.LSTMTrainer;
 import org.apache.commons.compress.utils.IOUtils;
-import sun.nio.ch.IOUtil;
 import tools.AbcToMidi;
 import tools.FluidSynthetizer;
 import website.java.app.util.ViewUtil;
@@ -12,59 +9,64 @@ import website.java.app.util.ViewUtil;
 import javax.servlet.http.HttpServletResponse;
 
 import static spark.Spark.*;
+import static tools.filemanagement.TrainedLSTMsDeserializer.getTrainedLSTMs;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Random;
 
 public class Routes {
-    public static void setRoutes(HashMap<String, LSTMTrainer> generators) {
-        Model model = new Model().addGenres(generators);
+    private static HashMap<String, LSTMTrainer> generators_;
+    public static void setRoutes(ArrayList<String> genres, boolean backend) {
+        Model model = new Model().addGenres(genres);
         get("/", (req, res) -> ViewUtil.render("/views/index.vm", model.getMap()));
-        generationRoute(generators);
+        if (backend)
+            generationRoute(genres);
+        else
+            post("/generate", (req, res) -> ViewUtil.render("/views/nobackend.vm", model.getMap()));
     }
 
-    // TO DELETE
-    private static Tonality getATonality(long seed) {
-        ArrayList<Tonality> tonalities = new ArrayList<>();
-        tonalities.add(new Tonality(0, 0));
-        tonalities.add(new Tonality(0, 1));
-        tonalities.add(new Tonality(1, 0));
-        tonalities.add(new Tonality(-1, 0));
-        tonalities.add(new Tonality(4, 0));
-        tonalities.add(new Tonality(4, 1));
-        tonalities.add(new Tonality(6, 1));
-        Random r = new Random(seed);
-        return tonalities.get(r.nextInt(tonalities.size()));
+    private static byte[] generate(String genre, String action) {
+        byte[] data = null;
+        try {
+            String s = generators_.get(genre).generate();
+
+            Random r = new Random();
+            Integer i = Math.abs(r.nextInt());
+            AbcToMidi.abcToMidi(s, i.toString() + ".mid");
+
+            // This will check if conversion worked
+            data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".mid"));
+
+            if (action.equals("abc"))
+                data = s.getBytes();
+            else if (action.equals("wav")) {
+                FluidSynthetizer.midToWav(i.toString() + ".mid", i.toString() + ".wav");
+                data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".wav"));
+                new File(i.toString() + ".wav").delete();
+            }
+            new File(i.toString() + ".mid").delete();
+
+            return data;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    private static void generationRoute(HashMap<String, LSTMTrainer> generators) {
+    private static void generationRoute(ArrayList<String> genres) {
+        generators_ = getTrainedLSTMs(genres);
         post("/generate", (request, response) -> {
             String genre = request.queryParams("genre");
             String action = request.queryParams("action");
 
-            String s = generators.get(genre).generate();
-
             byte[] data = null;
 
-            if (action.equals("abc"))
-                data = s.getBytes();
-            else if (action.equals("mid") || action.equals("wav")) {
-                Random r = new Random();
-                Integer i = Math.abs(r.nextInt());
-                AbcToMidi.abcToMidi(s, i.toString() + ".mid");
-                if (action.equals("mid"))
-                    data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".mid"));
-                else {
-                    FluidSynthetizer.midToWav(i.toString() + ".mid", i.toString() + ".wav");
-                    data = IOUtils.toByteArray(new FileInputStream(i.toString() + ".wav"));
-                }
-            }
+            while (data == null)
+                data = generate(genre, action);
 
             HttpServletResponse raw = response.raw();
             response.header("Content-Disposition", "attachment; filename=generated." + action);

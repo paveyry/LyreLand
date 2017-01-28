@@ -77,7 +77,7 @@
             <p class="intro">A free music procedural generator based on <br/> machine-learning and pseudo-random algorithms.</p>
             <div class="btns">
                 <a class="btn btn-cta-secondary scrollto" href="#demo">Try now!</a>
-                <a class="btn btn-cta-primary" href="https://github.com/paveyry/LyreLand" target="_blank">Download</a>
+                <a class="btn btn-cta-primary" href="/downloads/lyreland-v1_0-release.tar.bz2">Download</a>
             </div>
             <ul class="meta list-inline">
                 <li><a href="https://github.com/paveyry/LyreLand" target="_blank">View on GitHub</a></li>
@@ -90,126 +90,35 @@
                 </li>
             </ul><!--//meta-->
         </div><!--//container-->
-        <div class="social-media">
-            <div class="social-media-inner container text-center">
-                <ul class="list-inline">
-                    <li class="twitter-follow"><a href="https://twitter.com/EPITA" class="twitter-follow-button" data-show-count="false">Follow @EPITA</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                    </li><!--//twitter-follow-->
-
-                    <li class="facebook-like">
-                         <div class="fb-like" data-href="https://www.facebook.com/epita/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-                    </li><!--//facebook-like-->
-                    <!--// Generate github buttons: https://github.com/mdo/github-buttons -->
-                    <li class="github-star"><iframe src="http://ghbtns.com/github-btn.html?user=paveyry&repo=LyreLand&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe></li>
-                    <li class="github-fork"><iframe src="http://ghbtns.com/github-btn.html?user=paveyry&repo=LyreLand&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe></li>
-                    <!--//
-                    <li class="github-follow"><iframe src="http://ghbtns.com/github-btn.html?user=mdo&type=follow&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe></li>
-                    -->
-                </ul>
-            </div>
-        </div>
+        #include("views/socialmedia.vm")
     </section><!--//promo-->
 
-    <!-- ******ABOUT****** -->
-    <section id="about" class="about section">
-        <div class="container">
-            <h2 class="title text-center">What is LyreLand?</h2>
-            <p class="intro text-center">LyreLand is an application that composes music for any purpose.</p>
-            <div class="row">
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-heart"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Accessible to anyone</h3>
-                        <p>LyreLand is incredibly easy to use and works on Windows, Mac OS X, and Linux</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-clock-o"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Time saver</h3>
-                        <p>You need free music for a specific purpose but do not want to send time looking for it? Just generate it using LyreLand.</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-pencil"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Designed for creators</h3>
-                        <p>You can be a composer, a game developer, a movie director, or an artistic performer. LyreLand can create the right music for you.</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="clearfix visible-md"></div>
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-music"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Created by musicians</h3>
-                        <p>LyreLand does not juste create random music. It actually respects tonal music rules and can learn new Music genres.</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-code"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Open-source and free</h3>
-                        <p>LyrLand is completely free and open-source. You can get the code on <a href="http://github.com/paveyry/LyreLand">Github</a> and modify it as you like.</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-sm-6 col-xs-12">
-                    <div class="icon-holder">
-                        <i class="fa fa-graduation-cap"></i>
-                    </div>
-                    <div class="content">
-                        <h3 class="sub-title">Made by students</h3>
-                        <p>LyreLand is developed by students from French Computer Science school <a href="http://www.epita.fr"> EPITA</a>.</p>
-                    </div><!--//content-->
-                </div><!--//item-->
-            </div><!--//row-->
-            <div class="row text-center">
-                </div>
-        </div><!--//container-->
-    </section><!--//about-->
+    #include("views/about.vm")
 
-    <!-- ******FEATURES****** -->
-    <section id="features" class="features section">
-        <div class="container text-center">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/EUyZxxuFF0s"></iframe>
-            </div>
-        </div><!--//container-->
-    </section><!--//features-->
+    #include ("views/video.vm")
 
     <!-- ******DOCS****** -->
     <section id="demo" class="docs section">
         <div class="container">
             <div class="docs-inner">
-            <h2 class="title text-center">Try it now!</h2>
-            <div class="block">
-                <form action="/generate" id="generation" method="post">
-                  <div class="form-group">
-                    <label for="musicstyle">Music Genre</label>
-                    <select class="form-control" id="musicstyle" form="generation" name="genre">
-                        #foreach($genre in $genres)
-                            <option value="$genre">$genre</option>
-                        #end
-                    </select>
-                  </div>
-                    <div class="text-center">
-                        <button type="submit" name="action" value="abc" class="btn btn-info">Generate ABC!</button>
-                        <button type="submit" name="action" value="mid" class="btn btn-info">Generate MIDI!</button>
-                        <button type="submit" name="action" value="wav" class="btn btn-info">Generate WAV!</button>
-                    </div>
-                </form>
-            </div>
+                <h2 class="title text-center">Try it now!</h2>
+                <div class="block">
+                    <form action="/generate" id="generation" method="post">
+                        <div class="form-group">
+                            <label for="musicstyle">Music Genre</label>
+                            <select class="form-control" id="musicstyle" form="generation" name="genre">
+                                #foreach($genre in $genres)
+                                    <option value="$genre">$genre</option>
+                                #end
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" name="action" value="abc" class="btn btn-info">Generate ABC!</button>
+                            <button type="submit" name="action" value="mid" class="btn btn-info">Generate MIDI!</button>
+                            <button type="submit" name="action" value="wav" class="btn btn-info">Generate WAV!</button>
+                        </div>
+                    </form>
+                </div>
             </div><!--//docs-inner-->
         </div><!--//container-->
     </section><!--//features-->
@@ -232,46 +141,6 @@
         </div><!--//container-->
     </section><!--//how-->
 
-
-    <!-- ******CONTACT****** -->
-    <!--
-    <section id="contact" class="contact section has-pattern">
-        <div class="container">
-            <div class="contact-inner">
-                <h2 class="title  text-center">Contact</h2>
-                <p class="intro  text-center">I hope you find this Bootstrap template useful. <br />Feel free to get in touch if you have any questions or suggestions.</p>
-                <div class="author-message">
-                    <div class="profile">
-                        <img class="img-responsive" src="assets/images/profile.png" alt="" />
-                    </div>
-
-                    <div class="speech-bubble">
-                        <h3 class="sub-title">Want to get more freebies in the future?</h3>
-                        <p>I tweet about #UX and #webdev related resources/content at <a href="https://twitter.com/3rdwave_themes" target="_blank">@3rdwave_themes</a>
-                        <p>If you like what I do, you can follow me on twitter and I will keep you informed about my next free template there :)</p>
-                        <p><strong>[Tip for developers]:</strong> If you take on freelance work you can put a tailored message here about your availability to attract potential clients. Be creative and good luck!</p>
-                        <div class="source">
-                            <span class="name"><a href="https://twitter.com/3rdwave_themes" target="_blank">Xiaoying Riley</a></span>
-                            <br />
-                            <span class="title">UX/UI Designer</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="info text-center">
-                    <h4 class="sub-title">Get Connected</h4>
-                    <ul class="social-icons list-inline">
-                        <li><a href="https://twitter.com/3rdwave_themes" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="https://www.facebook.com/3rdwavethemes" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="https://www.linkedin.com/in/xiaoying"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="http://instagram.com/xyriley"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="https://dribbble.com/Xiaoying"><i class="fa fa-dribbble"></i></a></li>
-                        <li class="last"><a href="mailto:hello@3rdwavemedia.com"><i class="fa fa-envelope"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>-->
 
     <!-- ******FOOTER****** -->
     <footer class="footer">

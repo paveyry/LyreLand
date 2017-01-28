@@ -4,7 +4,7 @@ import tools.Misc;
 
 public class ResourceManager {
     public static String getResourceDir() {
-        return  Misc.getProjectPath() + "src/website/resources/";
+        return  Misc.getProjectPath() + "target/classes/website/resources/";
     }
 
     public static String getGenDir() {

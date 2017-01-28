@@ -17,9 +17,7 @@ public class Model {
         return map_;
     }
 
-    public Model addGenres(HashMap<String, LSTMTrainer> generators) {
-        ArrayList<String> genres = new ArrayList<>();
-        genres.addAll(generators.keySet());
+    public Model addGenres(ArrayList<String> genres) {
         map_.put("genres", genres);
         return this;
     }

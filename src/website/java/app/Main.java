@@ -1,7 +1,9 @@
 package website.java.app;
 import lstm.LSTMTrainer;
+import tools.filemanagement.TrainedLSTMsDeserializer;
 import website.java.app.util.ResourceManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static spark.Spark.*;
@@ -15,8 +17,8 @@ public class Main {
         port(4567);
         staticFiles.externalLocation(ResourceManager.getResourceDir());
 
-        generators_ = getTrainedLSTMs();
+        ArrayList<String> genres = TrainedLSTMsDeserializer.getGenres();
 
-        setRoutes(generators_);
+        setRoutes(genres, args.length < 1 || !args[0].contains("no"));
     }
 }

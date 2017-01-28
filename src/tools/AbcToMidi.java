@@ -30,6 +30,7 @@ public class AbcToMidi {
                 sb.append(line).append(System.lineSeparator());
 
             abc2mid.waitFor();
+            new File(rand.toString() + ".abc").delete();
             return !sb.toString().contains("error") && !sb.toString().contains("Error");
 
         } catch (IOException | InterruptedException e) {

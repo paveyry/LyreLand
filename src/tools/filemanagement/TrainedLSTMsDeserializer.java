@@ -7,27 +7,35 @@ import main.options.ExecutionParameters;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TrainedLSTMsDeserializer {
-    public static HashMap<String, LSTMTrainer> getTrainedLSTMs() {
+    public static HashMap<String, LSTMTrainer> getTrainedLSTMs(ArrayList<String> genres) {
         HashMap<String, LSTMTrainer> learners = new HashMap<>();
-        XStream xstream = new XStream(new DomDriver());
 
-        // For each category in data set, create the corresponding XML files in the trained data dir
+        if (genres == null)
+            genres = getGenres();
+
+        for (String genre : genres) {
+            Path dataFile = new File(ExecutionParameters.trainedLSTMPath + "/" + genre + "/trained_lstm.bin").toPath();
+            LSTMTrainer trainer = LSTMTrainer.deserialize(dataFile.toString(),
+                                  ExecutionParameters.LSTMTrainingSetPath + "/" + genre + "/database.abc");
+            learners.put(genre, trainer);
+        }
+        return learners;
+    }
+    public static ArrayList<String> getGenres() {
+        ArrayList<String> genres = new ArrayList<>();
+
         File dir = new File(ExecutionParameters.trainedLSTMPath.toString());
         File[] subDirs = dir.listFiles();
 
-        if (subDirs != null) {
-            for (File subDir : subDirs) {
-                if (subDir.isDirectory()) {
-                    Path dataFile = subDir.toPath().resolve("trained_lstm.bin");
-                    LSTMTrainer trainer = LSTMTrainer.deserialize(dataFile.toString(),
-                            ExecutionParameters.LSTMTrainingSetPath + "/" + subDir.getName() + "/database.abc");
-                    learners.put(subDir.getName(), trainer);
-                }
-            }
-        }
-        return learners;
+        if (subDirs != null)
+            for (File subDir : subDirs)
+                if (subDir.isDirectory())
+                    genres.add(subDir.getName());
+
+        return genres;
     }
 }

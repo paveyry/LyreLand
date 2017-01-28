@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <title>LyreLand - Music Procedural Generation</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/dependencies/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/dependencies/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/dependencies/prism/min/prism.css">
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="/assets/css/styles.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll">
+
+    <!---//Facebook button code-->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- ******HEADER****** -->
+    <header id="header" class="header">
+        <div class="container">
+            <h1 class="logo pull-left">
+                <a href="/">
+                    <span class="logo-title">LyreLand</span>
+                </a>
+            </h1><!--//logo-->
+        </div>
+    </header><!--//header-->
+
+    <!-- ******PROMO****** -->
+    <section id="promo" class="promo section offset-header">
+        <div class="container text-center">
+            <img class="img-responsive center-block" src="assets/images/lyreland_no_bg.png" width="200px"/>
+            <h2 class="title">Apologies</h2>
+            <p class="intro">Our servers are not powerful enough to compose. But do not worry, you can deploy your
+            own version of LyreLand on your computer or server.</p>
+            <div class="btns">
+                <a class="btn btn-cta-primary" href="/downloads/lyreland-v1_0-release.tar.bz2">Download LyreLand</a>
+                <a class="btn btn-cta-secondary" href="https://soundcloud.com/lyreland">Listen to samples on SoundCloud </a>
+            </div>
+            <ul class="meta list-inline">
+                <li><a href="https://github.com/paveyry/LyreLand" target="_blank">View on GitHub</a></li>
+                <li>Created by:
+                    <a href="https://lnkd.in/d4c3xvn" target="_blank">
+                        Pierre-Alexandre Veyry</a>, <a href="https://fr.linkedin.com/in/olivier-laugier-6a2a90114" target="_blank">
+                        Olivier Laugier</a>, and <a href="#" target="_blank">
+                        Arnaud Ou</a> at <a href="http://www.epita.fr" target="_blank">
+                        EPITA</a>
+                </li>
+            </ul><!--//meta-->
+        </div><!--//container-->
+        #include("views/socialmedia.vm")
+    </section><!--//promo-->
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="assets/dependencies/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="assets/dependencies/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="assets/dependencies/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/dependencies/jquery-scrollTo/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="assets/dependencies/prism/min/prism-min.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+</body>
+</html>
