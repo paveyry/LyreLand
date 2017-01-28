@@ -74,7 +74,7 @@
         <div class="container text-center">
             <img class="img-responsive center-block" src="assets/images/lyreland_no_bg.png" width="200px"/>
             <h2 class="title">LyreLand</h2>
-            <p class="intro">A free music procedural generator based on <br/> machine-learning and pseudo-random algorithms.</p>
+            <p class="intro">A free and powerful music composition AI<br/>based on Deep Neural Networks.</p>
             <div class="btns">
                 <a class="btn btn-cta-secondary scrollto" href="#demo">Try now!</a>
                 <a class="btn btn-cta-primary" href="/downloads/lyreland-v1_0-release.tar.bz2">Download</a>
