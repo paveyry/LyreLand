@@ -32,7 +32,7 @@ script:
     - mvn package appassembler:assemble
 
 after_success:
-    - test $TRAVIS_PULL_REQUEST == "false" && tar cjvf package.tar.bz2 *
+    - test $TRAVIS_PULL_REQUEST == "false" && tar cjvf package.tar.bz2 assets LICENSE.txt target 
     - test $TRAVIS_PULL_REQUEST == "false" && ssh-keygen -R $DEPLOY_HOST
     - test $TRAVIS_PULL_REQUEST == "false" && export SSHPASS=$DEPLOY_PASS
     - test $TRAVIS_PULL_REQUEST == "false" && sshpass -e ssh -o stricthostkeychecking=no root@$DEPLOY_HOST "service lyreland stop" && echo yes || echo no
