@@ -3,17 +3,23 @@
 LyreLand
 ========
 
+Status
+------
+
+This project is not maintained anymore. Please use at your own risks.
+
 Overview
 --------
 
-LyreLand generates music procedurally using Markov-chains based learning,
-music composition rules, and pseudo-random.
+LyreLand is a music composition AI that uses deep artificial neural networks (LSTM) to generate music.
+It also contains a package used for more traditional music analysis of MIDI files (harmonic, melodic, and rhythmic analysis) that can be used to generate music procedurally using Markov Chains trained using the analysis of a dataset.
 
 Dependencies
 ------------
 
 LyreLand is developed using JAVA 8. It uses the jMusic library to generate
 MIDI scores and Fluidsynth to produce WAV files using a SF2 GM soundfont.
+It also uses deeplearning4j for the LSTM implementation and Spark for the web interface and website.
 
 File storage
 ------------
